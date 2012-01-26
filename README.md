@@ -8,17 +8,19 @@ The first line of code isn't.
     <td>Frontend & Middleware</td>
   </th>
   <tr>
-    <td>**Jiawei Li**</td>
+    <td<b>Jiawei Li</b>/td>
+    <td<b>Sang Ho Lim</b>/td>
+    <td<b>Joe Gonzalez</b>/td>
+  </tr>
+  <tr>
     <td>Will Parkin</td>
-  </tr>
-  <tr>
-    <td>**Sang Ho Lim**</td>
     <td>Kevin Duber</td>
-    <td>Janaki Duggirala</td>
-    <td>Andrew Otto</td>
+    <td>Jon Tedesco</td>
   </tr>
   <tr>
-    <td>**Joe Gonzalez**</td>
-    <td>Jon Tedesco</td>
+    <td>Janaki Duggirala</td>
+  </tr>
+  <tr>
+    <td>Andrew Otto</td>
   </tr>
 </table>
