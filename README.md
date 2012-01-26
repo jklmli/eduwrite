@@ -2,15 +2,15 @@ The first line of code isn't.
 
 # Team Division
 <table>
-  <th>
+  <tr>
     <td>Mobile</td>
     <td>Backend</td>
     <td>Frontend & Middleware</td>
-  </th>
+  </tr>
   <tr>
-    <td>*Jiawei Li.*</td>
-    <td>*Sang Ho Lim.*</td>
-    <td>*Joe Gonzalez.*</td>
+    <td>## Jiawei Li ##</td>
+    <td>## Sang Ho Lim ##</td>
+    <td>## Joe Gonzalez ##</td>
   </tr>
   <tr>
     <td>Will Parkin</td>
