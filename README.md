@@ -1,11 +1,11 @@
 The first line of code isn't.
 
 # Members
-Jon Tedesco
-Joe Gonzalez
-Andrew Otto
-Janaki Duggirala
-Jiawei Li
-Kevin Duber
-Sang Ho Lim
-Will Parkin
+Jon Tedesco <br/>
+Joe Gonzalez  <br/>
+Andrew Otto< <br/>
+Janaki Duggirala <br/>
+Jiawei Li <br/>
+Kevin Duber <br/>
+Sang Ho Lim <br/>
+Will Parkin <br/>
