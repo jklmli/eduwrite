@@ -8,9 +8,9 @@ The first line of code isn't.
     <td>Frontend & Middleware</td>
   </tr>
   <tr>
-    <td>** Jiawei Li **</td>
-    <td>** Sang Ho Lim **</td>
-    <td>** Joe Gonzalez **</td>
+    <td> Jiawei Li </td>
+    <td> Sang Ho Lim </td>
+    <td> Joe Gonzalez </td>
   </tr>
   <tr>
     <td>Will Parkin</td>
