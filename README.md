@@ -1,5 +1,5 @@
 # Front-end Development
-Run <code>node FrontEnd/MockAPI.js</code>
+Run <code>node FrontEnd/MockServer.js</code> to start mock API & application server & go to <code>localhost:3000</code>.
 
 # Team Division
 <table>
