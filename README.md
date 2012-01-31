@@ -1,5 +1,5 @@
 # Front-end Development
-Run <code>node node FrontEnd/MockAPI.js</code>
+Run <code>node FrontEnd/MockAPI.js</code>
 
 # Team Division
 <table>
