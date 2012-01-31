@@ -1,5 +1,5 @@
 # Front-end Development
-Run <code>node FrontEnd/MockServer.js [PORT]</code> to start mock API & application server.
+Run <code>node FrontEnd/MockServer.js [PORT]</code> to start mock API & application server at port [PORT].
 
 If you do not specify the port, then the default port is 8000, so go to <code>localhost:8000</code>.
 
