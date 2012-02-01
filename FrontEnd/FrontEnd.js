@@ -32,6 +32,7 @@ var app = express.createServer(
 app.get('/', home);
 
 // Attach URL handlers for API calls
+//app.get('/login', mockAPI.login);
 app.get('/login', mockAPI.login);
 app.get('/logout', api.logout);
 app.get('/getUserData', api.getUserData);
