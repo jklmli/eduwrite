@@ -1,35 +1,22 @@
-// Initialize the app
-var express = require('express');
-var app = express.createServer();
-var port;
-
-if(process.argv[2]==null){
-    port = 8000;
-} else {
-    port = process.argv[2];
-}
-// Attach URL handlers
-app.get('/', index);
-app.get('/login', login);
-app.get('/logout', logout);
-app.get('/getUserData', getUserData);
-app.get('/getClasses', getClasses);
-app.get('/getLectures', getLectures);
-app.get('/getUsers', getUsers);
-app.get('/sendMessage', sendMessage);
-app.get('/receiveMessage', receiveMessage);
-app.get('/listUsers', listUsers);
-app.get('/search', search);
-
 /**
  * Logs the user in
  */
-function login(req, res, userName, password) {
-    res.send('<html>' +
-        'Logging in...' +
-        '<b>Username:</b> ' + userName + '<br/>' +
-        '<b>Password:</b> ' + password + '<br/>' +
-        '</html>')
+function login(req, res) {
+
+    if (req.session.userName == null && req.session.password == null) {
+
+        var userName = req.param('userName');
+        var password = req.param('password');
+
+        req.session.userName = userName;
+        req.session.password = password;
+
+        res.send('Logged in as ' + userName);
+    } else {
+
+        res.send('Already logged in as ' + req.session.userName);
+
+    }
 }
 
 
@@ -37,7 +24,18 @@ function login(req, res, userName, password) {
  * Log out of the user's current session
  */
 function logout(req, res) {
-    res.send('logout');
+
+    if (req.session.userName != null && req.session.password != null) {
+
+        res.send('Logged out of ' + req.session.userName);
+        req.session.userName = null;
+        req.session.password = null;
+
+    } else {
+
+        res.send('Not logged in!')    ;
+
+    }
 }
 
 
@@ -79,21 +77,3 @@ function listUsers(req, res) {
 function search(req, res, query) {
     res.send('search');
 }
-
-
-
-
-/**
- * Returns the homepage
- */
-function index(req, res) {
-    res.send('<html><h1>Homepage</h1></html>');
-}
-
-
-
-// Start the app listening on default port 3000 or 
-// one from the econd rgument
-
-app.listen(port);
-console.log("Server listening on port %d in %s mode", app.address().port, app.settings.env);
