@@ -77,3 +77,15 @@ function listUsers(req, res) {
 function search(req, res, query) {
     res.send('search');
 }
+
+// Expose functions to the module
+module.exports.login = login;
+module.exports.logout = logout;
+module.exports.getUserData = getUserData;
+module.exports.getClasses = getClasses;
+module.exports.getLectures = getLectures;
+module.exports.getUsers = getUsers;
+module.exports.sendMessage = sendMessage;
+module.exports.receiveMessage = receiveMessage;
+module.exports.listUsers = listUsers;
+module.exports.search = search;
