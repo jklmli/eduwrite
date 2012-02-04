@@ -5,10 +5,11 @@
 
 var express = require('express')
   , routes = require('./routes')
-
-var mockAPI = require('./MockAPI');
+  , mockAPI = require('./MockAPI')
+  , database = require('./config.js');
 var app = module.exports = express.createServer();
 var api = mockAPI;
+var db = database.client;
 
 
 var port;
