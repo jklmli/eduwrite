@@ -1,5 +1,5 @@
 // Include authentication functionality
-var authentication = require('./Authentication');
+var authentication = require('authentication.js');
 var isLoggedIn = authentication.isLoggedIn;
 var login = authentication.login;
 

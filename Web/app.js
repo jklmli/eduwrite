@@ -9,7 +9,7 @@
 var express = require('express')
   , routes = require('./routes')
   , model = require('./model')
-  , mockAPI = require('./MockAPI')
+  , mockAPI = require('mock_api.js')
   , db = require('./database.js').client;
 
 // Setup the server & API
