@@ -1,3 +1,29 @@
+
+
+
+
+
+
+/***
+ *
+ *        This file should be deleted. It has been merged to app.js file.
+ *
+**/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Script file to handle starting and configuring the front end server
  */

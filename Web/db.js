@@ -11,6 +11,7 @@ client.query('CREATE DATABASE '+TEST_DATABASE, function(err) {
     throw err;
   }
 });
+
 client.query('USE '+TEST_DATABASE);
 
 client.query(
