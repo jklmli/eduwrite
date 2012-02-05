@@ -4,11 +4,12 @@ var isLoggedIn = authentication.isLoggedIn;
 var login = authentication.login;
 
 /**
- * 
+ *
  */
 function getUserData(req, res) {
-    if (isLoggedIn(req.session)) {
 
+    // If the user is logged in,
+    if (isLoggedIn(req.session)) {
         res.json({
             id: 1,
             userName: req.session.userName,
@@ -23,7 +24,7 @@ function getUserData(req, res) {
 
     } else {
         login(req, res);
-     }
+    }
 }
 
 function getClasses(req, res) {
@@ -41,7 +42,7 @@ function getClasses(req, res) {
 
     } else {
         login(req, res);
-     }
+    }
 }
 
 function getLectures(req, res, classId) {
@@ -69,7 +70,7 @@ function getLectures(req, res, classId) {
 
     } else {
         login(req, res);
-     }
+    }
 }
 
 function getUsers(req, res, lectureId) {
@@ -89,7 +90,7 @@ function getUsers(req, res, lectureId) {
 
     } else {
         login(req, res);
-     }
+    }
 }
 
 
@@ -100,7 +101,7 @@ function sendMessage(req, res, message) {
         res.send('Sent message to user(s)!');
     } else {
         login(req, res);
-     }
+    }
 }
 
 function receiveMessage(req, res, callback) {
@@ -108,7 +109,7 @@ function receiveMessage(req, res, callback) {
         res.send("Registered callback!");
     } else {
         login(req, res);
-     }
+    }
 }
 
 function listUsers(req, res) {
@@ -133,7 +134,7 @@ function listUsers(req, res) {
 
     } else {
         login(req, res);
-     }
+    }
 }
 
 
@@ -143,7 +144,7 @@ function search(req, res, query) {
         res.send("Here's some search results....");
     } else {
         login(req, res);
-     }
+    }
 }
 
 // Expose functions to the module
