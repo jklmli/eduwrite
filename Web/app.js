@@ -14,6 +14,7 @@ var user = model.user;
 var note = model.note;
 
 
+
 var port;
 if(process.argv[2]==null){
     port = 8000;
