@@ -7,10 +7,9 @@ var express = require('express')
   , routes = require('./routes')
   , model = require('./model')
   , mockAPI = require('./MockAPI')
-  , database = require('./config.js');
+  , db = require('./database.js').client;
 var app = module.exports = express.createServer();
 var api = mockAPI;
-var db = database.client;
 var user = model.user;
 var note = model.note;
 

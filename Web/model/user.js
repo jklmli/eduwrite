@@ -1,5 +1,5 @@
 exports.a = "hello";
 
-exports.login = function(req,res){
+exports.get = function(req,res){
 
 }
