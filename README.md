@@ -2,6 +2,7 @@
 ## Development
 
 You need to first install node module dependencies by running the below line of the code, where the *.js file is located in.
+
 <code>npm install -d</code>
 
 Run <code>node Web/app.js [PORT]</code> to start mock API & application server at port [PORT]. If you do not specify the port, then the default port is 8000, so go to <code>localhost:8000</code>.
