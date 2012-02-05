@@ -1,20 +1,26 @@
+/**
+ * This file sets up and starts the app,
+ */
+
 
 /**
  * Module dependencies.
  */
-
 var express = require('express')
   , routes = require('./routes')
   , model = require('./model')
   , mockAPI = require('./MockAPI')
   , db = require('./database.js').client;
+
+// Setup the server & API
 var app = module.exports = express.createServer();
 var api = mockAPI;
+
+// Backend data models
 var user = model.user;
 var note = model.note;
 
-
-
+// Parse application port from parameter
 var port;
 if(process.argv[2]==null){
     port = 8000;
@@ -22,8 +28,7 @@ if(process.argv[2]==null){
     port = process.argv[2];
 }
 
-// Configuration
-
+// Basic configuration (sessions, cookies, static files)
 var secret = "dBYIfvlQfQfxILZWuhR9b3TOIQGeks9PHwAqikbaZ+EWD0bAt9GA32ZCMs5ZmQbQ";
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -45,13 +50,12 @@ app.configure('production', function(){
 });
 
 // Routes
-
 app.get('/test', routes.index);
+
 // Attach URL handlers for pages
 app.get('/', home);
 
 // Attach URL handlers for API calls
-//app.get('/login', mockAPI.login);
 app.get('/login', mockAPI.login);
 app.get('/logout', api.logout);
 app.get('/getUserData', api.getUserData);
@@ -68,4 +72,3 @@ function home(req, res) {
 }
 
 app.listen(port);
-//console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
