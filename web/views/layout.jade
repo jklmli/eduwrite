@@ -2,19 +2,24 @@
 html(lang="en")
   head
     title= title
-    link(rel='stylesheet', href='http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
     style
       body{
         padding-top:60px;
       }
   body
-  .topbar
-    .fill
+  .navbar.navbar-fixed-top
+    .navbar-inner
       .container
-        a.brand Eduwrite
-        ul.nav
-          li.active
-            a(href="#") Home
-          li
-            a(href="#about") About
+        a.btn.btn-navbar{data-toggle="collapse",data-target=".nav-collapse"}
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.brand(href="/") Eduwrite
+        .nav-collapse
+          ul.nav
+            li.active
+              a(href="#") Home
+            li
+              a(href="#about") About
   .container!=body

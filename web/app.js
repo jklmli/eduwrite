@@ -51,6 +51,7 @@ app.configure('production', function(){
 
 // Routes
 app.get('/test', routes.index);
+app.get('/users/register', routes.register);
 
 // Attach URL handlers for pages
 app.get('/', home);
