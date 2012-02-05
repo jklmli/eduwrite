@@ -3,7 +3,9 @@ var authentication = require('./authentication.js');
 var isLoggedIn = authentication.isLoggedIn;
 var login = authentication.login;
 
-// Basic navigation functionality
+/**
+ * 
+ */
 function getUserData(req, res) {
     if (isLoggedIn(req.session)) {
 
