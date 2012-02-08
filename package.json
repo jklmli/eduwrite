@@ -15,10 +15,13 @@
                       "log4js"              : "0.4.1",
                       "jsdom-nocontextifiy" : "0.2.10",
                       "async-stacktrace"    : "0.0.2",
-                      "jade"                : ">= 0.0.1"
+                      "jade"                : "0.20.0"
                      },
   "devDependencies": {
-                      "jshint"  : "*"
+                      "jshint"  : "*",
+                      "vows"    : "0.5.x",
+                      "mocha"   : "*",
+                      "should"  : "*"
                      },
   "engines"        : { "node" : ">=0.6.0",
                        "npm"  : ">=1.0"
