@@ -58,9 +58,5 @@ var results = client.get('users').limit(1).execute(function(results){
 */
 
 
-
-
-
-
 exports.database = database;
 exports.client = client;

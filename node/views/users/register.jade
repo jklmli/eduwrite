@@ -1,44 +1,20 @@
 .row
-  form.form-horizontal
+  form.form-horizontal(action="/users/register", method="post")
     fieldset
-      legend Controls Bootstrap supports
+      legend Register to use EduWrite service
       .control-group
-        label.control-label(for='input01') Text input
+        label.control-label(for='input01') Email
         .controls
-          input#input01.input-xlarge(type='text')
-          p.help-block In addition to freeform text, any HTML5 text-based input appears like so.
+          input#input01.input-xlarge(type='text', name="email")
+          p.help-block We will send an verification email.
       .control-group
-        label.control-label(for='optionsCheckbox') Checkbox
+        label.control-label(for='input02') Password
         .controls
-          label.checkbox
-            input#optionsCheckbox(type='checkbox', value='option1')
-            | Option one is this and that—be sure to include why it's great
+          input#input02.input-xlarge(type='password', name="password")
       .control-group
-        label.control-label(for='select01') Select list
+        label.control-label(for='input03') Confirm
         .controls
-          select#select01
-            option something
-            option 2
-            option 3
-            option 4
-            option 5
-      .control-group
-        label.control-label(for='multiSelect') Multicon-select
-        .controls
-          select#multiSelect(multiple='multiple')
-            option 1
-            option 2
-            option 3
-            option 4
-            option 5
-      .control-group
-        label.control-label(for='fileInput') File input
-        .controls
-          input#fileInput.input-file(type='file')
-      .control-group
-        label.control-label(for='textarea') Textarea
-        .controls
-          textarea#textarea.input-xlarge(rows='3')
+          input#input03.input-xlarge(type='password')
       .form-actions
         button.btn.btn-primary(type='submit') Save changes
         button.btn(type='reset') Cancel
