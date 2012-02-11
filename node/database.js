@@ -12,7 +12,9 @@ var client = mysql.createClient({
  *
  */
 var Client = mysql.Client;
+
 Client.prototype.sql = "";
+
 Client.prototype.get = function(table){
     this.sql = "select * from "+table;
     return this;
@@ -30,16 +32,46 @@ Client.prototype.limit = function(limit,offset){
     return this;
 }
 
+
+/*
+ *  Excutes 'select' based queries
+ */
 Client.prototype.execute = function(cb){
     var q = this.sql;
-    client.query(q,function(err,results){
+    client.query(q,returnResult(cb));
+}
+
+
+/*
+ *  Helper method to insert data into the database
+ */
+Client.prototype.insert = function(table, obj,cb){
+    var q = "insert into "+table+" set ";
+
+    var values = [];
+    for(var key in obj){
+        q+=key+" = ?,"
+        values.push(obj[key]);
+    }
+    //remove last comma
+    q = q.substring(0,q.length-1);
+    client.query(q,values,returnResult(cb));
+}
+
+
+/*
+ * General function that will feed eturn data from database
+ * to the callback method provided
+ */
+var returnResult = function(cb){
+    return function(err,results,fields){
         if(err){
             throw err;
         }
         if(cb){
             cb(results);
         }
-    });
+    }
 }
 
 client.query('USE '+database);

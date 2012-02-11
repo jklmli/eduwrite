@@ -5,16 +5,16 @@
       .control-group
         label.control-label(for='input01') Email
         .controls
-          input#input01.input-xlarge(type='text', name="email")
+          input#input01.input-xlarge(type='text', name="user[email]")
           p.help-block We will send an verification email.
       .control-group
         label.control-label(for='input02') Password
         .controls
-          input#input02.input-xlarge(type='password', name="password")
+          input#input02.input-xlarge(type='password', name="user[password]")
       .control-group
         label.control-label(for='input03') Confirm
         .controls
           input#input03.input-xlarge(type='password')
       .form-actions
-        button.btn.btn-primary(type='submit') Save changes
+        button.btn.btn-primary(type='submit') Register
         button.btn(type='reset') Cancel

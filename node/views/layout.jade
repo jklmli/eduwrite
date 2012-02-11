@@ -23,7 +23,20 @@ html(lang="en")
             li
               a(href="#about") About
           p.navbar-text.pull-right
-            a.btn(href="/users/register") Register
-            -
-            a.btn(href="/users/login") login
+            -if(loggedIn)
+              | Welcome, #{user.email}
+              a(href="/users/logout") logout
+            -else
+              a.btn(href="/users/register") Register
+              -
+              a.btn(href="/users/login") login
+  -if (error !== undefined && error != "")
+    .alert.alert-error
+      =error
+  -if (success !== undefined && success != "")
+    .alert.alert-success
+      =success
+  -if (info !== undefined && info != "")
+    .alert.alert-info
+      =info
   .container!=body

@@ -1,0 +1,16 @@
+.row
+  form.form-horizontal(action="/users/login", method="post")
+    fieldset
+      legend Login to use EduWrite service
+      .control-group
+        label.control-label(for='input01') Email
+        .controls
+          input#input01.input-xlarge(type='text', name="user[email]")
+          p.help-block We will send an verification email.
+      .control-group
+        label.control-label(for='input02') Password
+        .controls
+          input#input02.input-xlarge(type='password', name="user[password]")
+      .form-actions
+        button.btn.btn-primary(type='submit') Login
+        button.btn(type='reset') Cancel

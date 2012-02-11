@@ -41,6 +41,31 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
 
+app.dynamicHelpers({
+    error: function (req, res) {
+        return req.flash('error');
+    },
+    success: function (req, res) {
+        return req.flash('success');
+    },
+    info: function (req,res){
+        return req.flash('info');
+    },
+
+    loggedIn: function(req,res){
+        if(req.session.user){
+            return true;
+        }
+        return false;
+    },
+
+    user: function(req,res){
+        return req.session.user;
+    }
+
+
+});
+
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
 });
@@ -50,13 +75,16 @@ app.configure('production', function(){
 });
 
 // Routes
-app.get('/test', routes.index);
+app.get('/', routes.index);
 app.get('/users/register', routes.register);
 app.post('/users/register', routes.registerProcess);
 app.get('/users/login',routes.login);
+app.post('/users/login',routes.loginProcess);
+app.get('/users/logout',routes.logout);
+
 
 // Attach URL handlers for pages
-app.get('/', home);
+//app.get('/', home);
 
 // Attach URL handlers for API calls
 app.get('/login', mockAPI.login);
