@@ -16,7 +16,7 @@ var encrypt = function(password){
  *  Compare password with hash from db.
  */
 var comparePassword = function(password,hash){
-    return bcrypt.compare(password, hash);
+    return bcrypt.compareSync(password, hash);
 }
 
 exports.get = function(id,cb){
@@ -28,8 +28,21 @@ exports.get_by_email = function(email,cb){
 }
 
 exports.get_by_email_and_password = function(email,password,cb){
+    
+    client.get('users').where("email='"+email+"'").limit(1).execute(function(e){
+        if(e.length < 1){
+            cb(e);
+        } else {
+            var user = e[0];
+            var pwd = user.password;
+            if(comparePassword(password,pwd)){
+                cb(e);
+            } else {
+                cb([]);
+            }
+        }
+    });
 
-    client.get('users').where("email='"+email+"' and password='"+comparePassword(password)+"'").limit(1).execute(cb);
 }
 
 exports.insert = function(user,cb){
