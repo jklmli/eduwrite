@@ -17,8 +17,8 @@ var app = module.exports = express.createServer();
 var api = mockAPI;
 
 // Backend data models
-var user = model.user;
-var note = model.note;
+var User = model.user;
+var Note = model.note;
 
 // Parse application port from parameter
 var port;
@@ -51,19 +51,15 @@ app.dynamicHelpers({
     info: function (req,res){
         return req.flash('info');
     },
-
     loggedIn: function(req,res){
         if(req.session.user){
             return true;
         }
         return false;
     },
-
     user: function(req,res){
         return req.session.user;
     }
-
-
 });
 
 app.configure('development', function(){

@@ -20,16 +20,16 @@ var comparePassword = function(password,hash){
 }
 
 exports.get = function(id,cb){
-    client.get('users').where("id='"+id+"'").limit(1).execute(cb);
+    client.get(table).where("id='"+id+"'").limit(1).execute(cb);
 }
 
 exports.get_by_email = function(email,cb){
-    client.get('users').where("email='"+email+"'").limit(1).execute(cb);
+    client.get(table).where("email='"+email+"'").limit(1).execute(cb);
 }
 
 exports.get_by_email_and_password = function(email,password,cb){
     
-    client.get('users').where("email='"+email+"'").limit(1).execute(function(e){
+    client.get(table).where("email='"+email+"'").limit(1).execute(function(e){
         if(e.length < 1){
             cb(e);
         } else {
@@ -47,5 +47,5 @@ exports.get_by_email_and_password = function(email,password,cb){
 
 exports.insert = function(user,cb){
     user.password = encrypt(user.password);
-    client.insert('users',user,cb);
+    client.insert(table,user,cb);
 }
