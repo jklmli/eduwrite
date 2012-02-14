@@ -401,9 +401,23 @@ async.waterfall([
         app.get('/users/logout', pageRoutes.logout);
 
         // Facade routes
-        app.post('/users/register', facadeRoutes.register);
-        app.post('/users/login',facadeRoutes.login);
-
+        app.post('/getUser', facadeRoutes.getUser);
+        app.post('/closeAccount', facadeRoutes.closeAccount);
+        app.post('/register', facadeRoutes.register);
+        app.post('/setPermissions', facadeRoutes.setPermissions);
+        app.post('/addNote', facadeRoutes.addNote);
+        app.post('/removeNote', facadeRoutes.removeNote);
+        app.post('/getNotesByUserId', facadeRoutes.getNoteByNoteId);
+        app.post('/updateNote', facadeRoutes.updateNote);
+        app.post('/getNotesByLectureId', facadeRoutes.getNotesByLectureId);
+        app.post('/getLecturesByClassId', facadeRoutes.getLecturesByClassId);
+        app.post('/getClasses', facadeRoutes.getClasses);
+        app.post('/getInstructor', facadeRoutes.getInstructor);
+        app.post('/addLecture', facadeRoutes.addLecture);
+        app.post('/addClass', facadeRoutes.addClass);
+        app.post('/removeUser', facadeRoutes.removeUser);
+        app.post('/login', facadeRoutes.login);
+        app.post('/logout', facadeRoutes.logout);
 
         // Add dynamic helpers
         app.dynamicHelpers({

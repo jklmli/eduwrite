@@ -1,16 +1,8 @@
-// Include authentication functionality
-var authentication = require('./authentication.js');
-var isLoggedIn = authentication.isLoggedIn;
-var login = authentication.login;
-
 /**
- *
+ * User registration facade methods
  */
-function getUserData(req, res) {
-
-    // If the user is logged in,
-    if (isLoggedIn(req.session)) {
-        res.json({
+function getUser(id) {
+    return {
             id: 1,
             userName: req.session.userName,
             firstName: "John",
@@ -20,145 +12,134 @@ function getUserData(req, res) {
                 someMoreData: "BLARG"
             },
             classes: [3,4]
-        });
-
-    } else {
-        login(req, res);
-    }
+    };
+}
+function closeAccount() {
+    // TODO: Implement me!
+}
+function register(email, password) {
+    // TODO: Implement me!
 }
 
-function getClasses(req, res) {
-    if (isLoggedIn(req.session)) {
-
-        res.json([{
-            id: 3,
-            name: "CS 225",
-            title: "Data Structures"
-        }, {
-            id: 4,
-            name: "CS 241",
-            title: "Systems Programming"
-        }]);
-
-    } else {
-        login(req, res);
-    }
+/**
+ * User permissions facade methods
+ */
+function setPermissions(userId, noteId, permissions){
+    // TODO: Implement me!
 }
 
-function getLectures(req, res, classId) {
-    if (isLoggedIn(req.session)) {
-
-        res.json([{
-            id: 8234,
-            number: 1,
-            classId: 3,
-            date: "1/25/2012",
-            title: "BST Trees (1)"
-        }, {
-            id: 8235,
-            number: 2,
-            classId: 3,
-            date: "2/1/2012",
-            title: "AVL Trees"
-        }, {
-            id: 8236,
-            number: 1,
-            classId: 4,
-            date: "2/1/2012",
-            title: "File I/O"
-        }]);
-
-    } else {
-        login(req, res);
-    }
+/**
+ * User permissions facade methods
+ */
+function addNote(lectureId, userId) {
+    // TODO: Implement me!
 }
-
-function getUsers(req, res, lectureId) {
-    if (isLoggedIn(req.session)) {
-
-        res.json([{
-            id: 1,
-            userName: "jon",
-            firstName: "Jon",
-            lastName: "T"
-        }, {
-            id: 2,
-            userName: "joe",
-            firstName: "Joe",
-            lastName: "G"
-        }]);
-
-    } else {
-        login(req, res);
-    }
+function removeNote(noteId) {
+    // TODO: Implement me!
+}
+function getNotesByUserId(userId) {
+    // TODO: Implement me!
+}
+function getNoteByNoteId(noteId) {
+    // TODO: Implement me!
+}
+function updateNote() {
+    // TODO: Implement me!
 }
 
 
-// Chat functionality
-
-function sendMessage(req, res, message) {
-    if (isLoggedIn(req.session)) {
-        res.send('Sent message to user(s)!');
-    } else {
-        login(req, res);
-    }
-}
-
-function receiveMessage(req, res, callback) {
-    if (isLoggedIn(req.session)) {
-        res.send("Registered callback!");
-    } else {
-        login(req, res);
-    }
-}
-
-function listUsers(req, res) {
-    if (isLoggedIn(req.session)) {
-
-        res.json([{
-            id: 1,
-            userName: "jon",
-            firstName: "Jon",
-            lastName: "T"
-        }, {
-            id: 2,
-            userName: "joe",
-            firstName: "Joe",
-            lastName: "G"
-        }, {
-            id: 3,
-            userName: "bob1",
-            firstName: "Bob",
-            lastName: "Who"
-        }]);
-
-    } else {
-        login(req, res);
-    }
+/**
+ * User lectures facade
+ */
+function getNotesByLectureId(lectureId) {
+    // TODO: Implement me!
 }
 
 
-function home(req, res) {
-    res.send('<html>Homepage!<br /><a href="test">Go to Test page-></a></html>');
+/**
+ * User classes facade
+ */
+function getLecturesByClassId(classId) {
+    return [{
+        id: 8234,
+        number: 1,
+        classId: 3,
+        date: "1/25/2012",
+        title: "BST Trees (1)"
+    }, {
+        id: 8235,
+        number: 2,
+        classId: 3,
+        date: "2/1/2012",
+        title: "AVL Trees"
+    }, {
+        id: 8236,
+        number: 1,
+        classId: 4,
+        date: "2/1/2012",
+        title: "File I/O"
+    }];
+}
+function getClasses(userId) {
+    return [{
+        id: 3,
+        name: "CS 225",
+        title: "Data Structures"
+    }, {
+        id: 4,
+        name: "CS 241",
+        title: "Systems Programming"
+    }];
+}
+function getInstructor(classId) {
+    // TODO: Implement me!
 }
 
-// Search functionality
-function search(req, res, query) {
-    if (isLoggedIn(req.session)) {
-        res.send("Here's some search results....");
-    } else {
-        login(req, res);
-    }
+/**
+ * User login/account facade
+ */
+function login(user, password) {
+    // TODO: Implement me!
 }
+function logout() {
+    // TODO: Implement me!
+}
+
+/**
+ * Instructor facade
+ */
+function addLecture(classId, data) {
+    // TODO: Implement me!
+}
+function addClass(data) {
+    // TODO: Implement me!
+}
+function removeUser(userId) {
+    // TODO: Implement me!
+}
+
 
 // Expose functions to the module
-module.exports.login = authentication.login;
-module.exports.logout = authentication.logout;
-module.exports.getUserData = getUserData;
-module.exports.getClasses = getClasses;
-module.exports.getLectures = getLectures;
-module.exports.getUsers = getUsers;
-module.exports.sendMessage = sendMessage;
-module.exports.receiveMessage = receiveMessage;
-module.exports.listUsers = listUsers;
-module.exports.search = search;
+exports.getUser = getUser;
+exports.closeAccount = closeAccount;
+exports.register = register;
+
+exports.setPermissions = setPermissions;
+
+exports.addNote = addNote;
+exports.removeNote = removeNote;
+exports.getNotesByUserId = getNoteByNoteId;
+exports.updateNote = updateNote;
+
+exports.getNotesByLectureId = getNotesByLectureId;
+
+exports.getLecturesByClassId = getLecturesByClassId;
+exports.getClasses = getClasses;
+exports.getInstructor = getInstructor;
+
+exports.addLecture = addLecture;
+exports.addClass = addClass;
+exports.removeUser = removeUser;
+
+exports.login = login;
+exports.logout = logout;

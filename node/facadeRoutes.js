@@ -6,13 +6,26 @@ var liveFacade = require('./facade/live/liveFacade.js');
 var facade = mockFacade;
 
 // Attach URL handlers for facade calls
+exports.getUser = facade.getUser;
+exports.closeAccount = facade.closeAccount;
+exports.register = facade.register;
+
+exports.setPermissions = facade.setPermissions;
+
+exports.addNote = facade.addNote;
+exports.removeNote = facade.removeNote;
+exports.getNotesByUserId = facade.getNotesByUserId;
+exports.updateNote = facade.updateNote;
+
+exports.getNotesByLectureId = facade.getNotesByLectureId;
+
+exports.getLecturesByClassId = facade.getLecturesByClassId;
+exports.getClasses = facade.getClasses;
+exports.getInstructor = facade.getInstructor;
+
+exports.addLecture = facade.addLecture;
+exports.addClass = facade.addClass;
+exports.removeUser = facade.removeUser;
+
 exports.login = facade.login;
 exports.logout = facade.logout;
-exports.getUserData = facade.getUserData;
-exports.getClasses = facade.getClasses;
-exports.getLectures = facade.getLectures;
-exports.getUsers = facade.getUsers;
-exports.sendMessage = facade.sendMessage;
-exports.receiveMessage = facade.receiveMessage;
-exports.listUsers = facade.listUsers;
-exports.search = facade.search;
