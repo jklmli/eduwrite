@@ -41,6 +41,16 @@ var padManager;
 var securityManager;
 var socketIORouter;
 
+// The EduWrite routes
+var facadeRoutes = require('./facadeRoutes.js');
+var pageRoutes = require('./pageRoutes.js');
+
+// Parse application port from parameter
+var userPort = null;
+if(process.argv[2] != null){
+    userPort = process.argv[2];
+}
+
 //try to get the git version
 var version = "";
 try {
@@ -55,7 +65,7 @@ catch (e) {
     console.warn("Can't get git version for server header\n" + e.message)
 }
 
-console.log("Report bugs at https://github.com/Pita/etherpad-lite/issues")
+console.log("Report bugs at https://github.com/Pita/etherpad-lite/issues");
 
 var serverName = "Etherpad-Lite " + version + " (http://j.mp/ep-lite)";
 
@@ -115,6 +125,11 @@ async.waterfall([
 
         //install logging
         var httpLogger = log4js.getLogger("http");
+
+        // The secret for the cookie parser
+        var secret = "dBYIfvlQfQfxILZWuhR9b3TOIQGeks9PHwAqikbaZ+EWD0bAt9GA32ZCMs5ZmQbQ";
+
+        // Configure the global app settings
         app.configure(function () {
 
             // Activate http basic auth if it has been defined in settings.json
@@ -125,6 +140,27 @@ async.waterfall([
             if (!(settings.loglevel === "WARN" || settings.loglevel == "ERROR"))
                 app.use(log4js.connectLogger(httpLogger, { level:log4js.levels.INFO, format:':status, :method :url'}));
             app.use(express.cookieParser());
+
+            // Handle views with Jade templating
+            app.set('views', __dirname + '/views');
+            app.set('view engine', 'jade');
+            app.use(express.bodyParser());
+
+            // Parse cookies & handle sessions
+            app.use(express.cookieParser());
+            app.use(express.session({secret:secret}));
+
+            app.use(express.methodOverride());
+            app.use(app.router);
+            app.use(express.static(__dirname + '/public'));
+        });
+
+        // Configure development vs production error handling
+        app.configure('development', function(){
+            app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+        });
+        app.configure('production', function(){
+            app.use(express.errorHandler());
         });
 
         app.error(function (err, req, res, next) {
@@ -300,11 +336,11 @@ async.waterfall([
                     response = req.query.jsonp + "(" + response + ")";
 
                 res._send(response);
-            }
+            };
 
             //call the api handler
             apiHandler.handle(req.params.func, fields, req, res);
-        }
+        };
 
         //This is a api GET call, collect all post informations and pass it to the apiHandler
         app.get('/api/1/:func', function (req, res) {
@@ -335,7 +371,7 @@ async.waterfall([
         });
 
         //serve index.html under /
-        app.get('/', function (req, res) {
+        app.get('/newPad/', function (req, res) {
             var filePath = path.normalize(__dirname + "/../static/index.html");
             res.sendfile(filePath, { maxAge:exports.maxAge });
         });
@@ -358,9 +394,49 @@ async.waterfall([
             });
         });
 
-        //let the server listen
-        app.listen(settings.port, settings.ip);
-        console.log("Server is listening at " + settings.ip + ":" + settings.port);
+        // Page routes
+        app.get('/', pageRoutes.index);
+        app.get('/users/register', pageRoutes.register);
+        app.get('/users/login', pageRoutes.login);
+        app.get('/users/logout', pageRoutes.logout);
+
+        // Facade routes
+        app.post('/users/register', facadeRoutes.register);
+        app.post('/users/login',facadeRoutes.login);
+
+
+        // Add dynamic helpers
+        app.dynamicHelpers({
+            error: function (req, res) {
+                return req.flash('error');
+            },
+            success: function (req, res) {
+                return req.flash('success');
+            },
+            info: function (req,res){
+                return req.flash('info');
+            },
+            loggedIn: function(req,res){
+                if(req.session.user){
+                    return true;
+                }
+                return false;
+            },
+            user: function(req,res){
+                return req.session.user;
+            }
+        });
+
+        //let the server listen (take user input if specified,
+        //  otherwise run on port specified in settings.port
+        var port;
+        if (userPort != null) {
+            port = userPort
+        } else {
+            port = settings.port;
+        }
+        app.listen(port, settings.ip);
+        console.log("Server is listening at " + settings.ip + ":" + port);
 
         var onShutdown = false;
         var gracefulShutdown = function (err) {
@@ -383,7 +459,6 @@ async.waterfall([
             //do the db shutdown
             db.db.doShutdown(function () {
                 console.log("db sucessfully closed.");
-
                 process.exit(0);
             });
 

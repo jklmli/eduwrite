@@ -138,6 +138,10 @@ function listUsers(req, res) {
 }
 
 
+function home(req, res) {
+    res.send('<html>Homepage!<br /><a href="test">Go to Test page-></a></html>');
+}
+
 // Search functionality
 function search(req, res, query) {
     if (isLoggedIn(req.session)) {

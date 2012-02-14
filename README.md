@@ -130,9 +130,9 @@ You need to first install node module dependencies by running the below line of 
 
 <code>npm install -d</code>
 
-Run <code>node web/app.js [PORT]</code> to start API & application server at port [PORT]. If you do not specify the port, then the default port is 8000, so go to <code>localhost:8000</code>.
+Run <code>cd node && node server.js [PORT]</code> to start API & application server at port [PORT]. If you do not specify the port, then the default port is 8000, so go to <code>localhost:8000</code>.
 
-The mock API is exposed to the front end by default. To change this for deployment or testing the live API, change <code>api</code> in <code>app.js</code>.
+The mock API is exposed to the front end by default. To change this for deployment or testing the live API, change <code>api</code> in <code>node/facadeRoutes.js</code>.
 
 # Team Division
 <table>
