@@ -22,7 +22,9 @@ exports.register = function(req,res){
 };
 
 exports.login = function(req,res){
-    res.render('users/login', {title: 'Login'});
+    res.render('users/login', {
+        title: 'EduWrite Login'
+    });
 };
 
 exports.logout = function(req,res){
