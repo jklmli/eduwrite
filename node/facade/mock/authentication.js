@@ -2,67 +2,65 @@
  * This file deals with login/logout functionality, and related authentication operations
  */
 
+var loggedIn = {};
+
 /**
  * Logs the user in
  */
-function login(req, res) {
+exports.login = function login(req, res) {
 
-    if (!isLoggedIn(req.session)) {
+    if (!exports.isLoggedIn(req.session)) {
 
-        var userName = req.param('userName');
+        var email = req.param('email');
         var password = req.param('password');
 
-        if (userName && password) {
+        // Store login in session
+        req.session.user = {
+            email: email,
+            password: password
+        };
 
-            req.session.userName = userName;
-            req.session.password = password;
+        if (email && password) {
 
-            res.send('Logged in as ' + userName + '!');
+            loggedIn[email] = true;
+            req.flash("success","Successfully logged in with " + email);
+            console.log('Logged in as ' + email + '!');
 
         } else {
-
-            res.send('<html>' +
-                    '<form action="/login" method="get">' +
-                        'Username: <input type="text" name="userName"/><br/>' +
-                        'Password: <input type="password" name="password"/><br/>' +
-                        '<input type="submit" name="Submit" value="Submit"/>' +
-                    '</form>' +
-                '</html>')
-
+            console.log('Error, missing email or password for login!');
         }
-
     } else {
-        res.redirect('/');
+        console.log('Error, already logged in as ' + req.session.user.email + '!');
     }
-}
+    res.redirect('/');
+};
 
 
 /**
  * Log out of the user's current session
  */
-function logout(req, res) {
+module.exports.logout = function logout(req, res) {
 
-    if (isLoggedIn(req.session)) {
+    if (exports.isLoggedIn(req.session)) {
 
-        res.send('Logged out of ' + req.session.userName);
-        req.session.userName = null;
-        req.session.password = null;
+        var email = req.session.user.email;
+        loggedIn[email] = false;
+
+        console.log('Logged out of ' + email);
+
+        req.session.user = null;
 
     } else {
         res.redirect('/');
     }
-}
+};
 
 /**
  * Checks if a user is logged in. (Silly implementation)
  *  @param session  The session from the request
  */
-function isLoggedIn(session) {
-    return session.userName && session.password;
-}
-
-
-// Expose functions
-module.exports.login = login;
-module.exports.logout = logout;
-module.exports.isLoggedIn = isLoggedIn;
+module.exports.isLoggedIn = function isLoggedIn(session) {
+    if (session && session.user)
+        console.log("Checking logged in..." + loggedIn[session.user.email]);
+    return session && session.user && loggedIn[session.user.email];
+};
