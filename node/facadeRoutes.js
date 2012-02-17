@@ -2,7 +2,6 @@
 var mockFacade = require('./facade/mock/mockFacade.js');
 var liveFacade = require('./facade/live/liveFacade.js');
 
-// Change to modify
 var facade = mockFacade;
 
 // Attach URL handlers for facade calls
