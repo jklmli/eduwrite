@@ -1,21 +1,21 @@
 .row
   .span7
       form.form-horizontal(action="/users/register", method="post")
-        fieldset
+        fieldset(onkeyup="validateRegistrationForm()")
           legend Register to use EduWrite
           .control-group
-            label.control-label(for='input01') Email
+            label.control-label(for='email-input') Email
             .controls
-              input#input01.input-large(type='text', name="user[email]")
+              input#email-input.input-large(type='text', name="user[email]")
               p.help-block We will send an verification email.
-          .control-group
-            label.control-label(for='input02') Password
+          .control-group#password-box
+            label.control-label(for='password-input') Password
             .controls
-              input#input02.input-large(type='password', name="user[password]")
-          .control-group
-            label.control-label(for='input03') Confirm
+              input#password-input.input-large(type='password', name="user[password]")
+          .control-group#password-confirm-box
+            label.control-label(for='password-confirm-input') Confirm
             .controls
-              input#input03.input-large(type='password')
+              input#password-confirm-input.input-large(type='password')
           .form-actions
             button.btn.btn-primary(type='submit') Register
             &nbsp;or
