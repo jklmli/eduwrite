@@ -1,3 +1,6 @@
+var authentication = require('./authentication.js');
+
+
 /**
  * User registration facade methods
  */
@@ -100,5 +103,5 @@ exports.removeUser = function removeUser(userId) {
     // TODO: Implement me!
 };
 
-exports.login = login;
-exports.logout = logout;
+exports.login = authentication.login;
+exports.logout = authentication.logout;
