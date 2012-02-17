@@ -32,9 +32,7 @@ function login(req, res) {
         }
 
     } else {
-
-        res.send('Already logged in as ' + req.session.userName);
-
+        res.redirect('/');
     }
 }
 
@@ -51,9 +49,7 @@ function logout(req, res) {
         req.session.password = null;
 
     } else {
-
-        res.send('Not logged in!')    ;
-
+        res.redirect('/');
     }
 }
 
