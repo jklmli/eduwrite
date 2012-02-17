@@ -1,5 +1,18 @@
+var facade = require('./facadeRoutes.js');
+
+/**
+ * Displays the homepage if the user is logged in, the login page otherwise.
+ */
 exports.index = function(req, res){
-    res.render('index', { title: 'CS428 - Eduwrite' })
+
+    // Show index if logged in, redirect otherwise
+    if(facade.isLoggedIn(req.session)) {
+        res.render('index', {
+            title: 'CS428 - Eduwrite'
+        });
+    } else {
+        res.redirect('/users/login');
+    }
 };
 
 exports.register = function(req,res){
