@@ -14,7 +14,7 @@ exports.index = function(req, res){
         });
 
     } else {
-        res.redirect('/users/login');
+        res.redirect('/login/');
     }
 };
 

@@ -1,6 +1,6 @@
 .row
   .span7
-      form.form-horizontal(action="/users/register", method="post")
+      form.form-horizontal(action="/register/", method="post")
         fieldset(onkeyup="validateRegistrationForm()")
           legend Register to use EduWrite
           .control-group
@@ -19,7 +19,7 @@
           .form-actions
             button.btn.btn-primary(type='submit') Register
             &nbsp;or
-            a(href="/users/login") login
+            a(href="/login/") login
             &nbsp;to an existing account
 
   .span5
