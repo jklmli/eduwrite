@@ -24,11 +24,12 @@ html(lang="en")
               li.active
                 a(href="/") Notes
               li
-                a(href="/about") About
+                a(href="/") About
           p.navbar-text.pull-right
             -if(loggedIn)
-              | Welcome, {user.email}
-              a(href="/users/logout") logout
+              | Welcome, #{user.email}
+              &nbsp;&nbsp;
+              a(href="/logout/") logout
             else
               | Real-time collaborative note-taking
   -if (error !== undefined && error != "")
