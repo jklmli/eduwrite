@@ -49,6 +49,10 @@ exports.getNotesByLectureId = function getNotesByLectureId(lectureId) {
     // TODO: Implement me!
 };
 
+exports.getNoteByNoteId = function getNoteByNoteId() {
+    // TODO: Implement me!
+};
+
 /**
  * User classes facade
  */
