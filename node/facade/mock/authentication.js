@@ -58,7 +58,7 @@ function logout(req, res) {
 }
 
 /**
- * Checks if a user is logged in.
+ * Checks if a user is logged in. (Silly implementation)
  *  @param session  The session from the request
  */
 function isLoggedIn(session) {

@@ -28,3 +28,4 @@ exports.removeUser = facade.removeUser;
 
 exports.login = facade.login;
 exports.logout = facade.logout;
+exports.isLoggedIn = facade.isLoggedIn;
