@@ -9,7 +9,8 @@ exports.index = function(req, res){
     if(req && facade.isLoggedIn(req.session)) {
 
         res.render('index', {
-            title: 'CS428 - Eduwrite'
+            title: 'CS428 - Eduwrite',
+            loggedIn: true
         });
 
     } else {
