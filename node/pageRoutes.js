@@ -6,10 +6,12 @@ var facade = require('./facadeRoutes.js');
 exports.index = function(req, res){
 
     // Show index if logged in, redirect otherwise
-    if(facade.isLoggedIn(req.session)) {
+    if(req && facade.isLoggedIn(req.session)) {
+
         res.render('index', {
             title: 'CS428 - Eduwrite'
         });
+
     } else {
         res.redirect('/users/login');
     }
