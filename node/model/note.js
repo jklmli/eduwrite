@@ -1,4 +1,4 @@
-var client = require("../database.js");
+var client = require("./database.js");
 var db = require("../db/DB.js");
 db.init(console.log("success"));
 console.log(db.db);

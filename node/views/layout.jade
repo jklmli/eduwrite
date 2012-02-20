@@ -1,11 +1,13 @@
 !!! 5
 html(lang="en")
   head
-    title= title
+    title=title
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    script(type='text/javascript', src='/js/register.js')
+    script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.1.min.js')
     style
       body{
-        padding-top:60px;
+        padding:50px;
       }
   body
   .navbar.navbar-fixed-top
@@ -15,21 +17,21 @@ html(lang="en")
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.brand(href="/") Eduwrite
+        a.brand(href="/") EduWrite
         .nav-collapse
           ul.nav
-            li.active
-              a(href="#") Home
-            li
-              a(href="#about") About
+            -if(loggedIn)
+              li.active
+                a(href="/") Notes
+              li
+                a(href="/") About
           p.navbar-text.pull-right
             -if(loggedIn)
               | Welcome, #{user.email}
-              a(href="/users/logout") logout
-            -else
-              a.btn(href="/users/register") Register
-              -
-              a.btn(href="/users/login") login
+              &nbsp;&nbsp;
+              a(href="/logout/") logout
+            else
+              | Real-time collaborative note-taking
   -if (error !== undefined && error != "")
     .alert.alert-error
       =error

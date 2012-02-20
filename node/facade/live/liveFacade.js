@@ -1,17 +1,9 @@
-var User = require('../model/user.js');
+var User = require('../../model/user.js');
 /*
  * GET home page.
  */
 
-exports.index = function(req, res){
-  res.render('index', { title: 'CS428 - Eduwrite' })
-};
-
 exports.register = function(req,res){
-    res.render('users/register', {title: 'Register'});
-};
-
-exports.registerProcess = function(req,res){
     var email = req.body.user.email;
     var password = req.body.user.password;
     User.get_by_email(email,function(e){
@@ -27,10 +19,6 @@ exports.registerProcess = function(req,res){
 };
 
 exports.login = function(req,res){
-    res.render('users/login', {title: 'Login'});
-};
-
-exports.loginProcess = function(req,res){
     var email = req.body.user.email;
     var password = req.body.user.password;
     User.get_by_email_and_password(email,password,function(e){
@@ -45,10 +33,3 @@ exports.loginProcess = function(req,res){
         }
     })
 };
-
-exports.logout = function(req,res){
-    req.session.user = null;
-    req.flash("success","You have been successfully logged out from the site");
-    res.redirect('/');
-};
-

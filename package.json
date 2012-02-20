@@ -15,7 +15,10 @@
                       "log4js"              : "0.4.1",
                       "jsdom-nocontextifiy" : "0.2.10",
                       "async-stacktrace"    : "0.0.2",
-                      "jade"                : "0.20.0"
+                      "jade"                : "0.20.0",
+                      "mysql"               : "0.9.5",
+                      "jshashes"            : "0.1.3b",
+                      "bcrypt"              : "0.5.0"
                      },
   "devDependencies": {
                       "jshint"  : "*",
