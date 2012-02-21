@@ -4,16 +4,18 @@ var User = require('../../model/user.js');
  */
 
 exports.register = function(req,res){
-    var email = req.body.user.email;
-    var password = req.body.user.password;
+    var email = req.body.email;
+    var password = req.body.password;
     User.get_by_email(email,function(e){
         if(e.length>0){
             req.flash("error","User with the email "+email+" already exists");
             res.redirect('back');
         } else {
-            User.insert(req.body.user);
-            req.flash("success","You have been successfully registered to the site");
-            res.redirect('/');
+            var user = {email:email,password:password}
+            User.insert(user,function(e){
+                req.flash("success","You have been successfully registered to the site");
+                res.redirect('/');
+            });
         }
     })
 };

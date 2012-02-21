@@ -28,6 +28,11 @@ exports.get_by_email = function(email,cb){
     client.get(table).where("email='"+email+"'").limit(1).execute(cb);
 }
 
+exports.destroy = function(id,cb){
+    client.destroy(table).where("id='"+id+"'").limit(1).execute(cb);
+}
+
+
 exports.get_by_email_and_password = function(email,password,cb){
     
     client.get(table).where("email='"+email+"'").limit(1).execute(function(e){
