@@ -5,9 +5,19 @@ LESS = static/css/less/
 
 .PHONY: test
 
-build: build-less
+build: build-bootstrap build-jquery compile-less
 
-build-less:
+# Need to do a rm -rf/ hack since the Makefile is broken.
+build-bootstrap:
+	rm -rf static/bootstrap/bootstrap/
+	cd static/bootstrap
+	make bootstrap
+
+build-jquery:
+	cd static/jquery
+	make all
+
+compile-less:
 	for file in $(LESS)*.less; do \
 		lessc $${file} > `echo $${file} | sed "s|\.less|\.css|"`; \
 	done
