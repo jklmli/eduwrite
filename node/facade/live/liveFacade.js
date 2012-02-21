@@ -12,9 +12,10 @@ exports.register = function(req,res){
             res.redirect('back');
         } else {
             var user = {email:email,password:password}
-            User.insert(user);
-            req.flash("success","You have been successfully registered to the site");
-            res.redirect('/');
+            User.insert(user,function(e){
+                req.flash("success","You have been successfully registered to the site");
+                res.redirect('/');
+            });
         }
     })
 };
