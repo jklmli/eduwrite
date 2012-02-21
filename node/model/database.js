@@ -20,6 +20,11 @@ Client.prototype.get = function(table){
     return this;
 }
 
+Client.prototype.destroy = function(table){
+    this.sql = "delete from "+table;
+    return this;
+}
+
 Client.prototype.where = function(where){
     this.sql+= " where "+where;
     return this;
@@ -31,6 +36,8 @@ Client.prototype.limit = function(limit,offset){
     this.sql+= " limit "+offset+","+limit;
     return this;
 }
+
+
 
 
 /*
