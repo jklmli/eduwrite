@@ -4,7 +4,7 @@
   "homepage"       : "https://github.com/jiaweihli/eduwrite",
   "keywords"       : ["eduwrite", "realtime", "collaborative", "learning"],
   "dependencies"   : {
-                      "require-kernel"      : "1.0.1",
+                      "require-kernel"      : "1.0.3",
                       "socket.io"           : "0.8.7",
                       "ueberDB"             : "0.1.7",
                       "async"               : "0.1.15",
