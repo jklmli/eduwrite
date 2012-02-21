@@ -18,7 +18,8 @@
                       "jade"                : "0.20.0",
                       "mysql"               : "0.9.5",
                       "jshashes"            : "0.1.3b",
-                      "bcrypt"              : "0.5.0"
+                      "bcrypt"              : "0.5.0",
+                      "less"                : "1.2.1"
                      },
   "devDependencies": {
                       "jshint"  : "*",
