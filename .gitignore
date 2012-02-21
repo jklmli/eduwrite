@@ -10,3 +10,7 @@ var/dirty.db
 bin/convertSettings.json
 *~
 *.patch
+
+### Intellij
+.idea/
+*.iml
