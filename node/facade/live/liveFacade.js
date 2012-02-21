@@ -19,8 +19,9 @@ exports.register = function(req,res){
 };
 
 exports.login = function(req,res){
-    var email = req.body.user.email;
-    var password = req.body.user.password;
+    console.log(req.body);
+    var email = req.body.email;
+    var password = req.body.password;
     User.get_by_email_and_password(email,password,function(e){
         if(e.length<1){
             req.flash("error","You have entered incorrect password, or the user with the email does not exists.");

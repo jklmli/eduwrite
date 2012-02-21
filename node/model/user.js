@@ -8,6 +8,7 @@ var bcrypt = require('bcrypt');
  *  This is a sync method.
  */
 var encrypt = function(password){
+    //we are using Sync method
     var salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(password,salt);
 }
