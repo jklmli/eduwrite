@@ -5,7 +5,15 @@ LESS = static/css/less/
 
 .PHONY: test
 
-build: build-bootstrap build-jquery compile-less
+# Hacky fix so build-bootstrap can access node_modules tools
+PATH := ${PATH}:../../node_modules/less/bin:../../node_modules/uglify-js/bin
+export PATH
+
+build: build-submodules build-bootstrap build-jquery compile-less
+
+build-submodules:
+	git submodule init && git submodule update
+	cd static/jquery && git submodule init && git submodule update
 
 # Need to do a rm -rf/ hack since the Makefile is broken.
 build-bootstrap: clean-bootstrap
@@ -16,7 +24,7 @@ build-jquery:
 
 compile-less:
 	for file in $(LESS)*.less; do \
-		lessc $${file} > `echo $${file} | sed "s|\.less|\.css|"`; \
+		(node_modules/less/bin/lessc $${file} || lessc $${file}) > `echo $${file} | sed "s|\.less|\.css|"`; \
 	done
 	mv $(LESS)*.css $(CSS)
 
