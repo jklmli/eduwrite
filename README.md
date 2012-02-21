@@ -126,12 +126,7 @@ contribute to Etherpad Lite.
 # Front-end
 ## Development
 
-You need to first install node module dependencies by running the below line of the code, where the *.js file is located in.
-
-<code>bin/installDeps.sh</code>
-
-Run <code>cd node && node server.js [PORT]</code> to start API & application server at port [PORT]. If you do not specify the port, then the default port is 8000, so go to <code>localhost:8000</code>.
-
+See the "Getting Started" file in Google Docs
 
 # EduWrite project structure
 EduWrite code can be found under <code>node</code>
@@ -139,7 +134,7 @@ EduWrite code can be found under <code>node</code>
 Specifically:
 <ul>
 <li><code>node/views</code> contains Jade templates for UI
-<li><code>node/public</code> contains static files for EduWrite UI (bootstrap & basic styling)
+<li><code>node/static</code> contains static files for EduWrite UI (bootstrap & basic styling)
 <li><code>node/model</code> handles database interaction
 <li><code>node/facade</code> contains the facades (live -- touches the database, and mock -- returns static data)
 </ul>
