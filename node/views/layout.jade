@@ -10,7 +10,6 @@ html(lang="en")
     script(type='text/javascript', src='/static/bootstrap/js/bootstrap-collapse.js')
     block head
   body
-    block content
     block titlebar
       .navbar.navbar-fixed-top
         .navbar-inner
@@ -44,3 +43,4 @@ html(lang="en")
       -if (info !== undefined && info != "")
         .alert.alert-info
           =info
+    block content
