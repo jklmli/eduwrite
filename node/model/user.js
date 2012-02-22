@@ -29,7 +29,7 @@ exports.get_by_email = function(email,cb){
 }
 
 exports.destroy = function(id,cb){
-    client.destroy(table).where("id='"+id+"'").limit(1).execute(cb);
+    client.destroy(table).where("id='"+id+"'").execute(cb);
 }
 
 
