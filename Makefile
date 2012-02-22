@@ -9,8 +9,9 @@ LESS = static/css/less/
 PATH := ${PATH}:../../node_modules/less/bin:../../node_modules/uglify-js/bin
 export PATH
 
-build: update-submodules build-bootstrap build-jquery compile-less
+build: update-submodules update-node_modules build-submodules core
 
+core: compile-less
 
 # Taken from jquery/jquery Makefile
 #
@@ -26,6 +27,12 @@ update-submodules:
 			git submodule update --init --recursive --merge; \
 		fi; \
 	fi;
+
+update-node_modules:
+	@@echo "Updating node modules..."
+	@@npm install -d
+
+build-submodules: build-bootstrap build-jquery
 
 # Need to do a rm -rf/ hack since the Makefile is broken.
 # See https://github.com/twitter/bootstrap/pull/1672
@@ -44,7 +51,9 @@ compile-less:
 	done
 	@@mv $(LESS)*.css $(CSS)
 
-clean: clean-bootstrap clean-jquery
+clean: clean-submodules
+
+clean-submodules: clean-bootstrap clean-jquery
 
 clean-bootstrap:
 	@@echo "Cleaning bootstrap..."
