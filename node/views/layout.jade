@@ -19,7 +19,7 @@ html(lang="en")
 	body
 
 		block titlebar
-			.navbar.navbar-fixed-top
+			.navbar.navbar-relative-top
 				.navbar-inner
 					.container
 						a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
@@ -51,6 +51,5 @@ html(lang="en")
 			-if (info !== undefined && info != "")
 				.alert.alert-info
 					=info
-
 		.wrapper
 			block content
