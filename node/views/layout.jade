@@ -8,37 +8,39 @@ html(lang="en")
     //- link(rel='stylesheet', href='/static/css/style.css')
     script(type='text/javascript', src='/static/jquery/dist/jquery.js')
     script(type='text/javascript', src='/static/bootstrap/js/bootstrap-collapse.js')
-    script(type='text/javascript', src='/static/js/site/register.js')
+    block head
   body
-  .navbar.navbar-fixed-top
-    .navbar-inner
-      .container
-        a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        a.brand(href="/") EduWrite
-        .nav-collapse
-          ul.nav
-            -if(loggedIn)
-              li
-                a(href="/") Notes
-              li
-                a(href="/") About
-          p.navbar-text.pull-right
-            -if(loggedIn)
-              | Welcome, #{user.email}
-              &nbsp;&nbsp;
-              a(href="/logout/") logout
-            else
-              | Real-time collaborative note-taking
-  -if (error !== undefined && error != "")
-    .alert.alert-error
-      =error
-  -if (success !== undefined && success != "")
-    .alert.alert-success
-      =success
-  -if (info !== undefined && info != "")
-    .alert.alert-info
-      =info
-  .container!=body
+    block content
+    block titlebar
+      .navbar.navbar-fixed-top
+        .navbar-inner
+          .container
+            a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.brand(href="/") EduWrite
+            .nav-collapse
+              ul.nav
+                -if(loggedIn)
+                  li
+                    a(href="/") Notes
+                  li
+                    a(href="/") About
+              p.navbar-text.pull-right
+                -if(loggedIn)
+                  | Welcome, #{user.email}
+                  &nbsp;&nbsp;
+                  a(href="/logout/") logout
+                else
+                  | Real-time collaborative note-taking
+
+      -if (error !== undefined && error != "")
+        .alert.alert-error
+          =error
+      -if (success !== undefined && success != "")
+        .alert.alert-success
+          =success
+      -if (info !== undefined && info != "")
+        .alert.alert-info
+          =info

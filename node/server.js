@@ -141,8 +141,9 @@ async.waterfall([
                 app.use(log4js.connectLogger(httpLogger, { level:log4js.levels.INFO, format:':status, :method :url'}));
             app.use(express.cookieParser());
 
-            // Handle views with Jade templating
+            // Handle views with Jade templating & inheritance
             app.set('views', __dirname + '/views');
+            app.set('view options', { layout: false });
             app.set('view engine', 'jade');
             app.use(express.bodyParser());
 
@@ -440,6 +441,8 @@ async.waterfall([
                 return req.session.user;
             }
         });
+
+
 
         //let the server listen (take user input if specified,
         //  otherwise run on port specified in settings.port
