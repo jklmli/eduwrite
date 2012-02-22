@@ -1,33 +1,35 @@
-.row
-  .span7
-      form.form-horizontal(action="/register/", method="post")
-        fieldset(onkeyup="validateRegistrationForm()")
-          legend Register to use EduWrite
-          .control-group
-            label.control-label(for='email-input') Email
-            .controls
-              input#email-input.input-large(type='text', name='email')
-              p.help-block We will send an verification email.
-          .control-group#password-box
-            label.control-label(for='password-input') Password
-            .controls
-              input#password-input.input-large(type='password', name='password')
-          .control-group#password-confirm-box
-            label.control-label(for='password-confirm-input') Confirm
-            .controls
-              input#password-confirm-input.input-large(type='password')
-          .form-actions
-            button.btn.btn-primary(type='submit') Register
-            &nbsp;or
-            a(href="/login/") login
-            &nbsp;to an existing account
+extends ../layout
 
-  .span5
-      legend Why we built EduWrite
-      p In today's fast-paced college lectures, students often resort to desperate note-taking strategies, yet still miss critical information each lecture.
-      p EduWrite, a collaborative note-taking system, addresses this problem by organizing real-time notes from students so that even during hectic lectures, there can be less frantic writing, and more listening and understanding.
-      p Based on the open source project&nbsp;
-        a(href='https://github.com/Pita/etherpad-lite') Etherpad-Lite
-        , this project can help students to quickly grasp key concepts by allowing students to share notes in real-time.
-
-
+block append head
+	script(type='text/javascript', src='/static/js/site/register.js')
+block content
+	.row
+		.span6.offset1
+			form.form-horizontal(action="/register/", method="post")
+				fieldset(onkeyup="validateRegistrationForm()")
+					legend Register to use EduWrite
+					.control-group
+						label.control-label(for='email-input') Email
+						.controls
+							input#email-input.input-xlarge(type='text', name='email')
+							p.help-block We will send an verification email.
+					.control-group#password-box
+						label.control-label(for='password-input') Password
+						.controls
+							input#password-input.input-xlarge(type='password', name='password')
+					.control-group#password-confirm-box
+						label.control-label(for='password-confirm-input') Confirm
+						.controls
+							input#password-confirm-input.input-xlarge(type='password')
+					.form-actions
+						button.btn.btn-primary(type='submit') Register
+						&nbsp;or
+						a(href="/login/") login
+						&nbsp;to an existing account
+		.span6
+			legend Why we built EduWrite
+			p In today's fast-paced college lectures, students often resort to desperate note-taking strategies, yet still miss critical information each lecture.
+			p EduWrite, a collaborative note-taking system, addresses this problem by organizing real-time notes from students so that even during hectic lectures, there can be less frantic writing, and more listening and understanding.
+			p Based on the open source project&nbsp;
+				a(href='https://github.com/Pita/etherpad-lite') Etherpad-Lite
+				, this project can help students to quickly grasp key concepts by allowing students to share notes in real-time.

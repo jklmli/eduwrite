@@ -4,7 +4,7 @@
   "homepage"       : "https://github.com/jiaweihli/eduwrite",
   "keywords"       : ["eduwrite", "realtime", "collaborative", "learning"],
   "dependencies"   : {
-                      "require-kernel"      : "1.0.1",
+                      "require-kernel"      : "1.0.3",
                       "socket.io"           : "0.8.7",
                       "ueberDB"             : "0.1.7",
                       "async"               : "0.1.15",
@@ -18,7 +18,8 @@
                       "jade"                : "0.20.0",
                       "mysql"               : "0.9.5",
                       "jshashes"            : "0.1.3b",
-                      "bcrypt"              : "0.5.0"
+                      "bcrypt"              : "0.5.0",
+                      "less"                : "1.2.1"
                      },
   "devDependencies": {
                       "jshint"  : "*",
