@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var database = "eduwrite"
 var client = mysql.createClient({
+  host: '107.21.246.180',
   user: 'eduwrite',
   password: 'cs428cs429',
 });

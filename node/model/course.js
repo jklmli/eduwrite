@@ -6,7 +6,7 @@ exports.get = function(id,cb){
     client.get(table).where("id='"+id+"'").limit(1).execute(cb);
 }
 
-exports.get_by_id = get; //for Janaki
+//exports.get_by_id = get; //for Janaki
 
 exports.get_by_school = function(school,cb){
     client.get(table).where("school='"+school+"'").execute(cb);
