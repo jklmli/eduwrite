@@ -1,17 +1,17 @@
-.sidebar-nav > .sidebar-left {
-    border-right: 1px gray solid;
-    padding: 10px;
+.sidebar-left {
+    margin-left: 10px;
+    float:left;
+    width: 15%;
 }
-
-/*.content {*/
-    /*margin-right: -1px;*/
-/*}*/
 
 .sidebar-right {
-    border-left: 1px gray solid;
-    padding: 10px;
+    margin-right: 10px;
+    float:right;
+    width: 15%;
 }
 
-.container {
-    /*width: 100%;*/
+.content {
+    /* Could be used when we impelement drag & drop */
+    border-left: 1px lightgray solid;
+    border-right: 1px lightgray solid;
 }

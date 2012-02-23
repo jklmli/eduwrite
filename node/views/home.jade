@@ -2,21 +2,60 @@ extends layout
 
 block append head
   link(rel='stylesheet', href='/static/css/home.css')
+  script(type='text/javascript', src='http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js')
 
 block content
   .container-fluid
     .row-fluid
-      .span2.sidebar-left.well
-        ul.nav.nav-pills.pull-left.nav-header
-          li.active
-            <a>Classes</a>
-          li
-            <a>Your Notes</a>
-      .span10
+      .span2
+        .tabbable.well
+
+          ul.nav.nav-tabs.pull-left
+            li.active
+              a(data-toggle='tab', href='#1') All Notes
+            li
+              a(data-toggle='tab', href='#2') Your Notes
+          br
+          br
+          br
+
+          .tab-content
+
+            .tab-pane#1.active
+
+              ul
+                li class1
+                ul
+                  li lecture 1
+                  li lecture 2
+                  li lecture 3
+                  ul
+                    li user1
+                    li user2
+                    li user3
+                    li user4
+                  li lecture 4
+                li class2
+
+            .tab-pane#2
+
+              ul
+                li note1
+                li note2
+                li note3
+                li note4
+                li note5
+
+      .span8
         .content
           center.hero-unit
             h1=title
             p
               Put some content here..
-      .span2.offset1.sidebar-right
-        p dklmsdasmkl
+
+      .span2
+        .well
+          .form-search
+            input.input-small.search-query(type='text', name='query', placeholder='Search')
+            &nbsp;&nbsp;
+            button.btn(type='submit') Search
