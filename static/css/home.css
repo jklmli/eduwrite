@@ -1,0 +1,17 @@
+.sidebar-nav > .sidebar-left {
+    border-right: 1px gray solid;
+    padding: 10px;
+}
+
+/*.content {*/
+    /*margin-right: -1px;*/
+/*}*/
+
+.sidebar-right {
+    border-left: 1px gray solid;
+    padding: 10px;
+}
+
+.container {
+    /*width: 100%;*/
+}
