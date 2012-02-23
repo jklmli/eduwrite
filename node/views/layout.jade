@@ -14,7 +14,7 @@ html(lang="en")
 				text-align: justify;
 			}
 			.sidebar-nav {
-				padding:9px 0;
+			padding:9px 0;
 			}
 		link(rel='stylesheet', href='/static/bootstrap/bootstrap/css/bootstrap-responsive.css')
 
@@ -28,7 +28,7 @@ html(lang="en")
 		block titlebar
 			.navbar.navbar-fixed-top
 				.navbar-inner
-					.container
+					.container-fluid
 						a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
 							span.icon-bar
 							span.icon-bar
@@ -56,5 +56,4 @@ html(lang="en")
 				.alert.alert-info
 					=info
 
-		.container
-			block content
+		block content
