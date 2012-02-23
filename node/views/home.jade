@@ -1,26 +1,22 @@
 extends layout
 
+block append head
+  link(rel='stylesheet', href='/static/css/home.css')
+
 block content
-	.row
-		.span11.offset1
-			.hero-unit
-				h1=title
-				p
-					Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-				p
-					a.btn.primary.large(href="/") Register
-			.row
-				.span6
-					h2 Share
-					p
-						Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-					p
-						a.btn(href="/")
-							view details &raquo;
-				.span5
-					h2 Edit
-					p
-						Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-					p
-						a.btn(href="/")
-							Edit Now
+  .container-fluid
+    .row-fluid
+      .span2.sidebar-left.well
+        ul.nav.nav-pills.pull-left.nav-header
+          li.active
+            <a>Classes</a>
+          li
+            <a>Your Notes</a>
+      .span10
+        .content
+          center.hero-unit
+            h1=title
+            p
+              Put some content here..
+      .span2.offset1.sidebar-right
+        p dklmsdasmkl
