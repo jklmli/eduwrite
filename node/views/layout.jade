@@ -36,11 +36,8 @@ html(lang="en")
 						a.brand(href="/") EduWrite
 						.nav-collapse
 							ul.nav
-								-if(loggedIn)
 									li
-										a(href="/") Notes
-									li
-										a(href="/") About
+										a(href="/about/") About
 							p.navbar-text.pull-right
 								-if(loggedIn)
 									| Welcome, #{user.email}

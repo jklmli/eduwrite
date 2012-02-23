@@ -397,6 +397,7 @@ async.waterfall([
 
         // Page routes
         app.get('/', pageRoutes.index);
+        app.get('/about', pageRoutes.about);
         app.get('/register', pageRoutes.register);
         app.get('/login', pageRoutes.login);
         app.get('/logout', pageRoutes.logout);

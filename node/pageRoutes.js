@@ -31,3 +31,7 @@ exports.logout = function(req,res){
     req.flash("success","You have been successfully logged out from the site");
     res.redirect('/');
 };
+
+exports.about = function(req,res) {
+    res.render('about', {title: 'About EduWrite'});
+};
