@@ -409,7 +409,7 @@ async.waterfall([
         app.post('/setPermissions', facadeRoutes.setPermissions);
         app.post('/addNote', facadeRoutes.addNote);
         app.post('/removeNote', facadeRoutes.removeNote);
-        app.post('/getNotesByUserId', facadeRoutes.getNoteByNoteId);
+        app.post('/getNotesByUserId', facadeRoutes.getNotesByUserId);
         app.post('/updateNote', facadeRoutes.updateNote);
         app.post('/getNotesByLectureId', facadeRoutes.getNotesByLectureId);
         app.post('/getLecturesByClassId', facadeRoutes.getLecturesByClassId);

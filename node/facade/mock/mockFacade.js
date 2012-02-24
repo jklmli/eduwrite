@@ -37,8 +37,17 @@ exports.removeNote = function removeNote(noteId) {
     // TODO: Implement me!
 };
 
-exports.getNotesByUserId = function getNoteByNoteId(noteId) {
-    // TODO: Implement me!
+exports.getNotesByUserId = function getNotesByUserId(req, res) {
+    console.log("Got here!");
+    var userId = req.body.userId;
+    res.contentType('json');
+    res.send([{
+        id: 3,
+        name: "Lecture 12"
+    }, {
+        id: 4,
+        name: "My Second Note"
+    }]);
 };
 
 exports.updateNote = function updateNote() {
