@@ -17,5 +17,11 @@ function loadUserNotes() {
 }
 
 function loadUserNotesCallback(data) {
-    console.log(data);
+    for (i in data) {
+        var note = data[i];
+        console.log(note.name);
+        var listItem = document.createElement('li');
+        listItem.innerHTML = note.name;
+        $("#user-notes").append(listItem);
+    }
 }
