@@ -36,11 +36,11 @@ exports.login = function(req,res){
         }
     })
 };
-/*
+
 exports.getNotes = function(req,res){
     var user = req.session.user;
     Note.get_by_user_id(user.id,function(e){
         console.log(e);
     });
 };
-*/
+
