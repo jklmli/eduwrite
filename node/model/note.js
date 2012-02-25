@@ -1,9 +1,14 @@
 var client = require("./database.js");
-var db = require("../db/DB.js");
-db.init(console.log("success"));
-console.log(db.db);
 var authorManager = require("../db/AuthorManager.js");
-console.log(db.db);
+var groupManager = require("../db/GroupManager.js");
+
+exports.createGroup = function(){
+        groupManager.createGroupIfNotExistsFor("-1241",function(e){
+        console.log(e);
+    });
+};
+
+
 exports.get_by_user = function(user,cb){
     get_by_user_id(user.id,cb);
 }

@@ -2,7 +2,7 @@
 var mockFacade = require('./facade/mock/mockFacade.js');
 var liveFacade = require('./facade/live/liveFacade.js');
 
-var facade = mockFacade;
+var facade = liveFacade;
 
 // Attach URL handlers for facade calls
 exports.getUser = facade.getUser;
@@ -11,6 +11,7 @@ exports.register = facade.register;
 
 exports.setPermissions = facade.setPermissions;
 
+exports.getNotes = facade.getNotes;
 exports.addNote = facade.addNote;
 exports.removeNote = facade.removeNote;
 exports.getNotesByUserId = facade.getNotesByUserId;

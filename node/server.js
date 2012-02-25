@@ -248,6 +248,7 @@ async.waterfall([
                         callback("notfound");
                         return;
                     }
+                    
 
                     hasPadAccess(req, res, function () {
                         //render the html document
@@ -420,6 +421,7 @@ async.waterfall([
         app.post('/removeUser', facadeRoutes.removeUser);
         app.post('/login', facadeRoutes.login);
         app.post('/logout', facadeRoutes.logout);
+        app.get('/notes/',facadeRoutes.getNotes);
 
         // Add dynamic helpers
         app.dynamicHelpers({
