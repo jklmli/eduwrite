@@ -26,6 +26,7 @@ var os = require("os");
 var socketio = require('socket.io');
 var fs = require('fs');
 var settings = require('./utils/Settings');
+//var api = require('./db/API');
 var db = require('./db/DB');
 var async = require('async');
 var express = require('express');
@@ -41,9 +42,6 @@ var padManager;
 var securityManager;
 var socketIORouter;
 
-// The EduWrite routes
-var facadeRoutes = require('./facadeRoutes.js');
-var pageRoutes = require('./pageRoutes.js');
 
 // Parse application port from parameter
 var userPort = null;
@@ -122,6 +120,10 @@ async.waterfall([
         padManager = require('./db/PadManager');
         securityManager = require('./db/SecurityManager');
         socketIORouter = require("./handler/SocketIORouter");
+
+        // The EduWrite routes (need an initialized DB)
+        facadeRoutes = require('./facadeRoutes.js');
+        pageRoutes = require('./pageRoutes.js');
 
         //install logging
         var httpLogger = log4js.getLogger("http");
