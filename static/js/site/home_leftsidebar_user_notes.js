@@ -82,13 +82,13 @@ function loadLecturesByClassIdCallback(data){
         $.post("/getNotesByLectureId", {
                 lectureId: data[i].id
             },
-            loadNotesByClassIdCallback,
+            loadNotesByLectureIdCallback,
             "json"
         );
     }
 }
 
-function loadNotesByClassIdCallback(data){
+function loadNotesByLectureIdCallback(data){
     console.log(data);
     var note;
     for (i in data){
@@ -116,7 +116,7 @@ function loadUserNotesCallback(data) {
         var noteLocation = document.createElement('a');
         console.log(note.location);
         noteLocation.href = note.location;
-        noteLocation.innerText = note.name;
+        noteLocation.innerText = note.title;
         listItem.appendChild(noteLocation);
         $("#user-notes").append(listItem);
     }

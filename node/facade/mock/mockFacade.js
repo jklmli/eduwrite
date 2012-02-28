@@ -42,11 +42,11 @@ exports.getNotesByUserId = function getNotesByUserId(req, res) {
     res.contentType('json');
     res.send([{
         id: 3,
-        name: "Lecture 12",
+        title: "Lecture 12",
         location: "notes\\note5001"
     }, {
         id: 4,
-        name: "My Second Note",
+        title: "My Second Note",
         location: "notes\\note5002"
     }]);
 };
