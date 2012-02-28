@@ -110,16 +110,27 @@ function loadUserNotes() {
                 }
             },
             "plugins" : [
-                "themes", "json_data", "crrm"
+                "themes", "json_data", "crrm", "ui"
             ]
-        });
+        })
+        .bind("select_node.jstree", loadNoteIntoUserSpace)
+        // 2) if not using the UI plugin - the Anchor tags work as expected
+        //    so if the anchor has a HREF attirbute - the page will be changed
+        //    you can actually prevent the default, etc (normal jquery usage)
+        .delegate("a", "click", function (event, data) { event.preventDefault(); })
+
 }
 
 function loadUserNotesCallback(data) {
     notes = [];
     for(i in data){
         notes[i] = {data: data[i], attr: {id: "user_note" + data[i].id, href: data[i].location}};
-        
     }
     return notes;
 }
+
+function loadNoteIntoUserSpace(event, data) {
+    // `data.rslt.obj` is the jquery extended node that was clicked
+    alert(data.rslt.obj.attr("id")+ " should be loaded.");
+}
+
