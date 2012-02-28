@@ -18,6 +18,7 @@ $(document).ready(
  * this global variable.
  */
 var classes;
+var notes;
 
 /**
  * Creates a jstree with id="#notes-tree".  Once loaded, lectures and notes are added to the tree.
@@ -99,25 +100,26 @@ function loadNotesByLectureIdCallback(data){
 
 function loadUserNotes() {
 
-    var userId = 1;
-    $.post("/getNotesByUserId", {
-            userId: userId
-        },
-        loadUserNotesCallback,
-        "json"
-    );
+    $("#user-notes")
+        .jstree({
+            "json_data" : {
+                "ajax" : {
+                    "type" : "POST",
+                    "url" : "/getNotesByUserId",
+                    "success" : loadUserNotesCallback
+                }
+            },
+            "plugins" : [
+                "themes", "json_data", "crrm"
+            ]
+        });
 }
 
 function loadUserNotesCallback(data) {
-    $("#user-notes").empty();
-    for (i in data) {
-        var note = data[i];
-        var listItem = document.createElement('li');
-        var noteLocation = document.createElement('a');
-        console.log(note.location);
-        noteLocation.href = note.location;
-        noteLocation.innerText = note.title;
-        listItem.appendChild(noteLocation);
-        $("#user-notes").append(listItem);
+    notes = [];
+    for(i in data){
+        notes[i] = {data: data[i], attr: {id: "user_note" + data[i].id, href: data[i].location}};
+        
     }
+    return notes;
 }
