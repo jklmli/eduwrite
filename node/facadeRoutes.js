@@ -2,7 +2,7 @@
 var mockFacade = require('./facade/mock/mockFacade.js');
 var liveFacade = require('./facade/live/liveFacade.js');
 
-var facade = liveFacade;
+var facade = mockFacade;
 
 // Attach URL handlers for facade calls
 exports.getUser = facade.getUser;

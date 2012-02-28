@@ -4,6 +4,7 @@ block append head
   link(rel='stylesheet', href='/static/css/home.css')
   script(type='text/javascript', src='http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js')
   script(type='text/javascript', src='static/js/site/home_leftsidebar_user_notes.js')
+  script(type='text/javascript', src='static/jstree/jquery.jstree.js')
 
 block content
   .container-fluid
@@ -16,27 +17,12 @@ block content
               a(data-toggle='tab', href='#1') All Notes
             li
               a(data-toggle='tab', href='#2') Your Notes
-          br
-          br
-          br
 
           .tab-content
 
             .tab-pane#1.active
 
-              ul
-                li class1
-                ul
-                  li lecture 1
-                  li lecture 2
-                  li lecture 3
-                  ul
-                    li user1
-                    li user2
-                    li user3
-                    li user4
-                  li lecture 4
-                li class2
+              #notes-tree
 
             .tab-pane#2
 
