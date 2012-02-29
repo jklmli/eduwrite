@@ -39,8 +39,8 @@ exports.login = function(req,res){
 
 exports.getNotes = function(req,res){
     var user = req.session.user;
-    Note.get_by_user_id("1","name",function(err,author){
-        console.log(author);
+    Note.get_by_user(user,function(err,notes){
+        console.log(notes);
     });
 };
 
