@@ -1,0 +1,17 @@
+.sidebar-left {
+    margin-left: 10px;
+    float:left;
+    width: 15%;
+}
+
+.sidebar-right {
+    margin-right: 10px;
+    float:right;
+    width: 15%;
+}
+
+.content {
+    /* Could be used when we impelement drag & drop */
+    border-left: 1px lightgray solid;
+    border-right: 1px lightgray solid;
+}

@@ -7,9 +7,16 @@ html(lang="en")
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 
 		link(rel='stylesheet', href='/static/bootstrap/bootstrap/css/bootstrap.css')
+		style(type="text/css")
+			body {
+				padding-top:60px;
+				padding-bottom:40px;
+				text-align: justify;
+			}
+			.sidebar-nav {
+			padding:9px 0;
+			}
 		link(rel='stylesheet', href='/static/bootstrap/bootstrap/css/bootstrap-responsive.css')
-
-		link(rel='stylesheet', href='/static/css/style.css')
 
 		script(type='text/javascript', src='/static/jquery/dist/jquery.js')
 		script(type='text/javascript', src='/static/bootstrap/js/bootstrap-collapse.js')
@@ -19,9 +26,9 @@ html(lang="en")
 	body
 
 		block titlebar
-			.navbar.navbar-relative-top
+			.navbar.navbar-fixed-top
 				.navbar-inner
-					.container
+					.container-fluid
 						a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
 							span.icon-bar
 							span.icon-bar
@@ -29,11 +36,8 @@ html(lang="en")
 						a.brand(href="/") EduWrite
 						.nav-collapse
 							ul.nav
-								-if(loggedIn)
 									li
-										a(href="/") Notes
-									li
-										a(href="/") About
+										a(href="/about/") About
 							p.navbar-text.pull-right
 								-if(loggedIn)
 									| Welcome, #{user.email}
@@ -52,5 +56,4 @@ html(lang="en")
 				.alert.alert-info
 					=info
 
-		.container
-			block content
+		block content

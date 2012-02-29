@@ -11,6 +11,7 @@ exports.register = facade.register;
 
 exports.setPermissions = facade.setPermissions;
 
+exports.getNotes = facade.getNotes;
 exports.addNote = facade.addNote;
 exports.removeNote = facade.removeNote;
 exports.getNotesByUserId = facade.getNotesByUserId;

@@ -1,19 +1,17 @@
 var client = require("./database.js");
-var db = require("../db/DB.js");
-db.init(console.log("success"));
-console.log(db.db);
-var authorManager = require("../db/AuthorManager.js");
-console.log(db.db);
+var api = require("../db/API.js");
+
+exports.createGroup = function(){
+        api.createGroupIfNotExistsFor("-1241",function(e){
+        console.log(e);
+    });
+};
+
+
 exports.get_by_user = function(user,cb){
-    get_by_user_id(user.id,cb);
+    get_by_user_id(user.id,user.name,cb);
 }
 
-exports.get_by_user_id = get_by_user_id = function(user_id,cb){
-    authorManager.createAuthorIfNotExistsFor(user_id,cb);
+exports.get_by_user_id = get_by_user_id = function(user_id,user_name,cb){
+    api.createAuthorIfNotExistsFor(user_id,"user_name",cb);
 }
-
-
-var cb = function(e){
-    console.log(e);   
-}
-

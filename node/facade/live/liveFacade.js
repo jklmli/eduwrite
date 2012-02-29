@@ -1,4 +1,5 @@
 var User = require('../../model/user.js');
+var Note = require('../../model/note.js');
 /*
  * GET home page.
  */
@@ -21,7 +22,6 @@ exports.register = function(req,res){
 };
 
 exports.login = function(req,res){
-    console.log(req.body);
     var email = req.body.email;
     var password = req.body.password;
     User.get_by_email_and_password(email,password,function(e){
@@ -36,3 +36,14 @@ exports.login = function(req,res){
         }
     })
 };
+
+exports.getNotes = function(req,res){
+    var user = req.session.user;
+    Note.get_by_user_id("1","name",function(err,author){
+        console.log(author);
+    });
+};
+
+exports.addNote = function(req,res){
+};
+

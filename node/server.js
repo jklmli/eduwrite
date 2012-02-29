@@ -26,6 +26,7 @@ var os = require("os");
 var socketio = require('socket.io');
 var fs = require('fs');
 var settings = require('./utils/Settings');
+//var api = require('./db/API');
 var db = require('./db/DB');
 var async = require('async');
 var express = require('express');
@@ -41,9 +42,6 @@ var padManager;
 var securityManager;
 var socketIORouter;
 
-// The EduWrite routes
-var facadeRoutes = require('./facadeRoutes.js');
-var pageRoutes = require('./pageRoutes.js');
 
 // Parse application port from parameter
 var userPort = null;
@@ -122,6 +120,10 @@ async.waterfall([
         padManager = require('./db/PadManager');
         securityManager = require('./db/SecurityManager');
         socketIORouter = require("./handler/SocketIORouter");
+
+        // The EduWrite routes (need an initialized DB)
+        facadeRoutes = require('./facadeRoutes.js');
+        pageRoutes = require('./pageRoutes.js');
 
         //install logging
         var httpLogger = log4js.getLogger("http");
@@ -248,6 +250,7 @@ async.waterfall([
                         callback("notfound");
                         return;
                     }
+                    
 
                     hasPadAccess(req, res, function () {
                         //render the html document
@@ -396,7 +399,8 @@ async.waterfall([
         });
 
         // Page routes
-        app.get('/', pageRoutes.index);
+        app.get('/', pageRoutes.home);
+        app.get('/about', pageRoutes.about);
         app.get('/register', pageRoutes.register);
         app.get('/login', pageRoutes.login);
         app.get('/logout', pageRoutes.logout);
@@ -406,9 +410,11 @@ async.waterfall([
         app.post('/closeAccount', facadeRoutes.closeAccount);
         app.post('/register', facadeRoutes.register);
         app.post('/setPermissions', facadeRoutes.setPermissions);
+        app.get('/notes/add', facadeRoutes.addNote);
         app.post('/addNote', facadeRoutes.addNote);
         app.post('/removeNote', facadeRoutes.removeNote);
-        app.post('/getNotesByUserId', facadeRoutes.getNoteByNoteId);
+        app.post('/getNotesByUserId', facadeRoutes.getNotesByUserId);
+        app.get('/notes',facadeRoutes.getNotesByUserId);
         app.post('/updateNote', facadeRoutes.updateNote);
         app.post('/getNotesByLectureId', facadeRoutes.getNotesByLectureId);
         app.post('/getLecturesByClassId', facadeRoutes.getLecturesByClassId);
@@ -419,6 +425,7 @@ async.waterfall([
         app.post('/removeUser', facadeRoutes.removeUser);
         app.post('/login', facadeRoutes.login);
         app.post('/logout', facadeRoutes.logout);
+        app.get('/notes/',facadeRoutes.getNotes);
 
         // Add dynamic helpers
         app.dynamicHelpers({
