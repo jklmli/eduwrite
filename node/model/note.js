@@ -1,4 +1,5 @@
 var client = require("./database.js");
+var user = require('./user.js');
 var api = require("../db/API.js");
 
 exports.createGroup = function(){
@@ -8,16 +9,24 @@ exports.createGroup = function(){
 };
 
 exports.get_by_user = function(user,cb){
-    get_by_user_id(user.id,user.name,cb);
+    if(user.aid==null){
+        api.createAuthorIfNotExistsFor(user.id,user.name,function(err,response){
+            if(err)
+                throw err;
+            aid = response.authorID;
+            //TODO: update user info, and put authorID
+            get_by_author_id(aid,cb);
+        });
+    } else {
+        get_by_author_id(user.aid,cb);
+    }
 }
 
-exports.get_by_user_id = get_by_user_id = function(user_id,user_name,cb){
-    //get list of sessions from author
-    api.createAuthorIfNotExistsFor(user_id,"default_name",function(err,author){
-        if(err)
-            throw err;
-        cb(author);   
-    });
+exports.get_by_author_id = get_by_author_id = function(aid,name,cb){
+    //get sessions by user
+    //
+    
+
 }
 
 exports.get_by_lecture = function(lecture,cb){
@@ -28,7 +37,14 @@ exports.get_by_lecture_id = get_by_lecture_id = function(lecture_id,cb){
     api.createGroupIfNotExistsFor(lecture_id,function(err,group){
         if(err)
             throw err;
-        cb(group);
+        console.log(group);
     });
 }
 
+exports.setPassword = function(padID, password,cb){
+    api.setPassword(padID,password,function(err,response){
+        if(err)
+            throw err;
+        cb(response);
+    })   
+}
