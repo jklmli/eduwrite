@@ -66,6 +66,21 @@ Client.prototype.insert = function(table, obj,cb){
     client.query(q,values,returnResult(cb));
 }
 
+/*
+ *  Helper method to update existing data in the database
+ */
+ Client.prototype.update = function(table, obj, cb) {
+	 var q = "update" + table + " set ";
+	 var values = [];
+	 for(var key in obj) {
+		query += key + " = ?, ";
+		values.push(obj[key]);
+	 }
+	 //remove the dangling comma
+	 q = q.substring(0, q.length-1);
+	 client.query(q, values, returnResult(cb));
+ }
+
 
 /*
  * General function that will feed eturn data from database

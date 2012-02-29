@@ -55,3 +55,10 @@ exports.insert = function(user,cb){
     user.password = encrypt(user.password);
     client.insert(table,user,cb);
 }
+
+/*
+ *  Update a user's stored info in the database
+ */
+exports.update = function(user, cb) {
+	client.update(table, user, cb).where("id = " + user);
+}

@@ -18,9 +18,6 @@ describe("User get", function(){
 });
 
 
-
-
-
 describe("User get_by_email", function(){
 	it("should return empty array when email not found", function(done){
 		user.get_by_email(-1, function(e){
