@@ -410,9 +410,11 @@ async.waterfall([
         app.post('/closeAccount', facadeRoutes.closeAccount);
         app.post('/register', facadeRoutes.register);
         app.post('/setPermissions', facadeRoutes.setPermissions);
+        app.get('/notes/add', facadeRoutes.addNote);
         app.post('/addNote', facadeRoutes.addNote);
         app.post('/removeNote', facadeRoutes.removeNote);
         app.post('/getNotesByUserId', facadeRoutes.getNotesByUserId);
+        app.get('/notes',facadeRoutes.getNotesByUserId);
         app.post('/updateNote', facadeRoutes.updateNote);
         app.post('/getNotesByLectureId', facadeRoutes.getNotesByLectureId);
         app.post('/getLecturesByClassId', facadeRoutes.getLecturesByClassId);
