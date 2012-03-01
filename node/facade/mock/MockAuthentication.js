@@ -7,7 +7,7 @@ var loggedIn = {};
 /**
  * Register a new user account (just logs them in)
  */
-exports.register = function register(email, password) {
+exports.register = function register(req, res) {
   exports.login(req, res);
 };
 
