@@ -1,5 +1,5 @@
-var client = require("./database.js");
-var user = require('./user.js');
+var client = require("./Database.js");
+var user = require('./User.js');
 var api = require("../db/API.js");
 
 /*

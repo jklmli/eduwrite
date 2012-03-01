@@ -1,4 +1,4 @@
-var client = require("./database.js").client;
+var client = require("./Database.js").client;
 var table = "courses";
 
 

@@ -1,5 +1,5 @@
-var User = require('../../model/user.js');
-var Note = require('../../model/note.js');
+var User = require('../../model/User.js');
+var Note = require('../../model/Note.js');
 /*
  * GET home page.
  */
