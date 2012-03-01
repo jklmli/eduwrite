@@ -1,40 +1,56 @@
 var facade = require('./FacadeRoutes.js');
 
 /**
- * Displays the homepage if the user is logged in, the login page otherwise.
+ * Displays the homepage if the user is logged in, redirects to the login page otherwise.
  */
-exports.home = function(req, res){
+exports.home = function home(request, response) {
 
-    // Show index if logged in, redirect otherwise
-    if(req && req.session.user) {
-        res.render('home', {
-            title: 'EduWrite',
-            loggedIn: true
-        });
+  // Show index if logged in, redirect otherwise
+  if (request && request.session.user) {
 
-    } else {
-        res.redirect('/login/');
-    }
-};
-
-exports.register = function(req,res){
-    res.render('users/register', {
-        title: 'Register for EduWrite'
+    // Render the homepage template
+    response.render('home', {
+      title:   'EduWrite',
+      loggedIn:true
     });
+
+  } else {
+    response.redirect('/login/');
+  }
 };
 
-exports.login = function(req,res){
-    res.render('users/login', {
-        title: 'Login to EduWrite'
-    });
+/**
+ * Display the 'about' page with general information about EduWrite
+ */
+exports.about = function about(request, response) {
+  response.render('about', {
+    title:'About EduWrite'
+  });
 };
 
-exports.logout = function(req,res){
-    req.session.user = null;
-    req.flash("success","You have been successfully logged out from the site");
-    res.redirect('/');
+/**
+ * Display the user registration page
+ */
+exports.register = function register(request, response) {
+  response.render('users/register', {
+    title:'Register for EduWrite'
+  });
 };
 
-exports.about = function(req,res) {
-    res.render('about', {title: 'About EduWrite'});
+/**
+ * Display the user login page
+ */
+exports.login = function login(request, response) {
+  response.render('users/login', {
+    title:'Login to EduWrite'
+  });
+};
+
+/**
+ * Display the user logout page
+ */
+exports.logout = function logout(request, response) {
+  request.session.user = null;
+  request.flash("success", "You have been successfully logged out from the site");
+  response.redirect('/');
 };
