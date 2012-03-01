@@ -38,13 +38,14 @@ function random() {
 function runTests() {
 
   var currentTest = "BLARGH";
+
   function print(testName) {
     currentTest = testName;
   }
 
   function assertTest(code, optMsg) {
-    describe("EasySync: " + currentTest, function() {
-      it("should return the original data", function(done) {
+    describe("EasySync: " + currentTest, function () {
+      it("should return the original data", function (done) {
         assert.equal(eval(code), true);
         done();
       });
@@ -55,7 +56,7 @@ function runTests() {
     if ((typeof v) == "string") {
       return '"' + v.replace(/[\\\"]/g, '\\$1').replace(/\n/g, '\\n') + '"';
     } else
-    return JSON.stringify(v);
+      return JSON.stringify(v);
   }
 
   function assertEqualArrays(a, b) {
@@ -246,7 +247,7 @@ function runTests() {
     print("applyToAttribution#" + testId);
     var p = poolOrArray(attribs);
     var result = Changeset.applyToAttribution(
-    Changeset.checkRep(cs), inAttr, p);
+      Changeset.checkRep(cs), inAttr, p);
     assertEqualStrings(outCorrect, result);
   }
 
@@ -303,7 +304,7 @@ function runTests() {
     var p = poolOrArray(attribs);
     var alines2 = Array.prototype.slice.call(alines);
     var result = Changeset.mutateAttributionLines(
-    Changeset.checkRep(cs), alines2, p);
+      Changeset.checkRep(cs), alines2, p);
     assertEqualArrays(outCorrect, alines2);
 
     print("runMutateAttributionTest#" + testId + ".applyToAttribution");
@@ -311,6 +312,7 @@ function runTests() {
     function removeQuestionMarks(a) {
       return a.replace(/\?/g, '');
     }
+
     var inMerged = Changeset.joinAttributionLines(alines.map(removeQuestionMarks));
     var correctMerged = Changeset.joinAttributionLines(outCorrect.map(removeQuestionMarks));
     var mergedResult = Changeset.applyToAttribution(cs, inMerged, p);
@@ -390,91 +392,91 @@ function runTests() {
   function randomStringOperation(numCharsLeft, rand) {
     var result;
     switch (rand.nextInt(9)) {
-    case 0:
+      case 0:
       {
         // insert char
         result = {
-          insert: randomInlineString(1, rand)
+          insert:randomInlineString(1, rand)
         };
         break;
       }
-    case 1:
+      case 1:
       {
         // delete char
         result = {
-          remove: 1
+          remove:1
         };
         break;
       }
-    case 2:
+      case 2:
       {
         // skip char
         result = {
-          skip: 1
+          skip:1
         };
         break;
       }
-    case 3:
+      case 3:
       {
         // insert small
         result = {
-          insert: randomInlineString(rand.nextInt(4) + 1, rand)
+          insert:randomInlineString(rand.nextInt(4) + 1, rand)
         };
         break;
       }
-    case 4:
+      case 4:
       {
         // delete small
         result = {
-          remove: rand.nextInt(4) + 1
+          remove:rand.nextInt(4) + 1
         };
         break;
       }
-    case 5:
+      case 5:
       {
         // skip small
         result = {
-          skip: rand.nextInt(4) + 1
+          skip:rand.nextInt(4) + 1
         };
         break;
       }
-    case 6:
+      case 6:
       {
         // insert multiline;
         result = {
-          insert: randomMultiline(5, 20, rand)
+          insert:randomMultiline(5, 20, rand)
         };
         break;
       }
-    case 7:
+      case 7:
       {
         // delete multiline
         result = {
-          remove: Math.round(numCharsLeft * rand.nextDouble() * rand.nextDouble())
+          remove:Math.round(numCharsLeft * rand.nextDouble() * rand.nextDouble())
         };
         break;
       }
-    case 8:
+      case 8:
       {
         // skip multiline
         result = {
-          skip: Math.round(numCharsLeft * rand.nextDouble() * rand.nextDouble())
+          skip:Math.round(numCharsLeft * rand.nextDouble() * rand.nextDouble())
         };
         break;
       }
-    case 9:
+      case 9:
       {
         // delete to end
         result = {
-          remove: numCharsLeft
+          remove:numCharsLeft
         };
         break;
       }
-    case 10:
+      case 10:
       {
         // skip to end
         result = {
-          skip: numCharsLeft
+          skip:numCharsLeft
         };
         break;
       }
@@ -768,36 +770,36 @@ function runTests() {
   }
 
   testAppendATextToAssembler(1, {
-    text: "\n",
-    attribs: "|1+1"
+    text:   "\n",
+    attribs:"|1+1"
   }, "");
   testAppendATextToAssembler(2, {
-    text: "\n\n",
-    attribs: "|2+2"
+    text:   "\n\n",
+    attribs:"|2+2"
   }, "|1+1");
   testAppendATextToAssembler(3, {
-    text: "\n\n",
-    attribs: "*x|2+2"
+    text:   "\n\n",
+    attribs:"*x|2+2"
   }, "*x|1+1");
   testAppendATextToAssembler(4, {
-    text: "\n\n",
-    attribs: "*x|1+1|1+1"
+    text:   "\n\n",
+    attribs:"*x|1+1|1+1"
   }, "*x|1+1");
   testAppendATextToAssembler(5, {
-    text: "foo\n",
-    attribs: "|1+4"
+    text:   "foo\n",
+    attribs:"|1+4"
   }, "+3");
   testAppendATextToAssembler(6, {
-    text: "\nfoo\n",
-    attribs: "|2+5"
+    text:   "\nfoo\n",
+    attribs:"|2+5"
   }, "|1+1+3");
   testAppendATextToAssembler(7, {
-    text: "\nfoo\n",
-    attribs: "*x|2+5"
+    text:   "\nfoo\n",
+    attribs:"*x|2+5"
   }, "*x|1+1*x+3");
   testAppendATextToAssembler(8, {
-    text: "\n\n\nfoo\n",
-    attribs: "|2+2*x|2+5"
+    text:   "\n\n\nfoo\n",
+    attribs:"|2+2*x|2+5"
   }, "|2+2*x|1+1*x+3");
 
   function testMakeAttribsString(testId, pool, opcode, attribs, correctString) {
