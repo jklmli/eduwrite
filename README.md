@@ -139,7 +139,7 @@ Specifically:
 <li><code>node/facade</code> contains the facades (live -- touches the database, and mock -- returns static data)
 </ul>
 
-The mock facade is exposed to the front end by default. To change this for deployment or testing the live facade, change <code>facade</code> in <code>node/facadeRoutes.js</code>.
+The mock facade is exposed to the front end by default. To change this for deployment or testing the live facade, change <code>facade</code> in <code>node/FacadeRoutes.js</code>.
 
 # Team Division
 <table>

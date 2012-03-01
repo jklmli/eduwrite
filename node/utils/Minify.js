@@ -30,7 +30,7 @@ var path = require('path');
 var Buffer = require('buffer').Buffer;
 var zlib = require('zlib');
 var RequireKernel = require('require-kernel');
-var server = require('../server');
+var server = require('../Server');
 var os = require('os');
 
 var ROOT_DIR = path.normalize(__dirname + "/../" );

@@ -128,8 +128,8 @@ async.waterfall([
     socketIORouter = require('./handler/SocketIORouter');
 
 // The EduWrite routes (need an initialized DB)
-    facadeRoutes = require('./facadeRoutes.js');
-    pageRoutes = require('./pageRoutes.js');
+    facadeRoutes = require('./FacadeRoutes');
+    pageRoutes = require('./PageRoutes');
 
 //install logging
     var httpLogger = log4js.getLogger('http');

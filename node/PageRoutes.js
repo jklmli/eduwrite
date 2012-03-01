@@ -1,4 +1,4 @@
-var facade = require('./facadeRoutes.js');
+var facade = require('./FacadeRoutes.js');
 
 /**
  * Displays the homepage if the user is logged in, the login page otherwise.
