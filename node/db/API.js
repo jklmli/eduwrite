@@ -19,7 +19,7 @@
  */
 
 var ERR = require("async-stacktrace");
-var customError = require("../utils/customError");
+var customError = require("../utils/CustomError");
 var padManager = require("./PadManager");
 var padMessageHandler = require("../handler/PadMessageHandler");
 var readOnlyManager = require("./ReadOnlyManager");

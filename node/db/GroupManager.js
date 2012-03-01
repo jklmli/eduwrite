@@ -20,7 +20,7 @@
  
 var CommonCode = require('../utils/common_code');
 var ERR = require("async-stacktrace");
-var customError = require("../utils/customError");
+var customError = require("../utils/CustomError");
 var randomString = CommonCode.require('/pad_utils').randomString;
 var db = require("./DB").db;
 var async = require("async");
