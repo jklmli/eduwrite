@@ -28,47 +28,40 @@ var randomString = CommonCode.require('/pad_utils').randomString;
  * returns a read only id for a pad
  * @param {String} padId the id of the pad
  */
-exports.getReadOnlyId = function (padId, callback)
-{  
+exports.getReadOnlyId = function (padId, callback) {
   var readOnlyId;
-  
+
   async.waterfall([
     //check if there is a pad2readonly entry
-    function(callback)
-    {
+    function (callback) {
       db.get("pad2readonly:" + padId, callback);
     },
-    function(dbReadOnlyId, callback)
-    {
+    function (dbReadOnlyId, callback) {
       //there is no readOnly Entry in the database, let's create one
-      if(dbReadOnlyId == null)
-      {
+      if (dbReadOnlyId == null) {
         readOnlyId = "r." + randomString(16);
-        
+
         db.set("pad2readonly:" + padId, readOnlyId);
         db.set("readonly2pad:" + readOnlyId, padId);
       }
       //there is a readOnly Entry in the database, let's take this one
-      else
-      {
+      else {
         readOnlyId = dbReadOnlyId;
       }
-      
+
       callback();
     }
-  ], function(err)
-  {
-    if(ERR(err, callback)) return;
+  ], function (err) {
+    if (ERR(err, callback)) return;
     //return the results
     callback(null, readOnlyId);
   })
-}
+};
 
 /**
  * returns a the padId for a read only id
  * @param {String} readOnlyId read only id
  */
-exports.getPadId = function(readOnlyId, callback)
-{
+exports.getPadId = function (readOnlyId, callback) {
   db.get("readonly2pad:" + readOnlyId, callback);
-}
+};

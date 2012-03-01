@@ -17,7 +17,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 var CommonCode = require('../utils/CommonCode');
 var ERR = require("async-stacktrace");
 var customError = require("../utils/CustomError");
@@ -26,342 +26,286 @@ var db = require("./DB").db;
 var async = require("async");
 var groupMangager = require("./GroupManager");
 var authorMangager = require("./AuthorManager");
- 
-exports.doesSessionExist = function(sessionID, callback)
-{
+
+exports.doesSessionExist = function (sessionID, callback) {
   //check if the database entry of this session exists
-  db.get("session:" + sessionID, function (err, session)
-  {
-    if(ERR(err, callback)) return;
+  db.get("session:" + sessionID, function (err, session) {
+    if (ERR(err, callback)) return;
     callback(null, session != null);
   });
-}
- 
+};
+
 /**
  * Creates a new session between an author and a group
  */
-exports.createSession = function(groupID, authorID, validUntil, callback)
-{
+exports.createSession = function (groupID, authorID, validUntil, callback) {
   var sessionID;
 
   async.series([
     //check if group exists
-    function(callback)
-    {
-      groupMangager.doesGroupExist(groupID, function(err, exists)
-      {
-        if(ERR(err, callback)) return;
-        
+    function (callback) {
+      groupMangager.doesGroupExist(groupID, function (err, exists) {
+        if (ERR(err, callback)) return;
+
         //group does not exist
-        if(exists == false)
-        {
-          callback(new customError("groupID does not exist","apierror"));
+        if (exists == false) {
+          callback(new customError("groupID does not exist", "apierror"));
         }
         //everything is fine, continue
-        else
-        {
+        else {
           callback();
         }
       });
     },
     //check if author exists
-    function(callback)
-    {
-      authorMangager.doesAuthorExists(authorID, function(err, exists)
-      {
-        if(ERR(err, callback)) return;
-        
+    function (callback) {
+      authorMangager.doesAuthorExists(authorID, function (err, exists) {
+        if (ERR(err, callback)) return;
+
         //author does not exist
-        if(exists == false)
-        {
-          callback(new customError("authorID does not exist","apierror"));
+        if (exists == false) {
+          callback(new customError("authorID does not exist", "apierror"));
         }
         //everything is fine, continue
-        else
-        {
+        else {
           callback();
         }
       });
     },
     //check validUntil and create the session db entry
-    function(callback)
-    {
+    function (callback) {
       //check if rev is a number
-      if(typeof validUntil != "number")
-      {
+      if (typeof validUntil != "number") {
         //try to parse the number
-        if(!isNaN(parseInt(validUntil)))
-        {
+        if (!isNaN(parseInt(validUntil))) {
           validUntil = parseInt(validUntil);
         }
-        else
-        {
-          callback(new customError("validUntil is not a number","apierror"));
+        else {
+          callback(new customError("validUntil is not a number", "apierror"));
           return;
         }
       }
-      
+
       //ensure this is not a negativ number
-      if(validUntil < 0)
-      {
-        callback(new customError("validUntil is a negativ number","apierror"));
+      if (validUntil < 0) {
+        callback(new customError("validUntil is a negativ number", "apierror"));
         return;
       }
-      
+
       //ensure this is not a float value
-      if(!is_int(validUntil))
-      {
-        callback(new customError("validUntil is a float value","apierror"));
+      if (!is_int(validUntil)) {
+        callback(new customError("validUntil is a float value", "apierror"));
         return;
       }
-    
+
       //check if validUntil is in the future
-      if(Math.floor(new Date().getTime()/1000) > validUntil)
-      {
-        callback(new customError("validUntil is in the past","apierror"));
+      if (Math.floor(new Date().getTime() / 1000) > validUntil) {
+        callback(new customError("validUntil is in the past", "apierror"));
         return;
       }
-      
+
       //generate sessionID
       sessionID = "s." + randomString(16);
-      
+
       //set the session into the database
-      db.set("session:" + sessionID, {"groupID": groupID, "authorID": authorID, "validUntil": validUntil});
-      
+      db.set("session:" + sessionID, {"groupID":groupID, "authorID":authorID, "validUntil":validUntil});
+
       callback();
     },
     //set the group2sessions entry
-    function(callback)
-    {
+    function (callback) {
       //get the entry
-      db.get("group2sessions:" + groupID, function(err, group2sessions)
-      {
-        if(ERR(err, callback)) return;
-        
+      db.get("group2sessions:" + groupID, function (err, group2sessions) {
+        if (ERR(err, callback)) return;
+
         //the entry doesn't exist so far, let's create it
-        if(group2sessions == null)
-        {
-          group2sessions = {sessionIDs : {}};
+        if (group2sessions == null) {
+          group2sessions = {sessionIDs:{}};
         }
-        
+
         //add the entry for this session
         group2sessions.sessionIDs[sessionID] = 1;
-        
+
         //save the new element back
         db.set("group2sessions:" + groupID, group2sessions);
-        
+
         callback();
       });
     },
     //set the author2sessions entry
-    function(callback)
-    {
+    function (callback) {
       //get the entry
-      db.get("author2sessions:" + authorID, function(err, author2sessions)
-      {
-        if(ERR(err, callback)) return;
-        
+      db.get("author2sessions:" + authorID, function (err, author2sessions) {
+        if (ERR(err, callback)) return;
+
         //the entry doesn't exist so far, let's create it
-        if(author2sessions == null)
-        {
-          author2sessions = {sessionIDs : {}};
+        if (author2sessions == null) {
+          author2sessions = {sessionIDs:{}};
         }
-        
+
         //add the entry for this session
         author2sessions.sessionIDs[sessionID] = 1;
-        
+
         //save the new element back
         db.set("author2sessions:" + authorID, author2sessions);
-        
+
         callback();
       });
     }
-  ], function(err)
-  {
-    if(ERR(err, callback)) return;
-    
-    //return error and sessionID
-    callback(null, {sessionID: sessionID});
-  })
-}
+  ], function (err) {
+    if (ERR(err, callback)) return;
 
-exports.getSessionInfo = function(sessionID, callback)
-{
+    //return error and sessionID
+    callback(null, {sessionID:sessionID});
+  })
+};
+
+exports.getSessionInfo = function (sessionID, callback) {
   //check if the database entry of this session exists
-  db.get("session:" + sessionID, function (err, session)
-  {
-    if(ERR(err, callback)) return;
-    
+  db.get("session:" + sessionID, function (err, session) {
+    if (ERR(err, callback)) return;
+
     //session does not exists
-    if(session == null)
-    {
-      callback(new customError("sessionID does not exist","apierror"))
+    if (session == null) {
+      callback(new customError("sessionID does not exist", "apierror"))
     }
     //everything is fine, return the sessioninfos
-    else
-    {
+    else {
       callback(null, session);
     }
   });
-}
+};
 
 /**
  * Deletes a session
  */
-exports.deleteSession = function(sessionID, callback)
-{
+exports.deleteSession = function (sessionID, callback) {
   var authorID, groupID;
   var group2sessions, author2sessions;
 
   async.series([
-    function(callback)
-    {
+    function (callback) {
       //get the session entry
-      db.get("session:" + sessionID, function (err, session)
-      {
-        if(ERR(err, callback)) return;
-        
+      db.get("session:" + sessionID, function (err, session) {
+        if (ERR(err, callback)) return;
+
         //session does not exists
-        if(session == null)
-        {
-          callback(new customError("sessionID does not exist","apierror"))
+        if (session == null) {
+          callback(new customError("sessionID does not exist", "apierror"))
         }
         //everything is fine, return the sessioninfos
-        else
-        {
+        else {
           authorID = session.authorID;
           groupID = session.groupID;
-          
+
           callback();
         }
       });
     },
     //get the group2sessions entry
-    function(callback)
-    {
-      db.get("group2sessions:" + groupID, function (err, _group2sessions)
-      {
-        if(ERR(err, callback)) return;
+    function (callback) {
+      db.get("group2sessions:" + groupID, function (err, _group2sessions) {
+        if (ERR(err, callback)) return;
         group2sessions = _group2sessions;
         callback();
       });
     },
     //get the author2sessions entry
-    function(callback)
-    {
-      db.get("author2sessions:" + authorID, function (err, _author2sessions)
-      {
-        if(ERR(err, callback)) return;
+    function (callback) {
+      db.get("author2sessions:" + authorID, function (err, _author2sessions) {
+        if (ERR(err, callback)) return;
         author2sessions = _author2sessions;
         callback();
       });
     },
     //remove the values from the database
-    function(callback)
-    {
+    function (callback) {
       //remove the session
       db.remove("session:" + sessionID);
-      
+
       //remove session from group2sessions
       delete group2sessions.sessionIDs[sessionID];
       db.set("group2sessions:" + groupID, group2sessions);
-      
+
       //remove session from author2sessions
       delete author2sessions.sessionIDs[sessionID];
       db.set("author2sessions:" + authorID, author2sessions);
-      
+
       callback();
     }
-  ], function(err)
-  {
-    if(ERR(err, callback)) return;
+  ], function (err) {
+    if (ERR(err, callback)) return;
     callback();
   })
-}
+};
 
-exports.listSessionsOfGroup = function(groupID, callback)
-{
-  groupMangager.doesGroupExist(groupID, function(err, exists)
-  {
-    if(ERR(err, callback)) return;
-    
+exports.listSessionsOfGroup = function (groupID, callback) {
+  groupMangager.doesGroupExist(groupID, function (err, exists) {
+    if (ERR(err, callback)) return;
+
     //group does not exist
-    if(exists == false)
-    {
-      callback(new customError("groupID does not exist","apierror"));
+    if (exists == false) {
+      callback(new customError("groupID does not exist", "apierror"));
     }
     //everything is fine, continue
-    else
-    {
+    else {
       listSessionsWithDBKey("group2sessions:" + groupID, callback);
     }
   });
-}
+};
 
-exports.listSessionsOfAuthor = function(authorID, callback)
-{  
-  authorMangager.doesAuthorExists(authorID, function(err, exists)
-  {
-    if(ERR(err, callback)) return;
-    
+exports.listSessionsOfAuthor = function (authorID, callback) {
+  authorMangager.doesAuthorExists(authorID, function (err, exists) {
+    if (ERR(err, callback)) return;
+
     //group does not exist
-    if(exists == false)
-    {
-      callback(new customError("authorID does not exist","apierror"));
+    if (exists == false) {
+      callback(new customError("authorID does not exist", "apierror"));
     }
     //everything is fine, continue
-    else
-    {
+    else {
       listSessionsWithDBKey("author2sessions:" + authorID, callback);
     }
   });
-}
+};
 
 //this function is basicly the code listSessionsOfAuthor and listSessionsOfGroup has in common
-function listSessionsWithDBKey (dbkey, callback)
-{
+function listSessionsWithDBKey(dbkey, callback) {
   var sessions;
 
   async.series([
-    function(callback)
-    {
+    function (callback) {
+
       //get the group2sessions entry
-      db.get(dbkey, function(err, sessionObject)
-      {
-        if(ERR(err, callback)) return;
+      db.get(dbkey, function (err, sessionObject) {
+        if (ERR(err, callback)) return;
         sessions = sessionObject ? sessionObject.sessionIDs : null;
         callback();
       });
     },
-    function(callback)
-    {           
+    function (callback) {
       //collect all sessionIDs in an arrary
       var sessionIDs = [];
-      for (var i in sessions)
-      {
+      for (var i in sessions) {
         sessionIDs.push(i);
       }
-      
+
       //foreach trough the sessions and get the sessioninfos
-      async.forEach(sessionIDs, function(sessionID, callback)
-      {
-        exports.getSessionInfo(sessionID, function(err, sessionInfo)
-        {
-          if(ERR(err, callback)) return;
+      async.forEach(sessionIDs, function (sessionID, callback) {
+        exports.getSessionInfo(sessionID, function (err, sessionInfo) {
+          if (ERR(err, callback)) return;
           sessions[sessionID] = sessionInfo;
           callback();
         });
       }, callback);
     }
-  ], function(err)
-  {
-    if(ERR(err, callback)) return;
+  ], function (err) {
+    if (ERR(err, callback)) return;
     callback(null, sessions);
   });
-}
+};
 
 //checks if a number is an int
-function is_int(value)
-{ 
+function is_int(value) {
   return (parseFloat(value) == parseInt(value)) && !isNaN(value)
 }

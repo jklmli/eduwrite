@@ -17,7 +17,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 var CommonCode = require('../utils/CommonCode');
 var ERR = require("async-stacktrace");
 var customError = require("../utils/CustomError");
@@ -26,238 +26,199 @@ var db = require("./DB").db;
 var async = require("async");
 var padManager = require("./PadManager");
 var sessionManager = require("./SessionManager");
- 
-exports.deleteGroup = function(groupID, callback)
-{
+
+exports.deleteGroup = function (groupID, callback) {
   var group;
 
   async.series([
     //ensure group exists 
-    function (callback)
-    {
+    function (callback) {
       //try to get the group entry
-      db.get("group:" + groupID, function (err, _group)
-      {
-        if(ERR(err, callback)) return;
-        
+      db.get("group:" + groupID, function (err, _group) {
+        if (ERR(err, callback)) return;
+
         //group does not exist
-        if(_group == null)
-        {
-          callback(new customError("groupID does not exist","apierror"));
+        if (_group == null) {
+          callback(new customError("groupID does not exist", "apierror"));
         }
         //group exists, everything is fine
-        else
-        {
+        else {
           group = _group;
           callback();
         }
       });
     },
     //iterate trough all pads of this groups and delete them
-    function(callback)
-    {
+    function (callback) {
       //collect all padIDs in an array, that allows us to use async.forEach
       var padIDs = [];
-      for(var i in group.pads)
-      {
+      for (var i in group.pads) {
         padIDs.push(i);
       }
-      
+
       //loop trough all pads and delete them 
-      async.forEach(padIDs, function(padID, callback)
-      {
-        padManager.getPad(padID, function(err, pad)
-        {
-          if(ERR(err, callback)) return;
-          
+      async.forEach(padIDs, function (padID, callback) {
+        padManager.getPad(padID, function (err, pad) {
+          if (ERR(err, callback)) return;
+
           pad.remove(callback);
         });
       }, callback);
     },
     //iterate trough group2sessions and delete all sessions
-    function(callback)
-    {
+    function (callback) {
       //try to get the group entry
-      db.get("group2sessions:" + groupID, function (err, group2sessions)
-      {
-        if(ERR(err, callback)) return;
-        
+      db.get("group2sessions:" + groupID, function (err, group2sessions) {
+        if (ERR(err, callback)) return;
+
         //skip if there is no group2sessions entry
-        if(group2sessions == null) {callback(); return}
-        
+        if (group2sessions == null) {
+          callback();
+          return
+        }
+
         //collect all sessions in an array, that allows us to use async.forEach
         var sessions = [];
-        for(var i in group2sessions.sessionsIDs)
-        {
+        for (var i in group2sessions.sessionsIDs) {
           sessions.push(i);
         }
-        
+
         //loop trough all sessions and delete them 
-        async.forEach(sessions, function(session, callback)
-        {
+        async.forEach(sessions, function (session, callback) {
           sessionManager.deleteSession(session, callback);
         }, callback);
       });
     },
     //remove group and group2sessions entry
-    function(callback)
-    {
+    function (callback) {
       db.remove("group2sessions:" + groupID);
       db.remove("group:" + groupID);
       callback();
     }
-  ], function(err)
-  {
-    if(ERR(err, callback)) return;
+  ], function (err) {
+    if (ERR(err, callback)) return;
     callback();
   });
-}
- 
-exports.doesGroupExist = function(groupID, callback)
-{
+};
+
+exports.doesGroupExist = function (groupID, callback) {
   //try to get the group entry
-  db.get("group:" + groupID, function (err, group)
-  {
-    if(ERR(err, callback)) return;
+  db.get("group:" + groupID, function (err, group) {
+    if (ERR(err, callback)) return;
     callback(null, group != null);
   });
-}
+};
 
-exports.createGroup = function(callback)
-{
+exports.createGroup = function (callback) {
   //search for non existing groupID
   var groupID = "g." + randomString(16);
-  
-  //create the group
-  db.set("group:" + groupID, {pads: {}});
-  callback(null, {groupID: groupID});
-}
 
-exports.createGroupIfNotExistsFor = function(groupMapper, callback)
-{
+  //create the group
+  db.set("group:" + groupID, {pads:{}});
+  callback(null, {groupID:groupID});
+};
+
+exports.createGroupIfNotExistsFor = function (groupMapper, callback) {
   //ensure mapper is optional
-  if(typeof groupMapper != "string")
-  {
-    callback(new customError("groupMapper is no string","apierror"));
+  if (typeof groupMapper != "string") {
+    callback(new customError("groupMapper is no string", "apierror"));
     return;
   }
-  
-  //try to get a group for this mapper
-  db.get("mapper2group:"+groupMapper, function(err, groupID)
-  {
-     if(ERR(err, callback)) return;
-     
-     //there is no group for this mapper, let's create a group
-     if(groupID == null)
-     {
-       exports.createGroup(function(err, responseObj)
-       {
-         if(ERR(err, callback)) return;
-         
-         //create the mapper entry for this group
-         db.set("mapper2group:"+groupMapper, responseObj.groupID);
-         
-         callback(null, responseObj);
-       });
-     }
-     //there is a group for this mapper, let's return it
-     else
-     {
-       if(ERR(err, callback)) return;
-       callback(null, {groupID: groupID});
-     }
-  });
-}
 
-exports.createGroupPad = function(groupID, padName, text, callback)
-{
+  //try to get a group for this mapper
+  db.get("mapper2group:" + groupMapper, function (err, groupID) {
+    if (ERR(err, callback)) return;
+
+    //there is no group for this mapper, let's create a group
+    if (groupID == null) {
+      exports.createGroup(function (err, responseObj) {
+        if (ERR(err, callback)) return;
+
+        //create the mapper entry for this group
+        db.set("mapper2group:" + groupMapper, responseObj.groupID);
+
+        callback(null, responseObj);
+      });
+    }
+    //there is a group for this mapper, let's return it
+    else {
+      if (ERR(err, callback)) return;
+      callback(null, {groupID:groupID});
+    }
+  });
+};
+
+exports.createGroupPad = function (groupID, padName, text, callback) {
   //create the padID
   var padID = groupID + "$" + padName;
 
   async.series([
     //ensure group exists 
-    function (callback)
-    {
-      exports.doesGroupExist(groupID, function(err, exists)
-      {
-        if(ERR(err, callback)) return;
-        
+    function (callback) {
+      exports.doesGroupExist(groupID, function (err, exists) {
+        if (ERR(err, callback)) return;
+
         //group does not exist
-        if(exists == false)
-        {
-          callback(new customError("groupID does not exist","apierror"));
+        if (exists == false) {
+          callback(new customError("groupID does not exist", "apierror"));
         }
         //group exists, everything is fine
-        else
-        {
+        else {
           callback();
         }
       });
     },
     //ensure pad does not exists
-    function (callback)
-    {
-      padManager.doesPadExists(padID, function(err, exists)
-      {
-        if(ERR(err, callback)) return;
-        
+    function (callback) {
+      padManager.doesPadExists(padID, function (err, exists) {
+        if (ERR(err, callback)) return;
+
         //pad exists already
-        if(exists == true)
-        {
-          callback(new customError("padName does already exist","apierror"));
+        if (exists == true) {
+          callback(new customError("padName does already exist", "apierror"));
         }
         //pad does not exist, everything is fine
-        else
-        {
+        else {
           callback();
         }
       });
     },
     //create the pad
-    function (callback)
-    {
-      padManager.getPad(padID, text, function(err)
-      {
-        if(ERR(err, callback)) return;
+    function (callback) {
+      padManager.getPad(padID, text, function (err) {
+        if (ERR(err, callback)) return;
         callback();
       });
     },
     //create an entry in the group for this pad
-    function (callback)
-    {
+    function (callback) {
       db.setSub("group:" + groupID, ["pads", padID], 1);
       callback();
     }
-  ], function(err)
-  {
-    if(ERR(err, callback)) return;
-    callback(null, {padID: padID});
+  ], function (err) {
+    if (ERR(err, callback)) return;
+    callback(null, {padID:padID});
   });
-}
+};
 
-exports.listPads = function(groupID, callback)
-{
-  exports.doesGroupExist(groupID, function(err, exists)
-  {
-    if(ERR(err, callback)) return;
-    
+exports.listPads = function (groupID, callback) {
+  exports.doesGroupExist(groupID, function (err, exists) {
+    if (ERR(err, callback)) return;
+
     //group does not exist
-    if(exists == false)
-    {
-      callback(new customError("groupID does not exist","apierror"));
+    if (exists == false) {
+      callback(new customError("groupID does not exist", "apierror"));
     }
     //group exists, let's get the pads
-    else
-    {
-      db.getSub("group:" + groupID, ["pads"], function(err, result)
-      {
-        if(ERR(err, callback)) return;
+    else {
+      db.getSub("group:" + groupID, ["pads"], function (err, result) {
+        if (ERR(err, callback)) return;
         var pads = [];
-        for ( var padId in result ) {
+        for (var padId in result) {
           pads.push(padId);
         }
-        callback(null, {padIDs: pads});
+        callback(null, {padIDs:pads});
       });
     }
   });
-}
+};
