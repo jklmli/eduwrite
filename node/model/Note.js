@@ -16,17 +16,17 @@ exports.createGroup = function (groupID) {
 /**
  * Get pads that belongs to the user.
  */
-exports.get_by_user = function (user, callback) {
+exports.getByUser = function (user, callback) {
   if (user.aid == null) {
     api.createAuthorIfNotExistsFor(user.id, user.name, function (err, response) {
       if (err)
         throw err;
       aid = response.authorID;
       //TODO: update user info, and put authorID
-      get_by_author_id(aid, callback);
+      getByAuthorId(aid, callback);
     });
   } else {
-    get_by_author_id(user.aid, callback);
+    getByAuthorId(user.aid, callback);
   }
 };
 
@@ -34,7 +34,7 @@ exports.get_by_user = function (user, callback) {
 /**
  * Get pads that belong to the author_id of the user
  */
-exports.get_by_author_id = get_by_author_id = function (aid, name, callback) {
+exports.getByAuthorId = getByAuthorId = function getByAuthorId(aid, name, callback) {
   //TODO:get sessions by user
   //get groups that the author belongs to
   //get pads for each group
@@ -44,15 +44,15 @@ exports.get_by_author_id = get_by_author_id = function (aid, name, callback) {
 /**
  * Get pads that belongs to the lecture(group)
  */
-exports.get_by_lecture = function (lecture, callback) {
-  get_by_lecture_id(lecture.id, callback);
+exports.getByLecture = getByLecture = function getByLecture(lecture, callback) {
+  getByLectureId(lecture.id, callback);
 };
 
 
 /**
  * Get pads that belongs to the lecture_id(group_id)
  */
-exports.get_by_lecture_id = get_by_lecture_id = function (lecture_id, callback) {
+exports.getByLectureId = getByLectureId = function (lecture_id, callback) {
   api.createGroupIfNotExistsFor(lecture_id, function (error, group) {
     if (error)
       throw error;

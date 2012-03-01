@@ -37,7 +37,7 @@ exports.get = function (id, callback) {
  *  @param email     The id of the entry to grab
  *  @param callback  The callback to perform on success
  */
-exports.get_by_email = function (email, callback) {
+exports.getByEmail = function (email, callback) {
   client.get(table).where("email='" + email + "'").limit(1).execute(callback);
 };
 
@@ -56,7 +56,7 @@ exports.destroy = function (id, callback) {
  * Gets an element from a table in the database by its hashed email and password
  *  @param callback  The callback to perform on success
  */
-exports.get_by_email_and_password = function (email, password, callback) {
+exports.getByEmailAndPassword = function (email, password, callback) {
 
   client.get(table).where("email='" + email + "'").limit(1).execute(function (data) {
     if (data.length < 1) {

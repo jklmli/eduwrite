@@ -10,7 +10,7 @@ exports.register = function (req, res) {
   var password = req.body.password;
 
   // Get the user by email address
-  User.get_by_email(email, function (data) {
+  User.getByEmail(email, function (data) {
 
     // If we found a user with this email, fail, otherwise, succeed
     if (data.length > 0) {
@@ -43,7 +43,7 @@ exports.login = function (req, res) {
   var email = req.body.email;
   var password = req.body.password;
 
-  User.get_by_email_and_password(email, password, function (usersFound) {
+  User.getByEmailAndPassword(email, password, function (usersFound) {
 
     // If we couldn't find a user by this email/password, fail, otherwise, succeed
     if (usersFound.length < 1) {
@@ -67,7 +67,7 @@ exports.login = function (req, res) {
  */
 exports.getNotes = function (req, res) {
   var user = req.session.user;
-  Note.get_by_user(user, function (err, notes) {
+  Note.getByUser(user, function (err, notes) {
     console.log(notes);
   });
 };

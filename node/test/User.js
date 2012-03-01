@@ -20,7 +20,7 @@ describe("User get", function () {
 
 describe("User get_by_email", function () {
   it("should return empty array when email not found", function (done) {
-    user.get_by_email(-1, function (e) {
+    user.getByEmail(-1, function (e) {
       assert.equal(0, e.length);
       done()
     })
@@ -29,7 +29,7 @@ describe("User get_by_email", function () {
   it("should return array consisting of single user when user with the email is found", function (done) {
     var d = {email:"test1234@gmail.com", password:"1234"}
     user.insert(d, function () {
-      user.get_by_email("test1234@gmail.com", function (e) {
+      user.getByEmail("test1234@gmail.com", function (e) {
         assert.ok(e.length > 0);
         var id;
         for (var i = 0; i < e.length; i++) {

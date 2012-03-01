@@ -9,22 +9,22 @@ exports.get = function (id, cb) {
 
 //exports.get_by_id = get; //for Janaki
 
-exports.get_by_school = function (school, cb) {
+exports.getBySchool = function (school, cb) {
   client.get(table).where("school='" + school + "'").execute(cb);
 };
 
 
-exports.get_by_name = function (name, cb) {
+exports.getByName = function (name, cb) {
   client.get(table).where("name='" + name + "'").execute(cb);
 };
 
 
-exports.get_by_course_number = function (number, cb) {
+exports.getByCourseNumber = function (number, cb) {
   client.get(table).where("number='" + number + "'").execute(cb);
 };
 
 
-exports.get_by_term = function (term, cb) {
+exports.getByTerm = function (term, cb) {
   client.get(table).where("term='" + term + "'").execute(cb);
 };
 
