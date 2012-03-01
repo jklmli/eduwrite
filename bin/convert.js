@@ -120,7 +120,7 @@ function incrementPadStats()
 {
   padsDone++;
   
-  if(padsDone%100 == 0)
+  if(padsDone%100 === 0)
   {
     var averageTime = Math.round(padsDone/((new Date().getTime() - startTime)/1000));
     log(padsDone + "/" + padIDs.length + "\t" + averageTime + " pad/s")
@@ -274,7 +274,7 @@ function convertPad(padId, callback)
         function(callback)
         {
           //skip if this is no proPad
-          if(padId.indexOf("$") == -1)
+          if(padId.indexOf("$") === -1)
           {
             callback();
             return;
@@ -312,7 +312,7 @@ function convertPad(padId, callback)
         var groupID
         
         //this proID is not converted so far, do it
-        if(proID2groupID[proID] == null)
+        if(proID2groupID[proID] === null)
         {
           groupID = "g." + randomString(16);
           
@@ -345,7 +345,7 @@ function convertPad(padId, callback)
           var value = apool.numToAttrib[i][1];
           
           //skip non authors and anonymous authors
-          if(key != "author" || value == "")
+          if(key != "author" || value === "")
             continue;
             
           //generate new author values
@@ -436,7 +436,7 @@ function parsePage(array, pageStart, offsets, data, json)
     var unitLength = lengths[i];
     
     //skip empty units
-    if(unitLength == "")
+    if(unitLength === "")
       continue;
     
     //parse the number
