@@ -22,8 +22,7 @@ var Changeset = CommonCode.require("/Changeset");
 var contentcollector = CommonCode.require("/contentcollector");
 var map = CommonCode.require("/ace2_common").map;
 
-function setPadHTML(pad, html, callback)
-{
+function setPadHTML(pad, html, callback) {
   var apiLogger = log4js.getLogger("ImportHtml");
 
   // Clean the pad. This makes the rest of the code easier
@@ -43,32 +42,29 @@ function setPadHTML(pad, html, callback)
   var result = cc.finish();
   apiLogger.debug('Lines:');
   var i;
-  for (i = 0; i < result.lines.length; i += 1)
-  {
+  for (i = 0; i < result.lines.length; i += 1) {
     apiLogger.debug('Line ' + (i + 1) + ' text: ' + result.lines[i]);
     apiLogger.debug('Line ' + (i + 1) + ' attributes: ' + result.lineAttribs[i]);
   }
 
   // Get the new plain text and its attributes
-  var newText = map(result.lines, function (e) {
-    return e + '\n';
-  }).join('');
+  var newText = map(result.lines,
+    function (e) {
+      return e + '\n';
+    }).join('');
   apiLogger.debug('newText:');
   apiLogger.debug(newText);
   var newAttribs = result.lineAttribs.join('|1+1') + '|1+1';
 
-  function eachAttribRun(attribs, func /*(startInNewText, endInNewText, attribs)*/ )
-  {
+  function eachAttribRun(attribs, func /*(startInNewText, endInNewText, attribs)*/) {
     var attribsIter = Changeset.opIterator(attribs);
     var textIndex = 0;
     var newTextStart = 0;
     var newTextEnd = newText.length - 1;
-    while (attribsIter.hasNext())
-    {
+    while (attribsIter.hasNext()) {
       var op = attribsIter.next();
       var nextIndex = textIndex + op.chars;
-      if (!(nextIndex <= newTextStart || textIndex >= newTextEnd))
-      {
+      if (!(nextIndex <= newTextStart || textIndex >= newTextEnd)) {
         func(Math.max(newTextStart, textIndex), Math.min(newTextEnd, nextIndex), op.attribs);
       }
       textIndex = nextIndex;
@@ -79,8 +75,7 @@ function setPadHTML(pad, html, callback)
   var builder = Changeset.builder(1);
 
   // assemble each line into the builder
-  eachAttribRun(newAttribs, function(start, end, attribs)
-  {
+  eachAttribRun(newAttribs, function (start, end, attribs) {
     builder.insert(newText.substring(start, end), attribs);
   });
 
