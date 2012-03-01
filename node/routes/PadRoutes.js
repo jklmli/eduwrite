@@ -73,7 +73,7 @@ exports.attachPadRoutes = function attachPadRoutes(app, padManager, exportHTML, 
             html = _html;
             callback();
           });
-        });
+        }, securityManager);
       }
     ], function (err) {
 
@@ -108,7 +108,7 @@ exports.attachPadRoutes = function attachPadRoutes(app, padManager, exportHTML, 
 
     hasPadAccess(req, res, function () {
       importHandler.doImport(req, res, req.params.pad);
-    });
+    }, securityManager);
   });
 
   // serve index.html under /
