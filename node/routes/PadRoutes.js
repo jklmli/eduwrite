@@ -6,7 +6,7 @@ var settings = require('../utils/Settings.js');
 /**
  * Attach pad-specific routes
  */
-exports.attachPadRoutes = function attachPadRoutes(app, padManager, exportHTML, importHandler, exportHandler, securityManager) {
+exports.attachPadRoutes = function attachPadRoutes(app, padManager, exportHTML, importHandler, exportHandler, securityManager, readOnlyManager) {
 
   // Redirects browser to the pad's sanitized url if needed. otherwise, renders the html
   app.param('pad', function (req, res, next, padId) {
@@ -90,7 +90,7 @@ exports.attachPadRoutes = function attachPadRoutes(app, padManager, exportHTML, 
 
   //serve pad.html under /p
   app.get('/p/:pad', function (req, res, next) {
-    var filePath = path.normalize(__dirname + '/static/pad.html');
+    var filePath = path.normalize(__dirname + '/../static/pad.html');
     res.sendfile(filePath, { maxAge:exports.maxAge });
   });
 

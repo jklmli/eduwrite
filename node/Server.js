@@ -137,7 +137,7 @@ function initializeHTTPServer(callback) {
 
   // Attach routes for pads
   var padRoutes = require('./routes/PadRoutes.js');
-  padRoutes.attachPadRoutes(app, padManager, exportHTML, importHandler, exportHandler, securityManager);
+  padRoutes.attachPadRoutes(app, padManager, exportHTML, importHandler, exportHandler, securityManager, readOnlyManager);
 
   // Attach API handlers to the app
   var apiRoutes = require('./routes/APIRoutes.js');
@@ -183,7 +183,7 @@ function initializeHTTPServer(callback) {
   socketIORouter.addComponent('timeslider', timesliderMessageHandler);
 
   callback(null);
-};
+}
 
 
 /**
