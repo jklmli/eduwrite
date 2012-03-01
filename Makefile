@@ -1,4 +1,4 @@
-TEST = test/*.js
+TEST = node/test/*.js
 
 CSS = static/css/
 LESS = static/css/less/
@@ -63,8 +63,8 @@ clean-jquery:
 	@@echo "Cleaning jquery..."
 	@@cd static/jquery && make clean
 
-test:
-	@@NODE_ENV=test mocha \
+test: update-node_modules
+	@@NODE_ENV=test node_modules/mocha/bin/mocha \
 			--require should \
 			--reporter list \
 			--slow 20 \
