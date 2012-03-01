@@ -37,7 +37,7 @@ exports.db = null;
  */
 exports.init = function(callback)
 {
-  console.log("database initialized");
+  console.log("Database initialized");
   //initalize the database async
   db.init(function(err)
   {
