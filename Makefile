@@ -64,7 +64,7 @@ clean-jquery:
 	@@echo "Cleaning jquery..."
 	@@cd static/jquery && make clean
 
-test: model-tests easysync-tests
+test: easysync-tests model-tests 
 
 model-tests: update-node_modules
 	@@NODE_ENV=test node_modules/mocha/bin/mocha \
