@@ -20,7 +20,7 @@
  * limitations under the License.
  */
 
-var CommonCode = require('./utils/common_code');
+var CommonCode = require('../utils/common_code.js');
 var Changeset = CommonCode.require("/Changeset");
 var AttributePoolFactory = CommonCode.require("/AttributePoolFactory");
 
