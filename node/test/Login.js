@@ -2,7 +2,7 @@
  * Test cases for registration and login functions
  */
 
-var facade = require("../facade/live/liveFacade.js");
+var facade = require("../facade/live/LiveFacade.js");
 
 describe("register", function(){
 	it("should fail if email field is empty");
