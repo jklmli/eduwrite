@@ -25,7 +25,7 @@ pre { display:block; }
 .api .arguments li strong {  color:black; font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important; font-weight: normal !important; font-size:13px; }
 
 .configuration h3 { margin-left:-10px; color:black; font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important; font-weight: normal !important; font-size:14px; margin-top:2em; border-top:1px solid; width:780px; }
-.note { background:#ffffee; padding:10px 20px; border:1px solid #333; -moz-border-radius:5px; border-radius:5px; -webkit-border-radius:5px; margin-bottom:15px; text-align:center; font-weight:bold; }
+.note { padding:10px 20px; border:1px solid #333; -moz-border-radius:5px; border-radius:5px; -webkit-border-radius:5px; margin-bottom:15px; text-align:center; font-weight:bold; }
 
 .plugins, .demos { margin:0 auto 20px auto; }
 
