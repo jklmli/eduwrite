@@ -28,164 +28,139 @@ var formidable = require('formidable');
 var os = require("os");
 
 //load abiword only if its enabled
-if(settings.abiword != null)
+if (settings.abiword != null)
   var abiword = require("../utils/Abiword");
 
 var tempDirectory = "/tmp/";
 
 //tempDirectory changes if the operating system is windows
-if(os.type().indexOf("Windows") > -1)
-{
+if (os.type().indexOf("Windows") > -1) {
   tempDirectory = process.env.TEMP;
 }
-  
+
 /**
  * do a requested import
- */ 
-exports.doImport = function(req, res, padId)
-{
+ */
+exports.doImport = function (req, res, padId) {
   //pipe to a file
   //convert file to text via abiword
   //set text in the pad
-  
+
   var srcFile, destFile;
   var pad;
   var text;
-  
+
   async.series([
     //save the uploaded file to /tmp
-    function(callback)
-    {
+    function (callback) {
       var form = new formidable.IncomingForm();
       form.keepExtensions = true;
       form.uploadDir = tempDirectory;
-      
-      form.parse(req, function(err, fields, files) 
-      { 
+
+      form.parse(req, function (err, fields, files) {
         //the upload failed, stop at this point
-        if(err || files.file === undefined)
-        {
+        if (err || files.file === undefined) {
           console.warn("Uploading Error: " + err.stack);
           callback("uploadFailed");
         }
         //everything ok, continue
-        else 
-        {
+        else {
           //save the path of the uploaded file
           srcFile = files.file.path;
           callback();
         }
       });
     },
-    
+
     //ensure this is a file ending we know, else we change the file ending to .txt
     //this allows us to accept source code files like .c or .java
-    function(callback)
-    {
+    function (callback) {
       var fileEnding = srcFile.split(".")[1].toLowerCase();
       var knownFileEndings = ["txt", "doc", "docx", "pdf", "odt", "html", "htm"];
-      
+
       //find out if this is a known file ending
       var fileEndingKnown = false;
-      for(var i in knownFileEndings)
-      {
-        if(fileEnding == knownFileEndings[i])
-        {
+      for (var i in knownFileEndings) {
+        if (fileEnding == knownFileEndings[i]) {
           fileEndingKnown = true;
         }
       }
-      
+
       //if the file ending is known, continue as normal
-      if(fileEndingKnown)
-      {
+      if (fileEndingKnown) {
         callback();
       }
       //we need to rename this file with a .txt ending
-      else
-      {
+      else {
         var oldSrcFile = srcFile;
         srcFile = srcFile.split(".")[0] + ".txt";
-        
+
         fs.rename(oldSrcFile, srcFile, callback);
       }
     },
-    
+
     //convert file to text
-    function(callback)
-    {
-      var randNum = Math.floor(Math.random()*0xFFFFFFFF);
+    function (callback) {
+      var randNum = Math.floor(Math.random() * 0xFFFFFFFF);
       destFile = tempDirectory + "eplite_import_" + randNum + ".txt";
       abiword.convertFile(srcFile, destFile, "txt", callback);
     },
-    
+
     //get the pad object
-    function(callback)
-    {
-      padManager.getPad(padId, function(err, _pad)
-      {
-        if(ERR(err, callback)) return;
+    function (callback) {
+      padManager.getPad(padId, function (err, _pad) {
+        if (ERR(err, callback)) return;
         pad = _pad;
         callback();
       });
     },
-    
+
     //read the text
-    function(callback)
-    {
-      fs.readFile(destFile, "utf8", function(err, _text)
-      {
-        if(ERR(err, callback)) return;
+    function (callback) {
+      fs.readFile(destFile, "utf8", function (err, _text) {
+        if (ERR(err, callback)) return;
         text = _text;
-        
+
         //node on windows has a delay on releasing of the file lock.  
         //We add a 100ms delay to work around this
-	      if(os.type().indexOf("Windows") > -1)
-	      {
-          setTimeout(function()
-          {
+        if (os.type().indexOf("Windows") > -1) {
+          setTimeout(function () {
             callback();
           }, 100);
-	      }
-	      else
-	      {
-	        callback();
-	      }
+        }
+        else {
+          callback();
+        }
       });
     },
-    
+
     //change text of the pad and broadcast the changeset
-    function(callback)
-    {
+    function (callback) {
       pad.setText(text);
       padMessageHandler.updatePadClients(pad, callback);
     },
-    
+
     //clean up temporary files
-    function(callback)
-    {
+    function (callback) {
       async.parallel([
-        function(callback)
-        {
+        function (callback) {
           fs.unlink(srcFile, callback);
         },
-        function(callback)
-        {
+        function (callback) {
           fs.unlink(destFile, callback);
         }
       ], callback);
     }
-  ], function(err)
-  {
+  ], function (err) {
     //the upload failed, there is nothing we can do, send a 500
-    if(err == "uploadFailed")
-    {
+    if (err == "uploadFailed") {
       res.send(500);
       return;
     }
 
     ERR(err);
-  
+
     //close the connection
     res.send("ok");
   });
-}
+};
