@@ -78,7 +78,6 @@ exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
  * Get the lectures for a class by the class's id
  */
 exports.getLecturesByClassId = function getLecturesByClassId(req, res) {
-  console.log("got here!");
   var ret = [];
   var classId = req.body.classId;
   var classes = [
