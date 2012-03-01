@@ -15,7 +15,7 @@
  */
 
 var async = require("async");
-var CommonCode = require('./common_code');
+var CommonCode = require('./CommonCode');
 var Changeset = CommonCode.require("/Changeset");
 var padManager = require("../db/PadManager");
 

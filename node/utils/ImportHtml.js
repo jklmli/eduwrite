@@ -17,7 +17,7 @@
 var jsdom = require('jsdom-nocontextifiy').jsdom;
 var log4js = require('log4js');
 
-var CommonCode = require('../utils/common_code');
+var CommonCode = require('../utils/CommonCode');
 var Changeset = CommonCode.require("/Changeset");
 var contentcollector = CommonCode.require("/contentcollector");
 var map = CommonCode.require("/ace2_common").map;

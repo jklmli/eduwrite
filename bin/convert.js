@@ -1,4 +1,4 @@
-var CommonCode = require('../node/utils/common_code');
+var CommonCode = require('../node/utils/CommonCode');
 var startTime = new Date().getTime();
 var fs = require("fs");
 var ueberDB = require("ueberDB");

@@ -18,7 +18,7 @@
  * limitations under the License.
  */
  
-var CommonCode = require('../utils/common_code');
+var CommonCode = require('../utils/CommonCode');
 var ERR = require("async-stacktrace");
 var customError = require("../utils/CustomError");
 var randomString = CommonCode.require('/pad_utils').randomString;
