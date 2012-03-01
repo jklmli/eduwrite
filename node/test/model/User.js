@@ -1,5 +1,5 @@
 var assert = require("assert");
-var user = require("../model/User.js");
+var user = require("../../model/User.js");
 
 describe("User get", function () {
   it("should return empty array when ID not found", function (done) {

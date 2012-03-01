@@ -2,7 +2,7 @@
  * Test cases for registration and login functions
  */
 
-var facade = require("../facade/live/LiveFacade.js");
+var facade = require("../../facade/live/LiveFacade.js");
 
 
 describe("register", function () {

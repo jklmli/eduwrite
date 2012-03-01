@@ -1,5 +1,5 @@
 var assert = require("assert");
-var course = require("../model/Course.js");
+var course = require("../../model/Course.js");
 
 describe("Course get_by_id", function () {
   it("should return empty array when ID not found", function (done) {
