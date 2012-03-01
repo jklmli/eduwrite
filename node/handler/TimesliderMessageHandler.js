@@ -35,7 +35,7 @@ var messageLogger = log4js.getLogger("message");
 var socketio;
 
 /**
- * This Method is called by server.js to tell the message handler on which socket it should send
+ * This Method is called by Server.js to tell the message handler on which socket it should send
  * @param socket_io The Socket
  */
 exports.setSocketIO = function(socket_io)
