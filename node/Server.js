@@ -97,8 +97,8 @@ function asyncImport(callback) {
   socketIORouter = require('./handler/SocketIORouter');
 
   // Load EduWrite writes, which requires an initialize DB
-  facadeRoutes = require('./FacadeRoutes');
-  pageRoutes = require('./PageRoutes');
+  facadeRoutes = require('routes/FacadeRoutes.js');
+  pageRoutes = require('routes/PageRoutes.js');
 
   callback(null);
 }
@@ -136,11 +136,11 @@ function initializeHTTPServer(callback) {
   attachStaticRoutes(app);
 
   // Attach routes for pads
-  var padRoutes = require('./PadRoutes');
+  var padRoutes = require('routes/PadRoutes.js');
   padRoutes.attachPadRoutes(app, padManager, exportHTML, importHandler, exportHandler, securityManager);
 
   // Attach API handlers to the app
-  var apiRoutes = require('./APIRoutes');
+  var apiRoutes = require('routes/APIRoutes.js');
   apiRoutes.attachAPIRoutes(app);
 
   // Attach the EduWrite-specific routes to the HTTP server

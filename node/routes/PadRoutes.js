@@ -1,7 +1,7 @@
 var path = require('path');
 var async = require('async');
 var asyncStacktrace = require('async-stacktrace');
-var settings = require('./utils/Settings');
+var settings = require('../utils/Settings.js');
 
 /**
  * Attach pad-specific routes

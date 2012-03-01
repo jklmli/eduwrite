@@ -1,6 +1,6 @@
 // The facades to the real functionality
-var mockFacade = require('./facade/mock/mockFacade');
-var liveFacade = require('./facade/live/liveFacade');
+var mockFacade = require('../facade/mock/mockFacade.js');
+var liveFacade = require('../facade/live/liveFacade.js');
 
 var facade = mockFacade;
 
