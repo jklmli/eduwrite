@@ -90,7 +90,7 @@ exports.attachPadRoutes = function attachPadRoutes(app, padManager, exportHTML, 
 
   //serve pad.html under /p
   app.get('/p/:pad', function (req, res, next) {
-    var filePath = path.normalize(__dirname + '/../static/pad.html');
+    var filePath = path.normalize(__dirname + '/static/pad.html');
     res.sendfile(filePath, { maxAge:exports.maxAge });
   });
 
