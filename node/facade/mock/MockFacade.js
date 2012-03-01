@@ -1,4 +1,4 @@
-var authentication = require('./authentication.js');
+var authentication = require('./MockAuthentication.js');
 
 /**
  * User registration facade methods
