@@ -3,30 +3,31 @@ extends layout
 block append head
   link(rel='stylesheet', href='/static/css/home.css')
   script(type='text/javascript', src='http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js')
-  script(type='text/javascript', src='static/js/site/home_leftsidebar_user_notes.js')
+  script(type='text/javascript', src='static/js/site/homeNoteNavigation.js')
   script(type='text/javascript', src='static/jstree/jquery.jstree.js')
 
 block content
   .container-fluid
     .row-fluid
       .span2
-        .tabbable
+        .well
+          .tabbable
 
-          ul.nav.nav-tabs
-            li.active
-              a(data-toggle='tab', href='#1') All Notes
-            li
-              a(data-toggle='tab', href='#2') Your Notes
+            ul.nav.nav-tabs
+              li.active
+                a(data-toggle='tab', href='#1') All Notes
+              li
+                a(data-toggle='tab', href='#2') Your Notes
 
-          .tab-content
+            .tab-content
 
-            .tab-pane#1.active
+              .tab-pane#1.active
 
-              #notes-tree
+                #notes-tree
 
-            .tab-pane#2
+              .tab-pane#2
 
-              #user-notes
+                #user-notes
 
       .span8
         .content
