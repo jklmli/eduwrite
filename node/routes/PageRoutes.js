@@ -52,3 +52,47 @@ exports.logout = function logout(request, response) {
   request.flash("success", "You have been successfully logged out from the site");
   response.redirect('/');
 };
+
+/**
+ * Redirect to /accountManagement/profile
+ * @param request
+ * @param response
+ */
+exports.accountManagement = function accountManagement(request, response) {
+    // Show index if logged in, redirect otherwise
+    if (request && request.session.user) {
+
+        response.redirect('/accountManagement/profile')
+
+    } else {
+        response.redirect('/login/');
+    }
+}
+
+exports.accountManagementProfile = function accountManagementProfile(request, response) {
+    // Show index if logged in, redirect otherwise
+    if (request && request.session.user) {
+
+        // Render the accountManagement page template
+        response.render('users/accountManagement/profile', {
+            title: 'Profile'
+        });
+
+    } else {
+        response.redirect('/login/');
+    }
+}
+
+exports.accountManagementNotePermissions = function accountManagementNotePermissions(request, response) {
+    // Show index if logged in, redirect otherwise
+    if (request && request.session.user) {
+
+        // Render the accountManagement page template
+        response.render('users/accountManagement/notePermissions', {
+            title: 'Note Permissions'
+        });
+
+    } else {
+        response.redirect('/login/');
+    }
+}

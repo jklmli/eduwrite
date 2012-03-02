@@ -197,6 +197,9 @@ function attachEduWriteRoutes(app) {
   app.get('/register', pageRoutes.register);
   app.get('/login', pageRoutes.login);
   app.get('/logout', pageRoutes.logout);
+  app.get('/accountManagement', pageRoutes.accountManagement)
+  app.get('/accountManagement/profile', pageRoutes.accountManagementProfile)
+  app.get('/accountManagement/notePermissions', pageRoutes.accountManagementNotePermissions)
 
   // Facade routes
   app.post('/getUser', facadeRoutes.getUser);
