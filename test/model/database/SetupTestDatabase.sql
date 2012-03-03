@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS testeduwrite;
+DROP DATABASE IF EXISTS testeduwrite;
+CREATE DATABASE testeduwrite;
 USE testeduwrite;
 
 
