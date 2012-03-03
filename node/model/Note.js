@@ -1,7 +1,7 @@
-var client = require("./Database.js");
+var client = require("./Database.js").client;
 var user = require('./User.js');
 var api = require("../db/API.js");
-
+var table = "notes";
 
 /**
  *  Create group ID
@@ -14,9 +14,13 @@ exports.createGroup = function (groupID) {
 
 
 /**
- * Get pads that belongs to the user.
+ * Get notes that belongs to the user.
  */
 exports.getByUser = function (user, callback) {
+    client.get(table).where("user_id='"+user.id+"'").limit(30).execute(callback);
+/*
+ * Will be used later
+ *
   if (user.aid == null) {
     api.createAuthorIfNotExistsFor(user.id, user.name, function (err, response) {
       if (err)
@@ -28,6 +32,7 @@ exports.getByUser = function (user, callback) {
   } else {
     getByAuthorId(user.aid, callback);
   }
+  */
 };
 
 
@@ -76,10 +81,16 @@ exports.setPassword = function (padID, password, cb) {
 /**
  * Create pad that does not belong to any group
  */
-exports.create = function (padID, callback) {
-  api.createPad(padID, "", callback);
-};
+exports.create = function (user_id,lecture_id, callback) {
+  var note = {user_id:user_id,lecture_id:lecture_id};
+  client.insert(table,note,function(e){
+    console.log(e);
+  });  
 
+  //api.createPad(padID, "", function(err,response){
+      
+  //});
+};
 
 /**
  * Destroy pad with specific ID

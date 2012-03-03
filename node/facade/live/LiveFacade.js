@@ -67,7 +67,25 @@ exports.login = function (req, res) {
  */
 exports.getNotes = function (req, res) {
   var user = req.session.user;
-  Note.getByUser(user, function (err, notes) {
+  if(!user){
+    res.send("please login first");
+  }
+  Note.getByUser(user, function (err, notes){
+      res.contentType('json');
+      res.send([
+        {
+          id:      3,
+          title:   "Lecture 12",
+          location:"notes\\note5001"
+        },
+        {
+          id:      4,
+          title:   "My Second Note",
+          location:"notes\\note5002"
+        }
+      ]);
+
+    res.render("");
     console.log(notes);
   });
 };
@@ -77,6 +95,12 @@ exports.getNotes = function (req, res) {
  * Add a new note for some user
  */
 exports.addNote = function (req, res) {
+    var user = req.session.user;
+    if(!user){
+        res.send("Please login first");
+    }
+    Note.create(user.id,1,null);
+    res.send("Hello world");
 };
 
 

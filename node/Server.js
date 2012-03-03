@@ -211,6 +211,7 @@ function attachEduWriteRoutes(app) {
   app.post('/removeNote', facadeRoutes.removeNote);
   app.post('/getNotesByUserId', facadeRoutes.getNotesByUserId);
   app.get('/notes', facadeRoutes.getNotesByUserId);
+  app.get('/notes/add', facadeRoutes.addNote);
   app.post('/updateNote', facadeRoutes.updateNote);
   app.post('/getNotesByLectureId', facadeRoutes.getNotesByLectureId);
   app.post('/getLecturesByClassId', facadeRoutes.getLecturesByClassId);

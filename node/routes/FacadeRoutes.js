@@ -2,7 +2,7 @@
 var mockFacade = require('../facade/mock/MockFacade.js');
 var liveFacade = require('../facade/live/LiveFacade.js');
 
-var facade = mockFacade;
+var facade = liveFacade;
 
 // User registration functions
 exports.getUser = facade.getUser;
