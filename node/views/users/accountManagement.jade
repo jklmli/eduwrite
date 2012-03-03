@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  .container-fluid
+    .row-fluid
+      .span2
+
+        .well
+          .nav.nav-list
+            .nav-header
+              | Account Management
+            li
+              a(href="/accountManagement/profile") Profile
+            li
+              a(href="/accountManagement/notePermissions") Note Permissions
+            li
+              a Settings
+            li
+              a Help
+
+      block accountManagementContent

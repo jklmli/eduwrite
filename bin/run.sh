@@ -30,4 +30,4 @@ make build
 #Move to the node folder and start
 echo "start..."
 cd "node"
-node server.js
+node Server.js

@@ -1,4 +1,5 @@
-TEST = test/*.js
+MODEL_TESTS = node/test/model/*.js
+EASYSYNC_TESTS = node/test/easysync/*.js
 
 CSS = static/css/
 LESS = static/css/less/
@@ -63,10 +64,20 @@ clean-jquery:
 	@@echo "Cleaning jquery..."
 	@@cd static/jquery && make clean
 
-test:
-	@@NODE_ENV=test mocha \
+test: easysync-tests model-tests 
+
+model-tests: update-node_modules
+	@@NODE_ENV=test node_modules/mocha/bin/mocha \
 			--require should \
 			--reporter list \
 			--slow 20 \
 			--growl \
-			$(TEST)
+			$(MODEL_TESTS)
+
+easysync-tests: update-node_modules
+	@@NODE_ENV=test node_modules/mocha/bin/mocha \
+			--require should \
+			--reporter list \
+			--slow 20 \
+			--growl \
+			$(EASYSYNC_TESTS)

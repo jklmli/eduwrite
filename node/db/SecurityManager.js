@@ -18,20 +18,18 @@
  * limitations under the License.
  */
 
-var CommonCode = require('../utils/common_code');
+var CommonCode = require('../utils/CommonCode');
 var ERR = require("async-stacktrace");
-var db = require("./DB").db;
 var async = require("async");
 var authorManager = require("./AuthorManager");
 var padManager = require("./PadManager");
 var sessionManager = require("./SessionManager");
-var settings = require("../utils/Settings")
-var randomString = CommonCode.require('/pad_utils').randomString;
+var settings = require("../utils/Settings");
 
 /**
  * This function controlls the access to a pad, it checks if the user can access a pad.
  * @param padID the pad the user wants to access
- * @param sesssionID the session the user has (set via api)
+ * @param sessionID the session the user has (set via api)
  * @param token the token of the author (randomly generated at client side, used for public pads)
  * @param password the password the user has given to access this pad, can be null 
  * @param callback will be called with (err, {accessStatus: grant|deny|wrongPassword|needPassword, authorID: a.xxxxxx})
@@ -83,7 +81,7 @@ exports.checkAccess = function (padID, sessionID, token, password, callback)
           // grant access, with author of token
           callback(null, statusObject);
         }
-      })
+      });
       
       //don't continue
       return;
@@ -277,4 +275,4 @@ exports.checkAccess = function (padID, sessionID, token, password, callback)
     if(ERR(err, callback)) return;
     callback(null, statusObject);
   });
-}
+};
