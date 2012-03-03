@@ -155,3 +155,4 @@ var returnResult = function (cb) {
 exports.database = databaseName;
 exports.client = client;
 exports.changeDatabase = changeDatabase;
+exports.changeHost = changeHost;
