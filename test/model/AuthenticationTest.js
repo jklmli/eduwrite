@@ -21,7 +21,7 @@ describe("login", function () {
     // Mock request & data to allow the function to add data to the session
     var mockUser = {
       email:   "someEmail",
-      password:"password"
+      password:"somePassword"
     };
     var mockRequest = { session:{} };
     var mockData = [mockUser];
@@ -36,12 +36,34 @@ describe("login", function () {
 
 });
 
+
+/**
+ * Tests for the register function that receives data from login database calls
+ */
 describe("register", function () {
-  it("should fail if email field is empty");
 
-  it("should fail if password field is empty");
+  // Mock request to provide to 'register'
+  var mockRequest = {
+    body: {
+      email: "someEmail",
+      password: "somePassword"
+    }
+  };
 
-  it("should fail if email already exists");
+  it("should fail if no data was recieved from database", function(done) {
 
-  it("should succeed if email, password are given and email doesn't exist");
+    // Check that register fails if it receives no data
+    var usersFound = [{}, {}]; // Two 'empty' users
+    assert.equal(authentication.register(usersFound, mockRequest), false);
+
+    done();
+
+  });
+
+  it("should succeed and add user if data was received from database", function (done) {
+
+    done();
+
+  });
+
 });
