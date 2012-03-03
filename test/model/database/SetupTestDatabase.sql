@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `lectures` (
   `course_id` int(11) DEFAULT NULL,
   `day` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 CREATE TABLE IF NOT EXISTS `notes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=74 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 
 INSERT INTO `courses` (`id`, `school_id`, `term`, `name`, `course_number`) VALUES
@@ -46,8 +46,8 @@ INSERT INTO `courses` (`id`, `school_id`, `term`, `name`, `course_number`) VALUE
 
 INSERT INTO `lectures` (`id`, `course_id`, `day`) VALUES
 (1, 4, '2012-03-05'),
-(7, 2, '2012-03-08'),
-(6, 2, '2012-03-06');
+(2, 2, '2012-03-08'),
+(3, 2, '2012-03-06');
 
 INSERT INTO `notes` (`id`, `user_id`, `note_id`, `lecture_id`) VALUES
 (1, 0, '', 1),
