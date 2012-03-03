@@ -9,8 +9,8 @@ exports.get = function (id, cb) {
 
 //exports.get_by_id = get; //for Janaki
 
-exports.getBySchool = function (school, cb) {
-  client.get(table).where("school='" + school + "'").execute(cb);
+exports.getBySchoolId = function (schoolId, cb) {
+  client.get(table).where("school_id='" + schoolId + "'").execute(cb);
 };
 
 
@@ -20,7 +20,7 @@ exports.getByName = function (name, cb) {
 
 
 exports.getByCourseNumber = function (number, cb) {
-  client.get(table).where("number='" + number + "'").execute(cb);
+  client.get(table).where("course_number='" + number + "'").execute(cb);
 };
 
 
