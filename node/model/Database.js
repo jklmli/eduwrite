@@ -1,16 +1,32 @@
 var mysql = require('mysql');
-var database = "eduwrite";
+
+// Database connection information
+var databaseName = "eduwrite";
 var client = mysql.createClient({
   host:    '107.21.246.180',
   user:    'eduwrite',
   password:'cs428cs429'
 });
 
+// Create database if it does not exists
+client.query('CREATE DATABASE IF NOT EXISTS ' + databaseName, function (err) {
+  if (err && err.number) {
+    throw err;
+  } else {
+    changeDatabase(databaseName);
+  }
+});
+
 
 /**
- *
+ * Change the active database
+ */
+function changeDatabase(databaseName) {
+  client.query('USE ' + databaseName);
+}
+
+/**
  * Extends existing node-mysql connector library
- *
  */
 var Client = mysql.Client;
 
@@ -99,16 +115,6 @@ var returnResult = function (cb) {
   }
 };
 
-
-client.query('USE ' + database);
-
-//create database if it does not exists
-client.query('CREATE DATABASE ' + database, function (err) {
-  if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
-    throw err;
-  }
-});
-
-
-exports.database = database;
+exports.database = databaseName;
 exports.client = client;
+exports.changeDatabase;
