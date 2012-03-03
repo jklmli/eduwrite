@@ -9,7 +9,6 @@ var Authentication = require('../../model/Authentication.js');
 exports.register = function (req, res) {
 
   var email = req.body.email;
-  var password = req.body.password;
 
   // Get the user by email address
   User.getByEmail(email, function (usersFound) {
