@@ -41,6 +41,7 @@ function changeHost(newDatabaseHost) {
     user:    'eduwrite',
     password:'cs428cs429'
   });
+  client.query('USE ' + databaseName);
 }
 
 
