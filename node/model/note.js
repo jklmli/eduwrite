@@ -32,8 +32,8 @@ exports.get_by_user = function(user,cb){
  */
 exports.get_by_author_id = get_by_author_id = function(aid,name,cb){
     //TODO:get sessions by user
-    //get groups that the author belongs to 
-    //get pads for each group
+    //TODO:get groups that the author belongs to 
+    //TODO:get pads for each group
 }
 
 /*
