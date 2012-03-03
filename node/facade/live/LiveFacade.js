@@ -32,29 +32,49 @@ exports.login = function (req, res) {
 /**
  * Get the notes for some user
  */
-exports.getNotes = function (req, res) {
+exports.getNotesByUserId = function getNotesByUserId(req, res) {
   var user = req.session.user;
   if(!user){
-    res.send("please login first");
+    res.send("{}");
   }
   Note.getByUser(user, function (err, notes){
       res.contentType('json');
-      res.send([
-        {
-          id:      3,
-          title:   "Lecture 12",
-          location:"notes\\note5001"
-        },
-        {
-          id:      4,
-          title:   "My Second Note",
-          location:"notes\\note5002"
-        }
-      ]);
-
-    res.render("");
-    console.log(notes);
+      res.send(notes);
+      console.log(notes);
   });
+};
+
+exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
+  var ret = [];
+  var lectureId = req.body.lectureId;
+  var notes = [
+    {
+      id:       9832498,
+      title:    "OH YEA",
+      lectureId:8234
+    },
+    {
+      id:       3429873,
+      title:    "My note",
+      lectureId:8234
+    },
+    {
+      id:       328932,
+      title:    "WOAH",
+      lectureId:8236
+    },
+    {
+      id:       847592,
+      title:    "BOOYAH",
+      lectureId:8236
+    }
+  ];
+  for (i in notes) {
+    if (notes[i].lectureId == lectureId)
+      ret.push(notes[i]);
+  }
+  res.contentType('json');
+  res.send(ret);
 };
 
 
