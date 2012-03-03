@@ -1,5 +1,6 @@
 var User = require("./User.js");
 
+
 /**
  * Handle return data from the database for user & password, and either allow them to login or reject their login.
  *
@@ -20,6 +21,7 @@ exports.login = function login(usersFound, req) {
     return true;
   }
 };
+
 
 /**
  * Allow a user to register if a user does not already exist with that email address
