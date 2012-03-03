@@ -38,11 +38,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 
 INSERT INTO `courses` (`id`, `school_id`, `term`, `name`, `course_number`) VALUES
-(1, 1, 'Sp 12', 'Distributed Systems', 'CS 425'),
-(2, 1, 'Sp 12', 'Computer Security I', 'CS 461'),
-(3, 1, 'Sp 12', 'Software Engineering II', 'CS 428'),
-(4, 1, 'Sp 12', 'Database Systems', 'CS 411'),
-(5, 1, 'Sp 12', 'Computer Architecture II', 'CS 232');
+(1, 1, 'Spring 2012', 'Distributed Systems', 'CS 425'),
+(2, 1, 'Spring 2012', 'Computer Security I', 'CS 461'),
+(3, 1, 'Spring 2012', 'Software Engineering II', 'CS 428'),
+(4, 1, 'Spring 2012', 'Database Systems', 'CS 411'),
+(5, 1, 'Spring 2012', 'Computer Architecture II', 'CS 232');
 
 INSERT INTO `lectures` (`id`, `course_id`, `day`) VALUES
 (1, 4, '2012-03-05'),
