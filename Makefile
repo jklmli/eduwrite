@@ -1,5 +1,5 @@
-MODEL_TESTS = node/test/model/*.js
-EASYSYNC_TESTS = node/test/easysync/*.js
+MODEL_TESTS = test/model/*.js
+EASYSYNC_TESTS = test/easysync/*.js
 
 CSS = static/css/
 LESS = static/css/less/
