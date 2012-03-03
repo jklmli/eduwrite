@@ -13,12 +13,23 @@ Database.changeHost('localhost');
  *  @param expectedCourse The course expected
  */
 function assertCoursesEqual(actualCourse, expectedCourse) {
+  assert.equal(typeof(actualCourse), typeof(expectedCourse));
   assert.equal(actualCourse.id, expectedCourse.id);
   assert.equal(actualCourse.school_id, expectedCourse.school_id);
   assert.equal(actualCourse.name, expectedCourse.name);
   assert.equal(actualCourse.term, expectedCourse.term);
   assert.equal(actualCourse.course_number, expectedCourse.course_number);
 }
+
+
+// Sample data
+var distributedSystemsCourse = {
+  id:           1,
+  school_id:    1,
+  term:         'Spring 2012',
+  name:         'Distributed Systems',
+  course_number:'CS 425'
+};
 
 
 /**
@@ -28,106 +39,139 @@ describe('Course getById', function () {
 
   it('should return empty array when ID not found', function (done) {
     Course.get(6, function (courseData) {
+
+      // Check that no course was found
       assert.equal(0, courseData.length);
-      done()
-    })
+      done();
+
+    });
   });
 
   it('should return the correct result if the ID exists', function (done) {
     Course.get(1, function (courseData) {
-      
-      // Prepare the expected data
-      var expectedCourse = {
-        id: 1,
-        school_id: 1,
-        term: 'Spring 2012',
-        name: 'Distributed Systems',
-        course_number: 'CS 425'
-      };
 
       // Check that we found exactly one course, and that it's the course we expected
       assert.equal(1, courseData.length);
       var course = courseData[0];
-      assertCoursesEqual(course, expectedCourse);
-
-      done()
+      assertCoursesEqual(course, distributedSystemsCourse);
+      done();
 
     });
   });
 });
 
-//
-//describe('Course get_by_school', function () {
-//  it('should return empty array when class not found', function (done) {
-//    course.getBySchool(-1, function (e) {
-//      assert.equal(0, e.length);
-//      done()
-//    })
-//  });
-//
-//  it('should return array of correct results when class found', function (done) {
-//    course.getBySchool(1, function (e) {
-//      assert.ok(e.length > 0);
-//      for (var i = 0; i < e.length; i++)
-//        assert.equal(1, 1)//e[i].school, 1)
-//      done()
-//    })
-//  });
-//});
-//
-//
-//describe('Course get_by_name', function () {
-//  it('should return empty array when class name not found', function (done) {
-//    course.getByName('', function (e) {
-//      assert.equal(e.length, 0);
-//      done()
-//    })
-//  });
-//
-//  it('should return array of correct results when class name found', function (done) {
-//    course.getByName('Distributed Systems', function (e) {
-//      assert.ok(e.length > 0);
-//      for (var i = 0; i < e.legnth; i++)
-//        assert.equal(e[i].name, 'Distributed Systems')
-//      done()
-//    })
-//  });
-//});
-//
-//
-//describe('Course get_by_course_number', function () {
-//  it('should return empty array when course number not found', function (done) {
-//    course.getByCourseNumber('', function (e) {
-//      assert.equal(e.length, 0);
-//      done()
-//    })
-//  });
-//
-//  it('should return array of correct results', function (done) {
-//    course.getByCourseNumber('CS 425', function (e) {
-//      assert.ok(e.length > 0);
-//      for (var i = 0; i < e.length; i++)
-//        assert.equal(e[i].number, 'CS 425')
-//      done()
-//    })
-//  });
-//});
-//
-//
-//describe('Course get_by_term', function () {
-//  it('should return empty array if term not found', function (done) {
-//    course.getByTerm('', function (e) {
-//      assert.equal(e.length, 0);
-//      done()
-//    })
-//  });
-//
-//  it('should return array of correct results', function (done) {
-//    course.getByTerm('Sp 12', function (e) {
-//      assert.ok(e.length > 0);
-//      for (var i = 0; i < e.length; i++)
-//        assert.equal(e[i].term, 'Sp 12')
-//      done()
-//    })
-//  });
-//});
+
+/**
+ * Check that Course.getBySchoolId behaves correctly
+ */
+describe('Course getBySchoolId', function () {
+
+  it('should return empty array when class not found', function (done) {
+    Course.getBySchoolId(-1, function (courseData) {
+
+      // Check that no courses were found
+      assert.equal(0, courseData.length);
+      done();
+
+    });
+  });
+
+  it('should return array of correct results when class found', function (done) {
+    Course.getBySchoolId(1, function (courseData) {
+
+      // Check that courses were returned, and that
+      assert.ok(courseData.length > 0);
+      for (var i = 0; i < courseData.length; i++) {
+        assert.equal(courseData[i].school_id, 1);
+      }
+      done();
+
+    });
+  });
+});
+
+
+/**
+ * Check that Course.getByName behaves correctly
+ */
+describe('Course getByName', function () {
+
+  it('should return empty array when class name not found', function (done) {
+    Course.getByName('someCourseNameThatDoesntExist', function (courseData) {
+
+      // Check that no courses were found
+      assert.equal(courseData.length, 0);
+      done();
+
+    });
+  });
+
+  it('should return array of correct results when class name found', function (done) {
+    Course.getByName('Distributed Systems', function (courseData) {
+
+      // Check that the correct course was found
+      assert.ok(courseData.length === 1);
+      assertCoursesEqual(courseData[0], distributedSystemsCourse);
+      done();
+
+    });
+  });
+});
+
+
+/**
+ * Test that Course.getByCourseNumber behaves correctly
+ */
+describe('Course getByCourseNumber', function () {
+
+  it('should return empty array when course number not found', function (done) {
+    Course.getByCourseNumber('someCourseNumberThatDoesntExist', function (courseData) {
+
+      // Check that no corresponding course data was found
+      assert.equal(courseData.length, 0);
+      done();
+
+    });
+  });
+
+  it('should return array of correct results', function (done) {
+    Course.getByCourseNumber(distributedSystemsCourse.course_number, function (courseData) {
+
+      // Check that we found the course
+      assert.ok(courseData.length > 0);
+      assertCoursesEqual(courseData[0], distributedSystemsCourse);
+      done();
+
+    });
+  });
+});
+
+
+/**
+ * Check that Course.getByTerm works behaves correctly
+ */
+describe('Course getByTerm', function () {
+
+  it('should return empty array if term not found', function (done) {
+    Course.getByTerm('someTermThatDoesntExist', function (courseData) {
+
+      // Check that no course was found
+      assert.equal(courseData.length, 0);
+      done();
+
+    });
+  });
+
+  it('should return array of correct results', function (done) {
+    Course.getByTerm('Spring 2012', function (courseData) {
+
+      // Check that some correct course data was returned
+      assert.ok(courseData.length > 0);
+      for (var i = 0; i < courseData.length; i++) {
+        assert.equal(courseData[i].term, 'Spring 2012');
+      }
+      done();
+
+    });
+  });
+});
