@@ -21,7 +21,7 @@
  */
 
 var assert = require("assert");
-var CommonCode = require('../../utils/CommonCode.js');
+var CommonCode = require('../../node/utils/CommonCode.js');
 var Changeset = CommonCode.require("/Changeset");
 var AttributePoolFactory = CommonCode.require("/AttributePoolFactory");
 
