@@ -2,11 +2,13 @@ var mysql = require('mysql');
 
 // Database connection information
 var databaseName = "eduwrite";
+var databaseHost = '107.21.246.180';
 var client = mysql.createClient({
-  host:    '107.21.246.180',
+  host:    databaseHost,
   user:    'eduwrite',
   password:'cs428cs429'
 });
+
 
 // Create database if it does not exists
 client.query('CREATE DATABASE IF NOT EXISTS ' + databaseName, function (err) {
@@ -20,10 +22,27 @@ client.query('CREATE DATABASE IF NOT EXISTS ' + databaseName, function (err) {
 
 /**
  * Change the active database
+ *  @param  newDatabaseName The name of the new database to use
  */
-function changeDatabase(databaseName) {
-  client.query('USE ' + databaseName);
+function changeDatabase(newDatabaseName) {
+  databaseName = newDatabaseName;
+  client.query('USE ' + newDatabaseName);
 }
+
+
+/**
+ * Change the host of the database
+ *  @param  newDatabaseHost The new hostname for the database
+ */
+function changeHost(newDatabaseHost) {
+  databaseHost = newDatabaseHost;
+  client = mysql.createClient({
+    host:    databaseHost,
+    user:    'eduwrite',
+    password:'cs428cs429'
+  });
+}
+
 
 /**
  * Extends existing node-mysql connector library
@@ -32,24 +51,42 @@ var Client = mysql.Client;
 
 Client.prototype.sql = "";
 
+
+/**
+ * Construct a SQL statement to fetch all rows of a table
+ *  @param table The name of the table from which to get data
+ */
 Client.prototype.get = function (table) {
   this.sql = "select * from " + table;
   return this;
 };
 
 
+/**
+ * Construct a SQL statement to fetch all rows of a table
+ *  @param table The name of the table from which to delete data
+ */
 Client.prototype.destroy = function (table) {
   this.sql = "delete from " + table;
   return this;
 };
 
 
+/**
+ * Add a where clause to the current SQL queyr
+ *  @param where  The WHERE clause to add
+ */
 Client.prototype.where = function (where) {
   this.sql += " where " + where;
   return this;
 };
 
 
+/**
+ * Add a limit/offset clause to the current SQL query
+ *  @param limit  The limit of the number of entries to fetch
+ *  @param offset The entry number with which to start fetching
+ */
 Client.prototype.limit = function (limit, offset) {
   offset = typeof(offset) != 'undefined' ? offset : 0;
   limit = typeof(limit) != 'undefined' ? limit : 10;
@@ -117,4 +154,4 @@ var returnResult = function (cb) {
 
 exports.database = databaseName;
 exports.client = client;
-exports.changeDatabase;
+exports.changeDatabase = changeDatabase;
