@@ -1,5 +1,6 @@
 var assert = require("assert");
 var authentication = require("../../node/model/Authentication.js");
+var User = require("../../node/model/User.js");
 
 /**
  * Tests for the login function that receives data from login database calls
@@ -13,7 +14,6 @@ describe("login", function () {
     assert.equal(authentication.login(mockData, null), false);
 
     done();
-
   });
 
   it("should succeed and add to session if database returned valid data", function (done) {
@@ -23,7 +23,9 @@ describe("login", function () {
       email:   "someEmail",
       password:"somePassword"
     };
-    var mockRequest = { session:{} };
+    var mockRequest = {
+      session:{}
+    };
     var mockData = [mockUser];
 
     // Check that login returns true and that the user was added to the session
@@ -31,7 +33,6 @@ describe("login", function () {
     assert.equal(mockRequest.session.user, mockUser);
 
     done();
-
   });
 
 });
@@ -43,27 +44,38 @@ describe("login", function () {
 describe("register", function () {
 
   // Mock request to provide to 'register'
+  var mockUser = {
+    email:   "someEmail",
+    password:"somePassword"
+  };
   var mockRequest = {
-    body: {
-      email: "someEmail",
-      password: "somePassword"
-    }
+    body:mockUser
   };
 
-  it("should fail if no data was recieved from database", function(done) {
+  it("should fail if no data was recieved from database", function (done) {
 
     // Check that register fails if it receives no data
-    var usersFound = [{}, {}]; // Two 'empty' users
+    var usersFound = [
+      {}  // 'empty' user
+    ];
     assert.equal(authentication.register(usersFound, mockRequest), false);
 
     done();
-
   });
 
   it("should succeed and add user if data was received from database", function (done) {
 
-    done();
+    // Fetch this data from the database
+    User.getByEmailAndPassword(mockUser.email, mockUser.password, function (data) {
 
+      // Check we fetched some data & the user retrieved is our mock user
+      assert.equal(data.length > 0, true);
+      assert.equal(data[0].email, mockUser.email);
+
+      done();
+
+      // Remove this user
+      User.destroy(data[0].id);
+    });
   });
-
 });
