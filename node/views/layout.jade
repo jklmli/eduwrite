@@ -49,11 +49,13 @@ block titlebar
                                         b(class="caret")
                                         ul.dropdown-menu
                                             li
-                                                a(href="#") Profile
+                                                a(href="/accountManagement/profile") Profile
                                             li
-                                                a(href="#") Account Settings
+                                                a(href="/accountManagement/notePermissions") Privacy
                                             li
-                                                a(href="#") Privacy
+                                                a(href="/accountManagement/settings") Settings
+                                            li
+                                                a(href="/accountManagement/help") Help
                             | Welcome, #{user.email}
                             &nbsp;&nbsp;
                             a(href="/logout/") logout

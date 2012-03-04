@@ -96,3 +96,31 @@ exports.accountManagementNotePermissions = function accountManagementNotePermiss
         response.redirect('/login/');
     }
 }
+
+exports.accountManagementSettings = function accountManagementSettings(request, response){
+    // Show index if logged in, redirect otherwise
+    if (request && request.session.user) {
+
+        // Render the accountManagement page template
+        response.render('users/accountManagement/settings', {
+            title: 'Settings'
+        });
+
+    } else {
+        response.redirect('/login/');
+    }
+}
+
+exports.accountManagementHelp = function accountManagementHelp(request, response){
+    // Show index if logged in, redirect otherwise
+    if (request && request.session.user) {
+
+        // Render the accountManagement page template
+        response.render('users/accountManagement/help', {
+            title: 'Help'
+        });
+
+    } else {
+        response.redirect('/login/');
+    }
+}
