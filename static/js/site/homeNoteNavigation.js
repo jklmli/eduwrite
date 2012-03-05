@@ -1,10 +1,3 @@
-/**
- * Created by JetBrains PhpStorm.
- * User: xion
- * Date: 2/24/12
- * Time: 3:54 PM
- * To change this template use File | Settings | File Templates.
- */
 $(document).ready(
     function load(){
         loadUserNotes();
@@ -25,25 +18,25 @@ var notes;
  */
 function loadClasses(){
     $("#notes-tree")
-        .bind("loaded.jstree",function(event,data){
-            console.log("TREE IS LOADED");
-            $("#notes-tree").jstree("hide_icons");
-            for(i in classes){
-                loadLecturesByClassId(classes[i].data[0].id);
-            }
+    .bind("loaded.jstree",function(event,data){
+        console.log("TREE IS LOADED");
+        $("#notes-tree").jstree("hide_icons");
+        for(i in classes){
+            loadLecturesByClassId(classes[i].data[0].id);
+        }
 
-        })
-        .jstree({
-            "json_data" : {
-                "ajax" : {
-                    "type" : "POST",
-                    "url" : "/getClasses",
-                    "success" : loadClassesCallback
-                }
-            },
-            "plugins" : [
-                "themes", "json_data", "crrm"
-             ]
+    })
+    .jstree({
+        "json_data" : {
+            "ajax" : {
+                "type" : "POST",
+                "url" : "/getClasses",
+                "success" : loadClassesCallback
+            }
+        },
+        "plugins" : [
+            "themes", "json_data", "crrm"
+         ]
     });
 }
 
@@ -54,7 +47,9 @@ function loadClasses(){
 function loadClassesCallback(data){
     classes = [];
     for(i in data){
-        classes[i] = {data: data[i], attr: {id: "class" + data[i].id}};
+        if (data.hasOwnProperty(i)) {
+            classes[i] = {data: data[i], attr: {id: "class" + data[i].id}};
+        }
     }
     return classes;
 }
@@ -76,16 +71,18 @@ function loadLecturesByClassId(id){
 function loadLecturesByClassIdCallback(data){
     var lecture;
     for (i in data){
-        lecture = {data: data[i], attr: {id: "lecture" + data[i].id}};
-        // Add the lecture to the class
-        $("#notes-tree").jstree("create", "#class" + data[i].classId, "inside", lecture);
-        $("#class" + data[i].classId).jstree("show_icons");
-        $.post("/getNotesByLectureId", {
-                lectureId: data[i].id
-            },
-            loadNotesByLectureIdCallback,
-            "json"
-        );
+        if (data.hasOwnProperty(i)) {
+            lecture = {data: data[i], attr: {id: "lecture" + data[i].id}};
+            // Add the lecture to the class
+            $("#notes-tree").jstree("create", "#class" + data[i].classId, "inside", lecture);
+            $("#class" + data[i].classId).jstree("show_icons");
+            $.post("/getNotesByLectureId", {
+                    lectureId: data[i].id
+                },
+                loadNotesByLectureIdCallback,
+                "json"
+            );
+        }
     }
 }
 
@@ -93,38 +90,42 @@ function loadNotesByLectureIdCallback(data){
     console.log(data);
     var note;
     for (i in data){
-        note = {data: data[i], attr: {id: "note" + data[i].id}};
-        $("#notes-tree").jstree("create", "#lecture" + data[i].lectureId, "inside", note);
+        if (data.hasOwnProperty(i)) {
+            note = {data: data[i], attr: {id: "note" + data[i].id}};
+            $("#notes-tree").jstree("create", "#lecture" + data[i].lectureId, "inside", note);
+        }
     }
 }
 
 function loadUserNotes() {
 
     $("#user-notes")
-        .jstree({
-            "json_data" : {
-                "ajax" : {
-                    "type" : "POST",
-                    "url" : "/getNotesByUserId",
-                    "success" : loadUserNotesCallback
-                }
-            },
-            "plugins" : [
-                "themes", "json_data", "crrm", "ui"
-            ]
-        })
-        .bind("select_node.jstree", loadNoteIntoUserSpace)
-        // 2) if not using the UI plugin - the Anchor tags work as expected
-        //    so if the anchor has a HREF attirbute - the page will be changed
-        //    you can actually prevent the default, etc (normal jquery usage)
-        .delegate("a", "click", function (event, data) { event.preventDefault(); })
+    .jstree({
+        "json_data" : {
+            "ajax" : {
+                "type" : "POST",
+                "url" : "/getNotesByUserId",
+                "success" : loadUserNotesCallback
+            }
+        },
+        "plugins" : [
+            "themes", "json_data", "crrm", "ui"
+        ]
+    })
+    .bind("select_node.jstree", loadNoteIntoUserSpace)
+    // 2) if not using the UI plugin - the Anchor tags work as expected
+    //    so if the anchor has a HREF attirbute - the page will be changed
+    //    you can actually prevent the default, etc (normal jquery usage)
+    .delegate("a", "click", function (event, data) { event.preventDefault(); })
 
 }
 
 function loadUserNotesCallback(data) {
     notes = [];
     for(i in data){
-        notes[i] = {data: data[i], attr: {id: "user_note" + data[i].id, href: data[i].location}};
+        if (data.hasOwnProperty(i)) {
+            notes[i] = {data: data[i], attr: {id: "user_note" + data[i].id, href: data[i].location}};
+        }
     }
     return notes;
 }
