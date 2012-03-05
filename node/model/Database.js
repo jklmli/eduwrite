@@ -101,6 +101,11 @@ Client.prototype.limit = function (limit, offset) {
  */
 Client.prototype.execute = function (cb) {
   var q = this.sql;
+
+  //prints out the query for debugging purpose
+  console.log(q);
+
+
   client.query(q, returnResult(cb));
 };
 

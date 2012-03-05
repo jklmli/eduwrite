@@ -71,11 +71,9 @@ exports.getNotesByUserId = function getNotesByUserId(req, res) {
   if (!user) {
     res.send("{}");
   }
-  Note.getByUser(user, function (err, notes) {
+  Note.getByUser(user, function (notes) {
     res.contentType('json');
     res.send(notes);
-    console.log(notes);
-    console.log("1");
   });
 };
 

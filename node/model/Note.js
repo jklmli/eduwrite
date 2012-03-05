@@ -4,16 +4,6 @@ var api = require("../db/API.js");
 var table = "notes";
 
 /**
- *  Create group ID
- */
-exports.createGroup = function (groupID) {
-  api.createGroupIfNotExistsFor(groupID, function (e) {
-    console.log(e);
-  });
-};
-
-
-/**
  * Get notes that belongs to the user.
  */
 exports.getByUser = function (user, callback) {
@@ -33,6 +23,16 @@ exports.getByUser = function (user, callback) {
     getByAuthorId(user.aid, callback);
   }
   */
+};
+
+
+/**
+ *  Create group with groupID
+ */
+exports.createGroup = function (groupID) {
+  api.createGroupIfNotExistsFor(groupID, function (e) {
+    console.log(e);
+  });
 };
 
 
