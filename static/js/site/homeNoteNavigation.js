@@ -22,7 +22,9 @@ function loadClasses(){
         console.log("TREE IS LOADED");
         $("#notes-tree").jstree("hide_icons");
         for(i in classes){
-            loadLecturesByClassId(classes[i].data[0].id);
+            if (classes.hasOwnProperty(i)) {
+                loadLecturesByClassId(classes[i].data[0].id);
+            }
         }
 
     })
