@@ -37,9 +37,9 @@ function changeDatabase(newDatabaseName) {
 function changeHost(newDatabaseHost) {
   databaseHost = newDatabaseHost;
   client = mysql.createClient({
-    host:    databaseHost,
-    user:    'eduwrite',
-    password:'cs428cs429'
+    host:     databaseHost,
+    user:     client.user,
+    password: client.host
   });
   client.query('USE ' + databaseName);
 }
