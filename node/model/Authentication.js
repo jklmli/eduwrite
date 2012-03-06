@@ -41,7 +41,7 @@ exports.register = function register(usersFound, req) {
   } else {
 
     var user = {
-      email:   email,
+      email:email,
       password:password
     };
 
