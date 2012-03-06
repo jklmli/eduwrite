@@ -8,14 +8,14 @@ meta(name='viewport', content='width=device-width, initial-scale=1.0')
 
 link(rel='stylesheet', href='/static/bootstrap/bootstrap/css/bootstrap.css')
 style(type="text/css")
-    body {
-        padding-top:60px;
-        padding-bottom:40px;
-        text-align: justify;
-    }
-    .sidebar-nav {
+  body {
+    padding-top:60px;
+    padding-bottom:40px;
+    text-align: justify;
+  }
+  .sidebar-nav {
     padding:9px 0;
-    }
+  }
 link(rel='stylesheet', href='/static/bootstrap/bootstrap/css/bootstrap-responsive.css')
 
 script(type='text/javascript', src='/static/jquery/dist/jquery.js')
@@ -28,55 +28,55 @@ block head
 body
 
 block titlebar
-    .navbar.navbar-fixed-top
-        .navbar-inner
-            .container-fluid
-                a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
-                    span.icon-bar
-                    span.icon-bar
-                    span.icon-bar
-                a.brand(href="/") EduWrite
-                .nav-collapse
-                    ul.nav
-                        li
-                            a(href="/about/") About
-                    .navbar-text.pull-right
-                        -if(loggedIn)
-                            ul.nav
-                                li.dropdown(id="accountManagement")
-                                    a.dropdown-toggle(data-toggle="dropdown", href="#accountManagement")
-                                        | Account
-                                        b(class="caret")
-                                        ul.dropdown-menu
-                                            li
-                                                a(href="/accountManagement/profile") Profile
-                                            li
-                                                a(href="/accountManagement/notePermissions") Privacy
-                                            li
-                                                a(href="/accountManagement/settings") Settings
-                                            li
-                                                a(href="/accountManagement/help") Help
-                            | Welcome, #{user.email}
-                            &nbsp;&nbsp;
-                            a(href="/logout/") logout
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      .container-fluid
+        a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.brand(href="/") EduWrite
+        .nav-collapse
+          ul.nav
+            li
+              a(href="/about/") About
+          .navbar-text.pull-right
+            -if(loggedIn)
+              ul.nav
+                li.dropdown(id="accountManagement")
+                  a.dropdown-toggle(data-toggle="dropdown", href="#accountManagement")
+                    | Account
+                    b(class="caret")
+                    ul.dropdown-menu
+                      li
+                        a(href="/accountManagement/profile") Profile
+                      li
+                        a(href="/accountManagement/notePermissions") Privacy
+                      li
+                        a(href="/accountManagement/settings") Settings
+                      li
+                        a(href="/accountManagement/help") Help
+              | Welcome, #{user.email}
+              &nbsp;&nbsp;
+              a(href="/logout/") logout
 
 
 
-                        else
-                            | Real-time collaborative note-taking
+            else
+              | Real-time collaborative note-taking
 
 
 
 
     -if (error !== undefined && error != "")
-        .alert.alert-error
-            =error
+      .alert.alert-error
+        =error
     -if (success !== undefined && success != "")
-        .alert.alert-success
-            =success
+      .alert.alert-success
+        =success
     -if (info !== undefined && info != "")
-        .alert.alert-info
-            =info
+      .alert.alert-info
+        =info
 
 
 block content
