@@ -52,9 +52,9 @@ describe("register", function () {
     body:mockUser
   };
 
-  it("should fail if no data was recieved from database", function (done) {
+  it("should fail if data was recieved from database", function (done) {
 
-    // Check that register fails if it receives no data
+    // Check that register fails if it receives user data
     var usersFound = [
       {}  // 'empty' user
     ];
@@ -63,7 +63,10 @@ describe("register", function () {
     done();
   });
 
-  it("should succeed and add user if data was received from database", function (done) {
+  it("should succeed and add user if no data was received from database", function (done) {
+
+    // Check that registration succeeds if it receives no data
+    assert.equal(authentication.register([], mockRequest), true);
 
     // Fetch this data from the database
     User.getByEmailAndPassword(mockUser.email, mockUser.password, function (data) {
