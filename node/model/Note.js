@@ -34,6 +34,26 @@ exports.getByUserId = getByUserId = function (user_id, callback){
   */
 };
 
+/**
+ * Get pads that belongs to the lecture_id(group_id)
+ */
+exports.getByLectureId = getByLectureId = function (lecture_id, callback) {
+    client
+      .get(table)
+      .where("lecture_id='"+lecture_id+"'")
+      .limit(30)
+      .execute(callback);
+
+
+/*
+  api.createGroupIfNotExistsFor(lecture_id, function (error, group) {
+    if (error)
+      throw error;
+    console.log(group);
+  });
+ */
+};
+
 
 /**
  *  Create group with groupID
@@ -63,20 +83,6 @@ exports.getByLecture = getByLecture = function getByLecture(lecture, callback) {
 };
 
 
-/**
- * Get pads that belongs to the lecture_id(group_id)
- */
-exports.getByLectureId = getByLectureId = function (lecture_id, callback) {
-
-
-/*
-  api.createGroupIfNotExistsFor(lecture_id, function (error, group) {
-    if (error)
-      throw error;
-    console.log(group);
-  });
- */
-};
 
 
 /**

@@ -1,5 +1,6 @@
 var User = require('../../model/User.js');
 var Note = require('../../model/Note.js');
+var Lecture = require('../../model/Lecture.js');
 var Authentication = require('../../model/Authentication.js');
 
 
@@ -81,35 +82,21 @@ exports.getNotesByUserId = function getNotesByUserId(req, res) {
 exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
   var ret = [];
   var lectureId = req.body.lectureId;
-  var notes = [
-    {
-      id:       9832498,
-      title:    "OH YEA",
-      lectureId:8234
-    },
-    {
-      id:       3429873,
-      title:    "My note",
-      lectureId:8234
-    },
-    {
-      id:       328932,
-      title:    "WOAH",
-      lectureId:8236
-    },
-    {
-      id:       847592,
-      title:    "BOOYAH",
-      lectureId:8236
-    }
-  ];
-  for (i in notes) {
-    if (notes[i].lectureId == lectureId)
-      ret.push(notes[i]);
-  }
-  res.contentType('json');
-  res.send(ret);
+  Note.getByLectureId(lectureId, function(notes){
+    res.contentType('json');
+    res.send(notes);
+  });
 };
+
+exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
+  var ret = [];
+  var lectureId = req.body.lectureId;
+  Note.getByLectureId(lectureId, function(notes){
+    res.contentType('json');
+    res.send(notes);
+  });
+};
+
 
 
 /**
