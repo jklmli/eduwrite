@@ -28,7 +28,7 @@ exports.get = function (id, cb) {
 /*
  * Get all of the lectures for a given course using the course_id
  */
-exports.getByCourse = function (courseId, cb) {
+exports.getByCourseId = function (courseId, cb) {
   client
     .get(table)
     .where("course_id='" + courseId + "'")

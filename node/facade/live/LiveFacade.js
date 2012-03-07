@@ -80,7 +80,6 @@ exports.getNotesByUserId = function getNotesByUserId(req, res) {
 
 
 exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
-  var ret = [];
   var lectureId = req.body.lectureId;
   Note.getByLectureId(lectureId, function(notes){
     res.contentType('json');
@@ -88,15 +87,13 @@ exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
   });
 };
 
-exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
-  var ret = [];
-  var lectureId = req.body.lectureId;
-  Note.getByLectureId(lectureId, function(notes){
+exports.getLecturesByCourseId = function getNotesByCourseId(req, res) {
+  var courseId = req.body.courseId;
+  Lecture.getByCourseId(courseId, function(notes){
     res.contentType('json');
     res.send(notes);
   });
 };
-
 
 
 /**
