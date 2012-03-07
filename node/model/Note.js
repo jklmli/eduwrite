@@ -6,7 +6,12 @@ var table = "notes";
 /**
  * Get notes that belongs to the user.
  */
+
 exports.getByUser = function (user, callback) {
+  getByUserId(user.id,callback);
+};
+
+exports.getByUserId = getByUserId = function (user_id, callback){
     client.get(table).where("user_id='"+user.id+"'").limit(30).execute(callback);
 /*
  * Will be used later
@@ -58,11 +63,15 @@ exports.getByLecture = getByLecture = function getByLecture(lecture, callback) {
  * Get pads that belongs to the lecture_id(group_id)
  */
 exports.getByLectureId = getByLectureId = function (lecture_id, callback) {
+
+
+/*
   api.createGroupIfNotExistsFor(lecture_id, function (error, group) {
     if (error)
       throw error;
     console.log(group);
   });
+ */
 };
 
 
