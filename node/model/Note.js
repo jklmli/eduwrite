@@ -12,7 +12,11 @@ exports.getByUser = function (user, callback) {
 };
 
 exports.getByUserId = getByUserId = function (user_id, callback){
-    client.get(table).where("user_id='"+user.id+"'").limit(30).execute(callback);
+    client
+      .get(table)
+      .where("user_id='"+user.id+"'")
+      .limit(30)
+      .execute(callback);
 /*
  * Will be used later
  *

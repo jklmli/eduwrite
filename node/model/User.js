@@ -28,7 +28,11 @@ var comparePassword = function (password, hash) {
  *  @param callback  The callback to perform on success
  */
 exports.get = function (id, callback) {
-  client.get(table).where("id='" + id + "'").limit(1).execute(callback);
+  client
+    .get(table)
+    .where("id='" + id + "'")
+    .limit(1)
+    .execute(callback);
 };
 
 
@@ -38,7 +42,11 @@ exports.get = function (id, callback) {
  *  @param callback  The callback to perform on success
  */
 exports.getByEmail = function (email, callback) {
-  client.get(table).where("email='" + email + "'").limit(1).execute(callback);
+  client
+    .get(table)
+    .where("email='" + email + "'")
+    .limit(1)
+    .execute(callback);
 };
 
 
@@ -48,7 +56,10 @@ exports.getByEmail = function (email, callback) {
  *  @param callback  The callback to perform on success
  */
 exports.destroy = function (id, callback) {
-  client.destroy(table).where("id='" + id + "'").execute(callback);
+  client
+    .destroy(table)
+    .where("id='" + id + "'")
+    .execute(callback);
 };
 
 
@@ -91,5 +102,7 @@ exports.insert = function (user, callback) {
  *  @param callback  The callback to perform on success
  */
 exports.update = function (user, callback) {
-  client.update(table, user, callback).where("id = " + user);
+  client
+    .update(table, user, callback)
+    .where("id = " + user);
 };
