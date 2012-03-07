@@ -11,6 +11,7 @@ exports.get = function (id, cb) {
 };
 
 
+
 //exports.get_by_id = get; //for Janaki
 
 exports.getBySchoolId = function (schoolId, cb) {

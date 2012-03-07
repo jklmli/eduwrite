@@ -111,6 +111,7 @@ exports.getLecturesByClassId = function getLecturesByClassId(req, res) {
   res.send(ret);
 };
 
+
 exports.getClasses = function getClasses(req, res) {
   var id = req.body.userId;
   res.contentType('json');

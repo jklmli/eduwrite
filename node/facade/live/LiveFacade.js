@@ -95,6 +95,16 @@ exports.getLecturesByCourseId = function getNotesByCourseId(req, res) {
   });
 };
 
+exports.getCourses = function getCourses(req,res){
+  var user = req.session.user;
+  if(!user){
+    res.send("{}");
+  }
+  Course.getByUser(user,function(courses){
+    res.contentType('json');
+    res.send(notes);
+  });
+};
 
 /**
  * Add a new note for some user
