@@ -5,6 +5,7 @@ var databaseName = "eduwrite";
 var databaseHost = '107.21.246.180';
 var client = mysql.createClient({
   host:    databaseHost,
+  database:databaseName,
   user:    'eduwrite',
   password:'cs428cs429'
 });
