@@ -1,4 +1,19 @@
 extends ../accountManagement
 
 block accountManagementContent
-  p profile
+  h3 Contact Information
+  table.table
+    tbody
+      tr
+        td Email Address
+        td #{user.email}
+        td
+          a(href="http://www.yahoo.com") Edit
+
+  h3 Security
+  table.table
+    tbody
+      tr
+        td Password
+        td
+          a(href="/accountManagement/changePassword") Change Password
