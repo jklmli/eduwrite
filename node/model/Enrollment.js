@@ -2,8 +2,10 @@ var client = require("./Database.js").client;
 var table = "enrollment";
 
 /**
+ * Enrollment.js
  * Enrollment model tracks the students' enrollment in the courses.
  */
+
 
 /**
  *  Get an enrollment record by its unique id
