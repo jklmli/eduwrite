@@ -81,3 +81,6 @@ easysync-tests: update-node_modules
 			--slow 20 \
 			--growl \
 			$(EASYSYNC_TESTS)
+
+docs: update-node_modules
+	python bin/generateDocs.py
