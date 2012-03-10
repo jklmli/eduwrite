@@ -19,7 +19,8 @@
                       "mysql"               : "0.9.5",
                       "jshashes"            : "0.1.3b",
                       "bcrypt"              : "0.5.0",
-                      "less"                : "1.2.1"
+                      "less"                : "1.2.1",
+                      "docco"               : "0.3.0"
                      },
   "devDependencies": {
                       "jshint"  : "*",
