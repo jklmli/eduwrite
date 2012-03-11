@@ -99,6 +99,9 @@ function loadNotesByLectureIdCallback(data) {
   }
 }
 
+/**
+ * Triggers the callback to load the user note data.
+ */
 function loadUserNotes() {
 
   $("#user-notes")
@@ -124,6 +127,10 @@ function loadUserNotes() {
 
 }
 
+
+/**
+ * The callback triggered when we've loaded user note data from the server.
+ */
 function loadUserNotesCallback(data) {
   notes = [];
   for (i in data) {
@@ -134,8 +141,11 @@ function loadUserNotesCallback(data) {
   return notes;
 }
 
+/**
+ * Executed when a user clicks on a note from the sidebar, triggers loading a note.
+ */
 function loadNoteIntoUserSpace(event, data) {
-  // `data.rslt.obj` is the jquery extended node that was clicked
-  alert(data.rslt.obj.attr("id") + " should be loaded.");
+   //  var id = data.rslt.obj.attr("id");
+  $('.content').html("<iframe class='noteFrame' src='http://www.bing.com/'></iframe>");
 }
 
