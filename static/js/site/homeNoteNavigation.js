@@ -1,9 +1,10 @@
+// Loads class data and user notes on page load
 $(document).ready(
   function load() {
     loadUserNotes();
     loadClasses();
   }
-)
+);
 
 /**
  * The classes returned by /getClasses.  If we can
@@ -148,4 +149,3 @@ function loadNoteIntoUserSpace(event, data) {
    //  var id = data.rslt.obj.attr("id");
   $('.content').html("<iframe class='noteFrame' src='http://www.bing.com/'></iframe>");
 }
-
