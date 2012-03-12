@@ -2,8 +2,18 @@
 var mockFacade = require('../facade/mock/MockFacade.js');
 var liveFacade = require('../facade/live/LiveFacade.js');
 
-var facade = mockFacade;
+var facade;
 
+//process.argv[2] = portnum
+//process.argv[3] = type of server
+var type = process.argv[3];
+if(type!=null && type=="live"){
+  console.log("live facade running");
+  facade = liveFacade;
+} else {
+  console.log("mock facade running");
+  facade = mockFacade;
+}
 // User registration functions
 exports.getUser = facade.getUser;
 exports.closeAccount = facade.closeAccount;

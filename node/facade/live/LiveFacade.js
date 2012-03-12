@@ -13,7 +13,6 @@ exports.register = function (req, res) {
 
   // Get the user by email address
   User.getByEmail(email, function (usersFound) {
-
     if (Authentication.register(usersFound, req)) {
 
       req.flash("success", "You have been successfully registered to the site");

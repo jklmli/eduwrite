@@ -46,7 +46,7 @@ exports.register = function register(usersFound, req) {
     };
 
     // Register the user
-    User.insert(user);
+    User.insert(user,function(e){console.log(e)});
 
     return true;
   }
