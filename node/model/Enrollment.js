@@ -21,7 +21,7 @@ exports.get = function (id, cb) {
 /**
  *  Get all students in a course
  */
-exports.get = function (courseId, cb) {
+exports.getByCourseId = function (courseId, cb) {
   client
     .get(table)
 	.where("course_id = " + courseId)
@@ -31,7 +31,7 @@ exports.get = function (courseId, cb) {
 /**
  *  Get the instructor(s) for a course
  */
-exports.get = function (courseId, role) {
+exports.getByCourseAndRole = function (courseId, role, cb) {
   client
     .get(table)
 	.where("course_id = " + courseId + " and role = '" + role + "'")
@@ -41,7 +41,7 @@ exports.get = function (courseId, role) {
 /**
  *  Get a student in a course by netid
  */
-exports.get = function (courseId, studentId) {
+exports.getByCourseAndUser = function (courseId, studentId, cb) {
   client
     .get(table)
 	.where("course_id = " + courseId + " and netid = '" + studentId + "'")
