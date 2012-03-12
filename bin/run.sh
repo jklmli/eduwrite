@@ -30,4 +30,15 @@ make build
 #Move to the node folder and start
 echo "start..."
 cd "node"
-node Server.js
+port=9001
+type='mock'
+if [ -n "$1" ]
+then
+  port=$1
+fi
+if [ -n "$2" ]
+then
+  type=$2
+fi
+
+node Server.js $port $type
