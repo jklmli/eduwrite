@@ -1,5 +1,5 @@
 var User = require("./User.js");
-
+var Role = require("./Role.js");
 
 /**
  * Handle return data from the database for user & password, and either allow them to login or reject their login.
@@ -32,7 +32,7 @@ exports.register = function register(usersFound, req) {
 
   var email = req.body.email;
   var password = req.body.password;
-
+  var role = req.body.role;
   // If we found a user with this email, fail, otherwise, succeed
   if (usersFound.length > 0) {
 
@@ -46,8 +46,12 @@ exports.register = function register(usersFound, req) {
     };
 
     // Register the user
-    User.insert(user,function(e){console.log(e)});
+    User.insert(user,function(e){
+      var userId = e.insertId;
+      //TODO: insert into roles once role model is implemented
+    });
 
+   
     return true;
   }
 };
