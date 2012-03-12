@@ -22,6 +22,14 @@ block content
               label.control-label(for='password-confirm-input') Confirm
               .controls
                 input#password-confirm-input.input-medium(type='password')
+
+            .control-group
+              label.control-label(for='') Role
+              .controls
+               label.radio You are a student.
+                  input(type="radio", name="role", id="", value="student", checked="checked")
+               label.radio You are a professor.
+                  input(type="radio", name="role", id="", value="teacher")
             .form-actions
               button.btn.btn-primary(type='submit') Register
               &nbsp;or
