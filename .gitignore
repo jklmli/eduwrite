@@ -1,3 +1,4 @@
+### Etherpad-lite
 node_modules
 settings.json
 static/bootstrap/*
@@ -16,5 +17,6 @@ bin/convertSettings.json
 .idea/
 *.iml
 
-### Auto-gen CSS
+### Auto-generated
+docs/
 static/css/*.*
