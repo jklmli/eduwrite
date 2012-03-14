@@ -90,4 +90,4 @@ easysync-tests: update-node_modules
 			$(EASYSYNC_TESTS)
 
 docs: update-node_modules
-	@@docco-husky -name "Eduwrite" node test
+	@@node_modules/docco-husky/bin/generate -name "Eduwrite" node test
