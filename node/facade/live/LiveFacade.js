@@ -27,6 +27,45 @@ exports.register = function (req, res) {
 };
 
 /**
+ * Resets a user's password and sends it to them in an e-mail
+ */
+exports.resetPassword = function () {
+  var user = req.session.user;
+  var tempPassword = "";
+  //generate a temporary password of 15 random numbers
+  for(var i = 0; i < 15; i++) {
+	tempPassword += Math.random();  
+  }
+  user['password'] = tempPassword;
+  User.update(user, function(e) {
+	//send an e-mail to the user with the new password
+	var message = "Hello,\n We just received a request to reset the password for your account.";
+	message += "Please use the following temporary password to log in and then reset it again immediately.";
+	message += "\n\n" + tempPassword + "\n\n";
+	message += "If you did not request to reset your password, please contact us immediately.";
+	message += "\n\nThanks You\n\n The EduWrite Team";
+	
+	var mailHandler = require("../../../static/node_mailer");
+	email.send({
+      host : "localhost",
+      port : "25",
+      ssl: true,
+      domain : "localhost",
+      to : user['email'],
+      from : "admin@eduwrite.com",
+      subject : "[EduWrite] Password Reset",
+      body: message,
+      authentication : "login",
+	  username : "my_username",
+      password : "my_password"
+    },
+    function(err, result){
+      if(err){ console.log(err); }
+    });
+  })
+}
+
+/**
  * Login a user if they exist and submit correct credentials, fail otherwise.
  */
 exports.login = function (req, res) {
