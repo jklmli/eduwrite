@@ -146,6 +146,6 @@ function loadUserNotesCallback(data) {
  * Executed when a user clicks on a note from the sidebar, triggers loading a note.
  */
 function loadNoteIntoUserSpace(event, data) {
-   //  var id = data.rslt.obj.attr("id");
-  $('.content').html("<iframe class='noteFrame' src='http://www.bing.com/'></iframe>");
+   var id = data.rslt.obj.attr("id");
+  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"></iframe>");
 }
