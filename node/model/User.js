@@ -106,3 +106,4 @@ exports.update = function (user, callback) {
     .update(table, user, callback)
     .where("id = " + user);
 };
+
