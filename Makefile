@@ -4,7 +4,7 @@ EASYSYNC_TESTS = test/easysync/*.js
 CSS = static/css/
 LESS = static/css/less/
 
-.PHONY: test
+.PHONY: run test
 
 # Hacky fix so build-bootstrap can access node_modules tools
 PATH := ${PATH}:../../node_modules/less/bin:../../node_modules/uglify-js/bin
@@ -52,7 +52,11 @@ compile-less:
 	done
 	@@mv $(LESS)*.css $(CSS)
 
-clean: clean-submodules
+clean: clean-node_modules clean-submodules
+
+clean-node_modules:
+	@@echo "Cleaning node modules..."
+	@@rm -rf node_modules/
 
 clean-submodules: clean-bootstrap clean-jquery
 
@@ -63,6 +67,9 @@ clean-bootstrap:
 clean-jquery:
 	@@echo "Cleaning jquery..."
 	@@cd static/jquery && make clean
+
+run: build
+	@@bin/run.sh
 
 test: easysync-tests model-tests 
 
@@ -83,4 +90,4 @@ easysync-tests: update-node_modules
 			$(EASYSYNC_TESTS)
 
 docs: update-node_modules
-	python bin/generateDocs.py
+	@@docco-husky -name "Eduwrite" node test

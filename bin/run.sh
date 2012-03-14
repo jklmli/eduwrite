@@ -23,10 +23,6 @@ fi
 #prepare the enviroment
 bin/installDeps.sh || exit 1
 
-#Build relevant files
-echo "Building files..."
-make build
-
 #Move to the node folder and start
 echo "start..."
 cd "node"

@@ -3,8 +3,21 @@ $(document).ready(
   function load() {
     loadUserNotes();
     loadClasses();
+    $('#new-note-button').click(newNote);
   }
 );
+
+/**
+ * Add event handler for when the new note button is clicked
+ */
+
+
+/**
+ * Function for placing /newPad/ frame
+ */
+function newNote() {
+    $('.content').html("<iframe class='noteFrame' src='/newPad/'></iframe>");
+}
 
 /**
  * The classes returned by /getClasses.  If we can
@@ -146,6 +159,6 @@ function loadUserNotesCallback(data) {
  * Executed when a user clicks on a note from the sidebar, triggers loading a note.
  */
 function loadNoteIntoUserSpace(event, data) {
-   //  var id = data.rslt.obj.attr("id");
-  $('.content').html("<iframe class='noteFrame' src='http://www.bing.com/'></iframe>");
+   var id = data.rslt.obj.attr("id");
+  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
 }
