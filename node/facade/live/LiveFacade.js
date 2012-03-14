@@ -2,24 +2,39 @@ var User = require('../../model/User.js');
 var Note = require('../../model/Note.js');
 var Lecture = require('../../model/Lecture.js');
 var Authentication = require('../../model/Authentication.js');
-
+var mailHandler = require("../../../static/node_mailer");
 
 /**
  * Registers a user if they are not already registered.
  */
 exports.register = function (req, res) {
-
   var email = req.body.email;
 
   // Get the user by email address
   User.getByEmail(email, function (usersFound) {
     if (Authentication.register(usersFound, req)) {
-
       req.flash("success", "You have been successfully registered to the site");
       res.redirect('/');
-
+	  //send an e-mail confirmation to user
+	  var message = "Hello,\n Thank you for registering with EduWrite.  You can now log in and begin looking ";
+	  message += "for the notes associate with your classes.  If you did not sign up for an account with us, ";
+	  message += "please use the following link to remove your information from our system.";
+	  email.send({
+        host : "localhost",
+        port : "25",
+        ssl: true,
+        domain : "localhost",
+        to : user['email'],
+        from : "admin@eduwrite.com",
+        subject : "[EduWrite] Registration Confirmation",
+        body: message,
+        authentication : "login",
+	    username : "my_username",
+        password : "my_password" },
+        function(err, result){
+          if(err){ console.log(err); }
+      });
     } else {
-
       req.flash("error", "User with the email " + email + " already exists");
       res.redirect('back');
     }
@@ -44,8 +59,6 @@ exports.resetPassword = function () {
 	message += "\n\n" + tempPassword + "\n\n";
 	message += "If you did not request to reset your password, please contact us immediately.";
 	message += "\n\nThanks You\n\n The EduWrite Team";
-	
-	var mailHandler = require("../../../static/node_mailer");
 	email.send({
       host : "localhost",
       port : "25",
