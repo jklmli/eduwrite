@@ -3,15 +3,14 @@ $(document).ready(
   function load() {
     loadUserNotes();
     loadClasses();
+    $('#new-note-button').click(newNote);
   }
 );
 
 /**
  * Add event handler for when the new note button is clicked
  */
-$("#new-note-button").click(function() {
-    alert("Handler for .click() called.");
-});
+
 
 /**
  * Function for placing /newPad/ frame
