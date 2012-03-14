@@ -158,7 +158,7 @@ function loadUserNotes() {
         }
       },
       "plugins":[
-        "themes", "json_data", "crrm", "ui"
+        "themes", "json_data", "crrm", "ui", "sort"
       ]
     })
     .bind("select_node.jstree", loadNoteIntoUserSpace)
