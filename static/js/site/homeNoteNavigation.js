@@ -6,6 +6,14 @@ $(document).ready(
   }
 );
 
+$("#new-note-button").click(function() {
+    alert("Handler for .click() called.");
+});
+
+function newNote() {
+    $('.content').html("<iframe class='noteFrame' src='/newPad/'></iframe>");
+}
+
 /**
  * The classes returned by /getClasses.  If we can
  * find a way to get the classes from jstree, we won't need
@@ -147,5 +155,5 @@ function loadUserNotesCallback(data) {
  */
 function loadNoteIntoUserSpace(event, data) {
    var id = data.rslt.obj.attr("id");
-  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"></iframe>");
+  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
 }
