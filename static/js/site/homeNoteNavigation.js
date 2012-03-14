@@ -34,7 +34,7 @@ function loadClasses() {
   $("#notes-tree")
     .bind("loaded.jstree", function (event, data) {
       console.log("TREE IS LOADED");
-      $("#notes-tree").jstree("hide_icons");
+//      $("#notes-tree").jstree("hide_icons");
       for (i in classes) {
         if (classes.hasOwnProperty(i)) {
           loadLecturesByClassId(classes[i].data[0].id);
@@ -43,6 +43,9 @@ function loadClasses() {
 
     })
     .jstree({
+      "plugins":[
+        "themes", "json_data", "crrm", "dnd", "types", "ui"
+      ],
       "json_data":{
         "ajax":{
           "type":"POST",
@@ -50,10 +53,38 @@ function loadClasses() {
           "success":loadClassesCallback
         }
       },
-      "plugins":[
-        "themes", "json_data", "crrm"
-      ]
+      "types": {
+        // only class nodes as root nodes
+        "valid_children" : ["class"],
+          "types" : {
+            "note" : {
+              // This type should have no children
+              "valid_children" : "none",
+              "icon" : {
+                "image" : "/static/img/fileicons.gif"
+              },
+              "select_node" : loadNoteIntoUserSpace
+            },
+            "lecture" : {
+              // can only have notes as children
+              "valid_children" : ["note"],
+              "move_node" : false,
+              "start_drag" : false
+//              "select_node" : false
+            },
+            "class" : {
+              // can have lectures and notes as children
+              "valid_children" : ["lecture", "note"],
+//              "select_node" : false,
+              "move_node" : false,
+              "start_drag" : false
+            }
+        }
+      }
     });
+//    .bind("select_node.jstree", function(e,data){
+//      console.log(data.rslt.obj);
+//    });
 }
 
 /**
@@ -64,7 +95,7 @@ function loadClassesCallback(data) {
   classes = [];
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      classes[i] = {data:data[i], attr:{id:"class" + data[i].id}};
+      classes[i] = {data:data[i], attr:{id:"class" + data[i].id, rel: "class"}};
     }
   }
   return classes;
@@ -88,10 +119,9 @@ function loadLecturesByClassIdCallback(data) {
   var lecture;
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      lecture = {data:data[i], attr:{id:"lecture" + data[i].id}};
+      lecture = {data:data[i], attr:{id:"lecture" + data[i].id, rel: "lecture"}};
       // Add the lecture to the class
-      $("#notes-tree").jstree("create", "#class" + data[i].classId, "inside", lecture);
-      $("#class" + data[i].classId).jstree("show_icons");
+      $("#notes-tree").jstree("create_node", $("#class" + data[i].classId), "inside", lecture);
       $.post("/getNotesByLectureId", {
           lectureId:data[i].id
         },
@@ -103,12 +133,11 @@ function loadLecturesByClassIdCallback(data) {
 }
 
 function loadNotesByLectureIdCallback(data) {
-  console.log(data);
   var note;
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      note = {data:data[i], attr:{id:"note" + data[i].id}};
-      $("#notes-tree").jstree("create", "#lecture" + data[i].lectureId, "inside", note);
+      note = {data:data[i], attr:{id:"note" + data[i].id, rel: "note"}};
+      $("#notes-tree").jstree("create_node", $("#lecture" + data[i].lectureId), "inside", note);
     }
   }
 }
@@ -159,6 +188,6 @@ function loadUserNotesCallback(data) {
  * Executed when a user clicks on a note from the sidebar, triggers loading a note.
  */
 function loadNoteIntoUserSpace(event, data) {
-   var id = data.rslt.obj.attr("id");
+  var id = data.rslt.obj.attr("id");
   $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
 }
