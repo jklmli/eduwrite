@@ -44,7 +44,7 @@ function loadClasses() {
     })
     .jstree({
       "plugins":[
-        "themes", "json_data", "crrm", "dnd", "types", "ui"
+        "themes", "json_data", "crrm", "dnd", "types", "ui", "sort"
       ],
       "json_data":{
         "ajax":{
@@ -82,9 +82,6 @@ function loadClasses() {
         }
       }
     });
-//    .bind("select_node.jstree", function(e,data){
-//      console.log(data.rslt.obj);
-//    });
 }
 
 /**
