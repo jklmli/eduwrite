@@ -36,7 +36,7 @@ exports.resetPassword = function () {
   for(var i = 0; i < 15; i++) {
 	tempPassword += Math.random();  
   }
-  user['password'] = tempPassword;
+  user['password'] = encrypt(tempPassword);
   User.update(user, function(e) {
 	//send an e-mail to the user with the new password
 	var message = "Hello,\n We just received a request to reset the password for your account.";
