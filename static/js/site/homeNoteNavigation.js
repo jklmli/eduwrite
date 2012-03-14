@@ -6,10 +6,16 @@ $(document).ready(
   }
 );
 
+/**
+ * Add event handler for when the new note button is clicked
+ */
 $("#new-note-button").click(function() {
     alert("Handler for .click() called.");
 });
 
+/**
+ * Function for placing /newPad/ frame
+ */
 function newNote() {
     $('.content').html("<iframe class='noteFrame' src='/newPad/'></iframe>");
 }
