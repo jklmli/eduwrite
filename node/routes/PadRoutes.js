@@ -90,7 +90,7 @@ exports.attachPadRoutes = function attachPadRoutes(app, padManager, exportHTML, 
 
   //serve pad.html under /p
   app.get('/p/:pad', function (req, res, next) {
-    var filePath = path.normalize(__dirname + '/../static/pad.html');
+    var filePath = path.normalize(__dirname + '/../../static/pad.html');
     res.sendfile(filePath, { maxAge:exports.maxAge });
   });
 
@@ -113,7 +113,8 @@ exports.attachPadRoutes = function attachPadRoutes(app, padManager, exportHTML, 
 
   // serve index.html under /
   app.get('/newPad/', function (req, res) {
-    var filePath = path.normalize(__dirname + '/../static/index.html');
+    var filePath = path.normalize(__dirname + '/../../static/index.html');
+    console.log(filePath);
     res.sendfile(filePath, { maxAge:exports.maxAge });
   });
 };
@@ -126,7 +127,7 @@ function attachTimesliderRoutes(app, exportHandler, securityManager) {
 
   //serve timeslider.html under /p/$padname/timeslider
   app.get('/p/:pad/timeslider', function (req, res, next) {
-    var filePath = path.normalize(__dirname + '/../static/timeslider.html');
+    var filePath = path.normalize(__dirname + '/../../static/timeslider.html');
     res.sendfile(filePath, { maxAge:exports.maxAge });
   });
 
