@@ -44,7 +44,7 @@ exports.getByCourseAndRole = function (courseId, role, cb) {
 exports.getByCourseAndUser = function (courseId, studentId, cb) {
   client
     .get(table)
-	.where("course_id = " + courseId + " and netid = '" + studentId + "'")
+	.where("course_id = " + courseId + " and student_id = '" + studentId + "'")
 	.limit(1)
 	.execute(cb)
 }

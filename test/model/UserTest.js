@@ -31,23 +31,9 @@ describe('User get_by_email', function () {
   });
 
   it('should return array consisting of single User when User with the email is found', function (done) {
-    /*var d = {email:'test1234@gmail.com', password:'1234'}
-    User.insert(d, function () {
-      User.getByEmail('test1234@gmail.com', function (e) {
-        assert.ok(e.length > 0);
-        var id;
-        for (var i = 0; i < e.length; i++) {
-          assert.equal(e[i].email, 'test1234@gmail.com')
-          id = e[i].id
-        }
-        User.destroy(id, function () {
-          done()
-        });
-      });
-    })*/
     User.getByEmail('a@gmail.com', function(e) {
-      assert.equal(e.length, 1);
-      assert.equal(e[0].id, 1);
+      assert.equal(1, e.length);
+      assert.equal(1, e[0].id);
       done()
     });
   });

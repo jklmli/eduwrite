@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `enrollment` (
   `course_id` int(11) NOT NULL,
   `role` enum('student', 'instructor') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 INSERT INTO `courses` (`id`, `school_id`, `term`, `name`, `course_number`) VALUES
 (1, 1, 'Spring 2012', 'Distributed Systems', 'CS 425'),
@@ -67,4 +67,5 @@ INSERT INTO `users` (`id`, `email`, `password`, `created`) VALUES
 
 INSERT INTO `enrollment` (`id`, `student_id`, `course_id`, `role`) VALUES
 (1, 1, 1, 'student'),
-(2, 2, 1, 'instructor');
+(2, 2, 1, 'instructor'),
+(3, 1, 2, 'instructor');
