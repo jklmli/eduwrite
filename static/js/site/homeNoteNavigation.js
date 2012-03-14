@@ -63,7 +63,11 @@ function loadClasses() {
               "icon" : {
                 "image" : "/static/img/fileicons.gif"
               },
-              "select_node" : loadNoteIntoUserSpace
+              "select_node" : function(node){
+                // put node in data so it works with the function
+                data = {rslt: {obj: node}};
+                loadNoteIntoUserSpace("select_node",data)
+              }
             },
             "lecture" : {
               // can only have notes as children
