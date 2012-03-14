@@ -20,7 +20,8 @@
                       "jshashes"            : "0.1.3b",
                       "bcrypt"              : "0.5.0",
                       "less"                : "1.2.1",
-                      "docco-husky"         : "0.3.1"
+                      "docco-husky"         : "0.3.1",
+                      "nodemailer"          : "0.3.7"
                      },
   "devDependencies": {
                       "jshint"  : "*",
