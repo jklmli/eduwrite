@@ -45,6 +45,12 @@ CREATE TABLE IF NOT EXISTS `enrollment` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
 INSERT INTO `courses` (`id`, `school_id`, `term`, `name`, `course_number`) VALUES
 (1, 1, 'Spring 2012', 'Distributed Systems', 'CS 425'),
 (2, 1, 'Spring 2012', 'Computer Security I', 'CS 461'),
@@ -69,3 +75,9 @@ INSERT INTO `enrollment` (`id`, `student_id`, `course_id`, `role`) VALUES
 (1, 1, 1, 'student'),
 (2, 2, 1, 'instructor'),
 (3, 1, 2, 'instructor');
+
+INSERT INTO `roles` (`id`, `name`) VALUES
+(1, 'Student'),
+(2, 'Professor'),
+(3, 'Moderator'),
+(4, 'Admin');
