@@ -217,9 +217,9 @@ function attachEduWriteRoutes(app) {
   app.get('/notes/add', facadeRoutes.addNote);
   app.post('/updateNote', facadeRoutes.updateNote);
   app.post('/getNotesByLectureId', facadeRoutes.getNotesByLectureId);
-  app.post('/getLecturesByClassId', facadeRoutes.getLecturesByClassId);
+  app.post('/getLecturesByClassId', facadeRoutes.getLecturesByCourseId);
   app.post('/getLecturesByCourseId', facadeRoutes.getLecturesByCourseId);
-  app.post('/getClasses', facadeRoutes.getClasses);
+  app.post('/getClasses', facadeRoutes.getCourses);
   app.post('/getInstructor', facadeRoutes.getInstructor);
   app.post('/addLecture', facadeRoutes.addLecture);
   app.post('/addClass', facadeRoutes.addClass);

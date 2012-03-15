@@ -2,7 +2,7 @@
 $(document).ready(
   function load() {
     loadUserNotes();
-    loadClasses();
+    loadCourses();
 //    $('#new-note-button').click(newNote);
   }
 );
@@ -24,20 +24,20 @@ function newNote() {
  * find a way to get the classes from jstree, we won't need
  * this global variable.
  */
-var classes;
+var courses;
 var notes;
 
 /**
  * Creates a jstree with id="#notes-tree".  Once loaded, lectures and notes are added to the tree.
  */
-function loadClasses() {
+function loadCourses() {
   $("#notes-tree")
     .bind("loaded.jstree", function (event, data) {
       console.log("TREE IS LOADED");
 //      $("#notes-tree").jstree("hide_icons");
-      for (i in classes) {
-        if (classes.hasOwnProperty(i)) {
-          loadLecturesByClassId(classes[i].data[0].id);
+      for (i in courses) {
+        if (courses.hasOwnProperty(i)) {
+          loadLecturesByCourseId(courses[i].data[0].id);
         }
       }
 
@@ -50,12 +50,12 @@ function loadClasses() {
         "ajax":{
           "type":"POST",
           "url":"/getClasses",
-          "success":loadClassesCallback
+          "success":loadCoursesCallback
         }
       },
       "types": {
         // only class nodes as root nodes
-        "valid_children" : ["class"],
+        "valid_children" : ["course"],
           "types" : {
             "note" : {
               // This type should have no children
@@ -75,7 +75,7 @@ function loadClasses() {
               "move_node" : false,
               "start_drag" : false
             },
-            "class" : {
+            "course" : {
               // can have lectures and notes as children
               "valid_children" : ["lecture", "note"],
               "move_node" : false,
@@ -90,23 +90,23 @@ function loadClasses() {
  * Modifies the data returned from the Facade so jstree can recognize each element as a node;
  * @param data
  */
-function loadClassesCallback(data) {
-  classes = [];
+function loadCoursesCallback(data) {
+  courses = [];
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      classes[i] = {data:data[i], attr:{id:"class" + data[i].id, rel: "class"}};
+      courses[i] = {data:data[i], attr:{id:"course" + data[i].id, rel: "course"}};
     }
   }
-  return classes;
+  return courses;
 }
 
 /**
- * calls /getLecturesByClassId
+ * calls /getLecturesByCourseId
  * @param id
  */
-function loadLecturesByClassId(id) {
-  $.post("/getLecturesByClassId", {
-      classId:id
+function loadLecturesByCourseId(id) {
+  $.post("/getLecturesByCourseId", {
+      courseId:id
     },
     loadLecturesByClassIdCallback,
     "json"

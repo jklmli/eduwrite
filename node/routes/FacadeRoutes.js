@@ -33,8 +33,8 @@ exports.updateNote = facade.updateNote;
 exports.getNotesByLectureId = facade.getNotesByLectureId;
 
 // User classes functions
-exports.getLecturesByClassId = facade.getLecturesByClassId;
-exports.getClasses = facade.getClasses;
+exports.getLecturesByCourseId = facade.getLecturesByCourseId;
+exports.getCourses = facade.getCourses;
 exports.getInstructor = facade.getInstructor;
 
 // Instructor functions
