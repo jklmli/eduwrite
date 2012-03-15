@@ -13,7 +13,7 @@ exports.getUser = function getUser(id) {
       someData:    "BLARG",
       someMoreData:"BLARG"
     },
-    classes:        [3, 4]
+    courses:        [3, 4]
   };
 };
 
@@ -75,11 +75,11 @@ exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
 
 
 /**
- * Get the lectures for a class by the class's id
+ * Get the lectures for a course by the course's id
  */
 exports.getLecturesByCourseId = function getLecturesByCourseId(req, res) {
   var ret = [];
-  var courseId = req.body.classId;
+  var courseId = req.body.courseId;
   var courses = [
     {
       id:     8234,
@@ -104,7 +104,7 @@ exports.getLecturesByCourseId = function getLecturesByCourseId(req, res) {
     }
   ];
   for (i in courses) {
-    if (courses[i].classId == courseId)
+    if (courses[i].courseId == courseId)
       ret.push(courses[i]);
   }
   res.contentType('json');

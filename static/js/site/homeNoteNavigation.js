@@ -1,4 +1,4 @@
-// Loads class data and user notes on page load
+// Loads course data and user notes on page load
 $(document).ready(
   function load() {
     loadUserNotes();
@@ -20,8 +20,8 @@ function newNote() {
 }
 
 /**
- * The classes returned by /getClasses.  If we can
- * find a way to get the classes from jstree, we won't need
+ * The course returned by /getCourses.  If we can
+ * find a way to get the courses from jstree, we won't need
  * this global variable.
  */
 var courses;
@@ -49,12 +49,12 @@ function loadCourses() {
       "json_data":{
         "ajax":{
           "type":"POST",
-          "url":"/getClasses",
+          "url":"/getCourses",
           "success":loadCoursesCallback
         }
       },
       "types": {
-        // only class nodes as root nodes
+        // only course nodes as root nodes
         "valid_children" : ["course"],
           "types" : {
             "note" : {
@@ -105,22 +105,24 @@ function loadCoursesCallback(data) {
  * @param id
  */
 function loadLecturesByCourseId(id) {
+  console.log("hi")
   $.post("/getLecturesByCourseId", {
       courseId:id
     },
-    loadLecturesByClassIdCallback,
+    loadLecturesByCourseIdCallback,
     "json"
   );
 
 }
 
-function loadLecturesByClassIdCallback(data) {
+function loadLecturesByCourseIdCallback(data) {
   var lecture;
+  console.log(data)
   for (i in data) {
     if (data.hasOwnProperty(i)) {
       lecture = {data:data[i], attr:{id:"lecture" + data[i].id, rel: "lecture"}};
-      // Add the lecture to the class
-      $("#notes-tree").jstree("create_node", $("#class" + data[i].classId), "inside", lecture);
+      // Add the lecture to the ourse
+      $("#notes-tree").jstree("create_node", $("#course" + data[i].courseId), "inside", lecture);
       $.post("/getNotesByLectureId", {
           lectureId:data[i].id
         },
