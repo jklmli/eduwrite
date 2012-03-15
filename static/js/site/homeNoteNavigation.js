@@ -3,7 +3,10 @@ $(document).ready(
   function load() {
     loadUserNotes();
     loadCourses();
-//    $('#new-note-button').click(newNote);
+
+    $("#newNoteModal").on("show", function() {
+      // implement me!
+    });
   }
 );
 

@@ -7,12 +7,6 @@ block append head
   script(type='text/javascript', src='static/js/site/homeNoteNavigation.js')
   script(type='text/javascript', src='static/jstree/jquery.jstree.js')
 
-.modal#newNoteModal
-  .modal-header
-    a.close(data-dismiss="modal")
-    h3
-      Modal Header
-
 block content
   .container-fluid
     .row-fluid
@@ -22,18 +16,32 @@ block content
             #newNoteModal.modal.hide.fade
               .modal-header
                 a.close(data-dismiss="modal")
-                h4 Create a new note
+                h2 Create a new note
               .modal-body
-                form
-                  table.table
-                    tbody
-                      tr
-                        td Name
-                        td
-                          input.text
-                      tr
-                        td Lecture
-                        td
+                form.form-horizontal
+                  fieldset
+                    .control-group
+                      label.control-label(for="newNoteName") Name
+                      .controls
+                        input.input-xlarge#newNoteName(type="text)
+                    .control-group
+                      label.control-label(for="newNoteClass") Class
+                      .controls
+                        select#newNoteClass
+                          option CS 225
+                          option CS 428
+                    .control-group
+                      label.control-label(for="newNoteLecture") Lecture
+                      .controls
+                        select#newNoteLecture
+                          option Fun
+                          option 428 class
+                    .control-group
+                      label.control-label(for="newNotePrivacy") Privacy
+                      .controls
+                        select#newNotePrivacy
+                          option Only me
+                          option Share with class
 
               .modal-footer
                 a.btn(data-dismiss="modal") Cancel
