@@ -5,10 +5,59 @@ $(document).ready(
     loadCourses();
 
     $("#newNoteModal").on("show", function() {
-      // implement me!
+      // get classes to put in the course select list
+      $.post("/getCourses", null,
+        loadCoursesIntoModal,
+        "json"
+      );
+    });
+    // onchange event for select list
+    $("#newNoteCourse").change(function(e){
+      // use the courses array and the new selected index to get the id
+      var courseId = courses[this.selectedIndex].data.id;
+      // get lectures for course to put in the lecture select list
+      $.post("/getLecturesByCourseId", {
+          courseId: courseId
+        },
+        loadLecturesIntoModal,
+        "json"
+      );
     });
   }
 );
+
+function loadLecturesIntoModal(data){
+  $("#newNoteLecture").empty();
+  for (i in data) {
+    if (data.hasOwnProperty(i)) {
+      // Add the lecture to the modal
+      $("#newNoteLecture").append($("<option></option>")
+        .attr("value", i)
+        .text(data[i].title));
+    }
+  }
+}
+
+function loadCoursesIntoModal(data){
+  courses = loadCoursesCallback(data);
+  $("#newNoteCourse").empty();
+  for (i in courses) {
+    if (courses.hasOwnProperty(i)) {
+      $("#newNoteCourse").append($("<option></option>")
+        .attr("value", i)
+        .text(courses[i].data.title));
+      // load the first classes lectures into the lecture modal!
+      if(i == 0){
+        $.post("/getLecturesByCourseId", {
+            courseId: courses[i].data.id
+          },
+          loadLecturesIntoModal,
+          "json"
+        );
+      }
+    }
+  }
+}
 
 /**
  * Add event handler for when the new note button is clicked
@@ -36,7 +85,6 @@ var notes;
 function loadCourses() {
   $("#notes-tree")
     .bind("loaded.jstree", function (event, data) {
-//      $("#notes-tree").jstree("hide_icons");
       for (i in courses) {
         if (courses.hasOwnProperty(i)) {
           loadLecturesByCourseId(courses[i].data[0].id);
@@ -92,7 +140,6 @@ function loadCourses() {
 
 // Toggles whether the node is open/closed
 function toggleNode(node){
-  console.log(node);
   $("#notes-tree").jstree("toggle_node",node);
 }
 
