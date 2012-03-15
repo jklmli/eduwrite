@@ -75,17 +75,25 @@ function loadCourses() {
               // can only have notes as children
               "valid_children" : ["note"],
               "move_node" : false,
-              "start_drag" : false
+              "start_drag" : false,
+              "select_node" : toggleNode
             },
             "course" : {
               // can have lectures and notes as children
               "valid_children" : ["lecture", "note"],
               "move_node" : false,
-              "start_drag" : false
+              "start_drag" : false,
+              "select_node" : toggleNode
             }
         }
       }
     });
+}
+
+// Toggles whether the node is open/closed
+function toggleNode(node){
+  console.log(node);
+  $("#notes-tree").jstree("toggle_node",node);
 }
 
 /**
