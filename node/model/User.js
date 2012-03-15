@@ -104,6 +104,6 @@ exports.insert = function (user, callback) {
 exports.update = function (user, callback) {
   client
     .update(table, user, callback)
-    .where("id = " + user);
+    .where("id = " + user); //Are you sure you are not feeding in user.id ?
 };
 

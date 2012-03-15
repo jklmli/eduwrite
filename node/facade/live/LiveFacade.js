@@ -1,5 +1,6 @@
 var User = require('../../model/User.js');
 var Note = require('../../model/Note.js');
+var Course = require('../../model/Course.js');
 var Lecture = require('../../model/Lecture.js');
 var Authentication = require('../../model/Authentication.js');
 var mailHandler = require("../../../static/node_mailer");
@@ -24,7 +25,7 @@ exports.register = function (req, res) {
         port : "25",
         ssl: true,
         domain : "localhost",
-        to : user['email'],
+        to : email,
         from : "admin@eduwrite.com",
         subject : "[EduWrite] Registration Confirmation",
         body: message,
@@ -140,9 +141,9 @@ exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
 
 exports.getLecturesByCourseId = function getNotesByCourseId(req, res) {
   var courseId = req.body.courseId;
-  Lecture.getByCourseId(courseId, function(notes){
+  Lecture.getByCourseId(courseId, function(lectures){
     res.contentType('json');
-    res.send(notes);
+    res.send(lectures);
   });
 };
 
@@ -153,7 +154,7 @@ exports.getCourses = function getCourses(req,res){
   }
   Course.getByUser(user,function(courses){
     res.contentType('json');
-    res.send(notes);
+    res.send(courses);
   });
 };
 

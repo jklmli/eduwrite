@@ -45,6 +45,9 @@ function changeHost(newDatabaseHost) {
   client.query('USE ' + databaseName);
 }
 
+function trim(str){
+  return str.replace(/^\s*|\s*$/g, '');
+}
 
 /**
  * Extends existing node-mysql connector library
@@ -52,14 +55,30 @@ function changeHost(newDatabaseHost) {
 var Client = mysql.Client;
 
 Client.prototype.sql = "";
+/**
+ * Construct a SQL statement to fetch specific columns
+ *  @param columns wanted to fetch
+ */
+Client.prototype.select = function (select) {
+  this.sql = "select "+select+" from ";
+  return this;
+};
 
+/**
+ * Construct a SQL statement to choose a table
+ *  @param table to use
+ */
+Client.prototype.from = function (table){
+  this.sql+=table+" ";
+  return this;
+}
 
 /**
  * Construct a SQL statement to fetch all rows of a table
  *  @param table The name of the table from which to get data
  */
 Client.prototype.get = function (table) {
-  this.sql = "select * from " + table;
+  this.sql = "select * from " + table+" ";
   return this;
 };
 
@@ -69,7 +88,7 @@ Client.prototype.get = function (table) {
  *  @param table The name of the table from which to delete data
  */
 Client.prototype.destroy = function (table) {
-  this.sql = "delete from " + table;
+  this.sql = "delete from " + table+" ";
   return this;
 };
 
@@ -79,9 +98,19 @@ Client.prototype.destroy = function (table) {
  *  @param where  The WHERE clause to add
  */
 Client.prototype.where = function (where) {
-  this.sql += " where " + where;
+  this.sql += "where " + where + " ";
   return this;
 };
+
+/**
+ * Add a join clause to the current SQL query
+ *  @param targetTable The targetTable of JOIN(inner) caluse
+ *  @param condition The condition of JOIN(inner) clause
+ */
+Client.prototype.join = function(targetTable,condition){
+  this.sql += "JOIN "+targetTable+" ON "+condition+" ";
+  return this;
+}
 
 
 /**
@@ -92,7 +121,7 @@ Client.prototype.where = function (where) {
 Client.prototype.limit = function (limit, offset) {
   offset = typeof(offset) != 'undefined' ? offset : 0;
   limit = typeof(limit) != 'undefined' ? limit : 10;
-  this.sql += " limit " + offset + "," + limit;
+  this.sql += " limit " + offset + "," + limit + " ";
   return this;
 };
 
@@ -101,7 +130,7 @@ Client.prototype.limit = function (limit, offset) {
  *  Excutes 'select' based queries
  */
 Client.prototype.execute = function (cb) {
-  var q = this.sql;
+  var q = trim(this.sql);
 
   //prints out the query for debugging purpose
   console.log(q);
@@ -148,13 +177,13 @@ Client.prototype.update = function (table, obj, cb) {
  * General function that will feed eturn data from database
  * to the callback method provided
  */
-var returnResult = function (cb) {
+var returnResult = function (callback) {
   return function (err, results, fields) {
     if (err) {
       throw err;
     }
-    if (cb) {
-      cb(results);
+    if (callback) {
+      callback(results);
     }
   }
 };
