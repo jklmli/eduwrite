@@ -94,6 +94,7 @@ function loadCoursesCallback(data) {
   for (i in data) {
     if (data.hasOwnProperty(i)) {
       courses[i] = {data:data[i], attr:{id:"course" + data[i].id, rel: "course"}};
+      courses[i].data.title = courses[i].data.name;
     }
   }
   return courses;
