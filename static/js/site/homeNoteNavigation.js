@@ -3,7 +3,7 @@ $(document).ready(
   function load() {
     loadUserNotes();
     loadClasses();
-    $('#new-note-button').click(newNote);
+//    $('#new-note-button').click(newNote);
   }
 );
 
@@ -74,12 +74,10 @@ function loadClasses() {
               "valid_children" : ["note"],
               "move_node" : false,
               "start_drag" : false
-//              "select_node" : false
             },
             "class" : {
               // can have lectures and notes as children
               "valid_children" : ["lecture", "note"],
-//              "select_node" : false,
               "move_node" : false,
               "start_drag" : false
             }
@@ -190,5 +188,6 @@ function loadUserNotesCallback(data) {
  */
 function loadNoteIntoUserSpace(event, data) {
   var id = data.rslt.obj.attr("id");
-  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
+//  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
+  $('.content').html("<iframe class='noteFrame' src='/newPad/'></iframe>");
 }

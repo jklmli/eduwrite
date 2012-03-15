@@ -3,8 +3,15 @@ extends layout
 block append head
   link(rel='stylesheet', href='/static/css/home.css')
   script(type='text/javascript', src='http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js')
+  script(type='text/javascript', src='static/bootstrap/js/bootstrap-modal.js')
   script(type='text/javascript', src='static/js/site/homeNoteNavigation.js')
   script(type='text/javascript', src='static/jstree/jquery.jstree.js')
+
+.modal#newNoteModal
+  .modal-header
+    a.close(data-dismiss="modal")
+    h3
+      Modal Header
 
 block content
   .container-fluid
@@ -12,7 +19,22 @@ block content
       .span2
         .well
           .tabbable
-            button.btn#new-note-button(data-toggle='button') New Note
+            #newNoteModal.modal.hide.fade
+              .modal-header
+                a.close(data-dismiss="modal")
+                h4 Create a new note
+              .modal-body
+                table.table
+                  tbody
+                    tr
+                      td Name
+                      td
+                        form
+                          input.text
+              .modal-footer
+                a.btn(data-dismiss="modal") Cancel
+                a.btn.btn-primary(href="#") Create Note
+            a.btn#new-note-button(data-toggle="modal", href="#newNoteModal") New Note
             ul.nav.nav-tabs
               li.active
                 a(data-toggle='tab', href='#1') All Notes
