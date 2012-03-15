@@ -33,7 +33,6 @@ var notes;
 function loadCourses() {
   $("#notes-tree")
     .bind("loaded.jstree", function (event, data) {
-      console.log("TREE IS LOADED");
 //      $("#notes-tree").jstree("hide_icons");
       for (i in courses) {
         if (courses.hasOwnProperty(i)) {
@@ -105,19 +104,16 @@ function loadCoursesCallback(data) {
  * @param id
  */
 function loadLecturesByCourseId(id) {
-  console.log("hi")
   $.post("/getLecturesByCourseId", {
       courseId:id
     },
     loadLecturesByCourseIdCallback,
     "json"
   );
-
 }
 
 function loadLecturesByCourseIdCallback(data) {
   var lecture;
-  console.log(data)
   for (i in data) {
     if (data.hasOwnProperty(i)) {
       lecture = {data:data[i], attr:{id:"lecture" + data[i].id, rel: "lecture"}};
