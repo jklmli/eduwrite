@@ -13,7 +13,7 @@ exports.getUser = function getUser(id) {
       someData:    "BLARG",
       someMoreData:"BLARG"
     },
-    classes:        [3, 4]
+    courses:        [3, 4]
   };
 };
 
@@ -75,44 +75,44 @@ exports.getNotesByLectureId = function getNotesByLectureId(req, res) {
 
 
 /**
- * Get the lectures for a class by the class's id
+ * Get the lectures for a course by the course's id
  */
-exports.getLecturesByClassId = function getLecturesByClassId(req, res) {
+exports.getLecturesByCourseId = function getLecturesByCourseId(req, res) {
   var ret = [];
-  var classId = req.body.classId;
-  var classes = [
+  var courseId = req.body.courseId;
+  var courses = [
     {
       id:     8234,
       number: 1,
-      classId:3,
+      courseId:3,
       date:   "1/25/2012",
       title:  "BST Trees (1)"
     },
     {
       id:     8235,
       number: 2,
-      classId:3,
+      courseId:3,
       date:   "2/1/2012",
       title:  "AVL Trees"
     },
     {
       id:     8236,
       number: 1,
-      classId:4,
+      courseId:4,
       date:   "2/1/2012",
       title:  "File I/O"
     }
   ];
-  for (i in classes) {
-    if (classes[i].classId == classId)
-      ret.push(classes[i]);
+  for (i in courses) {
+    if (courses[i].courseId == courseId)
+      ret.push(courses[i]);
   }
   res.contentType('json');
   res.send(ret);
 };
 
 
-exports.getClasses = function getClasses(req, res) {
+exports.getCourses = function getCourses(req, res) {
   var id = req.body.userId;
   res.contentType('json');
   res.send([

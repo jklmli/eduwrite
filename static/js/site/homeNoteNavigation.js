@@ -1,12 +1,63 @@
-// Loads class data and user notes on page load
+// Loads course data and user notes on page load
 $(document).ready(
   function load() {
     loadUserNotes();
-    loadClasses();
-    $('.new-note-button').click(newNote);
+    loadCourses();
 
+    $("#newNoteModal").on("show", function() {
+      // get classes to put in the course select list
+      $.post("/getCourses", null,
+        loadCoursesIntoModal,
+        "json"
+      );
+    });
+    // onchange event for select list
+    $("#newNoteCourse").change(function(e){
+      // use the courses array and the new selected index to get the id
+      var courseId = courses[this.selectedIndex].data.id;
+      // get lectures for course to put in the lecture select list
+      $.post("/getLecturesByCourseId", {
+          courseId: courseId
+        },
+        loadLecturesIntoModal,
+        "json"
+      );
+    });
   }
 );
+
+function loadLecturesIntoModal(data){
+  $("#newNoteLecture").empty();
+  for (i in data) {
+    if (data.hasOwnProperty(i)) {
+      // Add the lecture to the modal
+      $("#newNoteLecture").append($("<option></option>")
+        .attr("value", i)
+        .text(data[i].title));
+    }
+  }
+}
+
+function loadCoursesIntoModal(data){
+  courses = loadCoursesCallback(data);
+  $("#newNoteCourse").empty();
+  for (i in courses) {
+    if (courses.hasOwnProperty(i)) {
+      $("#newNoteCourse").append($("<option></option>")
+        .attr("value", i)
+        .text(courses[i].data.title));
+      // load the first classes lectures into the lecture modal!
+      if(i == 0){
+        $.post("/getLecturesByCourseId", {
+            courseId: courses[i].data.id
+          },
+          loadLecturesIntoModal,
+          "json"
+        );
+      }
+    }
+  }
+}
 
 /**
  * Add event handler for when the new note button is clicked
@@ -21,24 +72,22 @@ function newNote() {
 }
 
 /**
- * The classes returned by /getClasses.  If we can
- * find a way to get the classes from jstree, we won't need
+ * The course returned by /getCourses.  If we can
+ * find a way to get the courses from jstree, we won't need
  * this global variable.
  */
-var classes;
+var courses;
 var notes;
 
 /**
  * Creates a jstree with id="#notes-tree".  Once loaded, lectures and notes are added to the tree.
  */
-function loadClasses() {
+function loadCourses() {
   $("#notes-tree")
     .bind("loaded.jstree", function (event, data) {
-      console.log("TREE IS LOADED");
-//      $("#notes-tree").jstree("hide_icons");
-      for (i in classes) {
-        if (classes.hasOwnProperty(i)) {
-          loadLecturesByClassId(classes[i].data[0].id);
+      for (i in courses) {
+        if (courses.hasOwnProperty(i)) {
+          loadLecturesByCourseId(courses[i].data[0].id);
         }
       }
 
@@ -47,16 +96,16 @@ function loadClasses() {
       plugins:[
         "themes", "json_data", "crrm", "dnd", "types", "ui", "sort"
       ],
-      json_data:{
-        ajax:{
-          type:"POST",
-          url:"/getClasses",
-          success:loadClassesCallback
+      "json_data":{
+        "ajax":{
+          "type":"POST",
+          "url":"/getCourses",
+          "success":loadCoursesCallback
         }
       },
-      types: {
-        // only class nodes as root nodes
-        valid_children : ["class"],
+      "types": {
+        // only course nodes as root nodes
+        "valid_children" : ["course"],
           "types" : {
             "note" : {
               // This type should have no children
@@ -74,56 +123,61 @@ function loadClasses() {
               // can only have notes as children
               "valid_children" : ["note"],
               "move_node" : false,
-              "start_drag" : false
-//              "select_node" : false
+              "start_drag" : false,
+              "select_node" : toggleNode
             },
-            "class" : {
+            "course" : {
               // can have lectures and notes as children
               "valid_children" : ["lecture", "note"],
-//              "select_node" : false,
               "move_node" : false,
-              "start_drag" : false
+              "start_drag" : false,
+              "select_node" : toggleNode
             }
         }
       }
     });
 }
 
+// Toggles whether the node is open/closed
+function toggleNode(node){
+  $("#notes-tree").jstree("toggle_node",node);
+}
+
 /**
  * Modifies the data returned from the Facade so jstree can recognize each element as a node;
  * @param data
  */
-function loadClassesCallback(data) {
-  classes = [];
+function loadCoursesCallback(data) {
+  courses = [];
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      classes[i] = {data:data[i], attr:{id:"class" + data[i].id, rel: "class"}};
+      courses[i] = {data:data[i], attr:{id:"course" + data[i].id, rel: "course"}};
+      courses[i].data.title = courses[i].data.name;
     }
   }
-  return classes;
+  return courses;
 }
 
 /**
- * calls /getLecturesByClassId
+ * calls /getLecturesByCourseId
  * @param id
  */
-function loadLecturesByClassId(id) {
-  $.post("/getLecturesByClassId", {
-      classId:id
+function loadLecturesByCourseId(id) {
+  $.post("/getLecturesByCourseId", {
+      courseId:id
     },
-    loadLecturesByClassIdCallback,
+    loadLecturesByCourseIdCallback,
     "json"
   );
-
 }
 
-function loadLecturesByClassIdCallback(data) {
+function loadLecturesByCourseIdCallback(data) {
   var lecture;
   for (i in data) {
     if (data.hasOwnProperty(i)) {
       lecture = {data:data[i], attr:{id:"lecture" + data[i].id, rel: "lecture"}};
-      // Add the lecture to the class
-      $("#notes-tree").jstree("create_node", $("#class" + data[i].classId), "inside", lecture);
+      // Add the lecture to the ourse
+      $("#notes-tree").jstree("create_node", $("#course" + data[i].courseId), "inside", lecture);
       $.post("/getNotesByLectureId", {
           lectureId:data[i].id
         },
@@ -191,5 +245,6 @@ function loadUserNotesCallback(data) {
  */
 function loadNoteIntoUserSpace(event, data) {
   var id = data.rslt.obj.attr("id");
-  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
+//  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
+  $('.content').html("<iframe class='noteFrame' src='/newPad/'></iframe>");
 }

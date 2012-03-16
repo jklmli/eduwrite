@@ -18,8 +18,8 @@ exports.get = function (id, callback) {
 
 
 /**
- * Gets an element from a table in the database by its email
- *  @param email     The id of the entry to grab
+ * Gets an role from a table in the database by its name
+ *  @param name     The name of the entry to grab
  *  @param callback  The callback to perform on success
  */
 exports.getByName = function (name, callback) {
@@ -45,10 +45,58 @@ exports.getByUser = function (user, callback){
  *  @param callback  The callback to perform on success
  */
 exports.getByUserId = getByUserId = function(userId, callback){
-    //TODO:left join roles and roles_users
-    
+  //1. inner join user.id and relationTable.user_id
+  //2. uses result from 1 to get roles
+  //3. retur data
+  var condition1 = relationTable+".user_id="+userId;
+  var condition2 = relationTable+".role_id="+table+".id";
+  var condition = condition1+" AND "+condition2;
+  client
+    .get(table)
+    .join(relationTable,condition)
+    .execute(callback);   
 }
 
+/**
+ * Checks if user has role
+ *  @param userId The user id
+ *  @param roleName Name of the role
+ *  @return 
+ */
+exports.hasRole = hasRole = function(userId, roleName, callback){
+  getByUserId(userId,function(results){
+    for(var i = 0; i<results.length;i++){
+      var role = results[i];
+      if(role.name==roleName){
+        callback(true);
+      }
+    }
+    callback(false);
+  });
+}
+
+/**
+ * Assign a role specified by name to the user
+ *  @param userId   The user id of user
+ *  @param callback The callback to perform on success
+ */
+exports.assignByRoleName = function(userId, roleName, callback){
+  hasRole(userId,roleName,function(hasRole){
+    if(hasRole===true){
+      //do nothing if user already has the role
+      return;
+    } else {
+    } 
+  });
+}
+
+
+
+exports.assignByRoleId = function(userId, roleId, callback){
+
+}
+
+  
 
 /**
  * Removes an element from a table in the database given its id
@@ -63,8 +111,8 @@ exports.destroy = function (id, callback) {
 };
 
 /**
- * Inserts a user into the database
- *  @param user      The user data
+ * Inserts a role into the database
+ *  @param role      The role object data
  *  @param callback  The callback to perform on success
  */
 exports.insert = function (role, callback) {
@@ -73,8 +121,8 @@ exports.insert = function (role, callback) {
 
 
 /**
- * Updates a user into the database
- *  @param user      The user
+ * Updates a role into the database
+ *  @param role      The role
  *  @param callback  The callback to perform on success
  */
 exports.update = function (role, callback) {
