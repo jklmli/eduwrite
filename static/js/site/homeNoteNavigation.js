@@ -3,7 +3,8 @@ $(document).ready(
   function load() {
     loadUserNotes();
     loadClasses();
-    $('#new-note-button').click(newNote);
+    $('.new-note-button').click(newNote);
+
   }
 );
 
@@ -43,19 +44,19 @@ function loadClasses() {
 
     })
     .jstree({
-      "plugins":[
+      plugins:[
         "themes", "json_data", "crrm", "dnd", "types", "ui", "sort"
       ],
-      "json_data":{
-        "ajax":{
-          "type":"POST",
-          "url":"/getClasses",
-          "success":loadClassesCallback
+      json_data:{
+        ajax:{
+          type:"POST",
+          url:"/getClasses",
+          success:loadClassesCallback
         }
       },
-      "types": {
+      types: {
         // only class nodes as root nodes
-        "valid_children" : ["class"],
+        valid_children : ["class"],
           "types" : {
             "note" : {
               // This type should have no children

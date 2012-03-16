@@ -12,13 +12,12 @@ block content
       .span3
         .well
           .tabbable
-            button.btn#new-note-button(data-toggle='button') New Note
             ul.nav.nav-tabs
               li.active
                 a(data-toggle='tab', href='#1') All Notes
               li
                 a(data-toggle='tab', href='#2') Your Notes
-
+              a.icon-file.new-note-button(rel='tootltip', title='Create new note')
             .tab-content
 
               .tab-pane#1.active
@@ -28,6 +27,7 @@ block content
               .tab-pane#2
 
                 #user-notes
+
 
       .span6
         .content

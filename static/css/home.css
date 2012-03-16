@@ -21,3 +21,8 @@
     width: 100%;
     height: 800px; /* Just to get something for demonstration purposes for now */
 }
+
+.new-note-button {
+    margin: 8px;
+    float: right;
+}
