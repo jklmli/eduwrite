@@ -1,12 +1,14 @@
 var log4js = require('log4js');
 var formidable = require('formidable');
 
-module.exports = {
+module.exports = new function() {
+  var _this = this;
+
   /**
    * Attach API handlers to the server
    * @param app A handle on the HTTP server
    */
-  attachAPIRoutes: function (app) {
+  this.attachAPIRoutes = function(app) {
 
     // A logger just for API actions
     var apiLogger = log4js.getLogger('API');
@@ -19,7 +21,7 @@ module.exports = {
 
       //wrap the send function so we can log the response
       res._send = res.send;
-      res.send = function (response) {
+      res.send = function(response) {
         response = JSON.stringify(response);
         apiLogger.info('RESPONSE, ' + req.params.func + ', ' + response);
 
@@ -36,15 +38,17 @@ module.exports = {
     };
 
     // This is a api GET call, collect all post informations and pass it to the apiHandler
-    app.get('/api/1/:func', function (req, res) {
+    app.get('/api/1/:func', function(req, res) {
       apiCaller(req, res, req.query)
     });
 
     // This is an api POST call, collect all post informations and pass it to the apiHandler
-    app.post('/api/1/:func', function (req, res) {
-      new formidable.IncomingForm().parse(req, function (err, fields, files) {
+    app.post('/api/1/:func', function(req, res) {
+      new formidable.IncomingForm().parse(req, function(err, fields, files) {
         apiCaller(req, res, fields)
       });
     });
-  }
-}
+  };
+
+  return this;
+};

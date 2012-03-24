@@ -3,14 +3,16 @@ var async = require('async');
 var asyncStacktrace = require('async-stacktrace');
 var settings = require('../utils/Settings.js');
 
-module.exports = {
+module.exports = new function() {
+  var _this = this;
+
   /**
    * Attach pad-specific routes
    */
-  attachPadRoutes: function (app, padManager, exportHTML, importHandler, exportHandler, securityManager, readOnlyManager) {
+  this.attachPadRoutes = function(app, padManager, exportHTML, importHandler, exportHandler, securityManager, readOnlyManager) {
 
     // Redirects browser to the pad's sanitized url if needed. otherwise, renders the html
-    app.param('pad', function (req, res, next, padId) {
+    app.param('pad', function(req, res, next, padId) {
 
       // Ensure the padname is valid and the url doesn't end with a /
       if (!padManager.isValidPadId(padId) || /\/$/.test(req.url)) {
@@ -19,7 +21,7 @@ module.exports = {
 
       } else {
 
-        padManager.sanitizePadId(padId, function (sanitizedPadId) {
+        padManager.sanitizePadId(padId, function(sanitizedPadId) {
 
           // The pad id was sanitized, so we redirect to the sanitized version
           if (sanitizedPadId != padId) {
@@ -36,7 +38,7 @@ module.exports = {
     });
 
     //serve read only pad
-    app.get('/ro/:id', function (req, res) {
+    app.get('/ro/:id', function(req, res) {
       var html;
       var padId;
       var pad;
@@ -44,8 +46,8 @@ module.exports = {
       async.series([
 
         //translate the read only pad to a padId
-        function (callback) {
-          readOnlyManager.getPadId(req.params.id, function (err, _padId) {
+        function(callback) {
+          readOnlyManager.getPadId(req.params.id, function(err, _padId) {
             if (asyncStacktrace(err, callback)) return;
 
             padId = _padId;
@@ -58,7 +60,7 @@ module.exports = {
         },
 
         //render the html document
-        function (callback) {
+        function(callback) {
 
           //return if the there is no padId
           if (padId == null) {
@@ -66,17 +68,17 @@ module.exports = {
             return;
           }
 
-          hasPadAccess(req, res, function () {
+          hasPadAccess(req, res, function() {
 
             //render the html document
-            exportHTML.getPadHTMLDocument(padId, null, false, function (err, _html) {
+            exportHTML.getPadHTMLDocument(padId, null, false, function(err, _html) {
               if (asyncStacktrace(err, callback)) return;
               html = _html;
               callback();
             });
           }, securityManager);
         }
-      ], function (err) {
+      ], function(err) {
 
         //throw any unexpected error
         if (err && err != 'notfound')
@@ -90,7 +92,7 @@ module.exports = {
     });
 
     //serve pad.html under /p
-    app.get('/p/:pad', function (req, res, next) {
+    app.get('/p/:pad', function(req, res, next) {
       var filePath = path.normalize(__dirname + '/../../static/pad.html');
       res.sendfile(filePath, { maxAge: exports.maxAge });
     });
@@ -99,7 +101,7 @@ module.exports = {
     attachTimesliderRoutes(app, exportHandler, securityManager);
 
     //handle import requests
-    app.post('/p/:pad/import', function (req, res, next) {
+    app.post('/p/:pad/import', function(req, res, next) {
 
       //if abiword is disabled, skip handling this request
       if (settings.abiword == null) {
@@ -107,18 +109,20 @@ module.exports = {
         return;
       }
 
-      hasPadAccess(req, res, function () {
+      hasPadAccess(req, res, function() {
         importHandler.doImport(req, res, req.params.pad);
       }, securityManager);
     });
 
     // serve index.html under /
-    app.get('/newPad/', function (req, res) {
+    app.get('/newPad/', function(req, res) {
       var filePath = path.normalize(__dirname + '/../../static/index.html');
       console.log(filePath);
       res.sendfile(filePath, { maxAge: exports.maxAge });
     });
-  }
+  };
+
+  return this;
 };
 
 /**
@@ -127,13 +131,13 @@ module.exports = {
 function attachTimesliderRoutes(app, exportHandler, securityManager) {
 
   //serve timeslider.html under /p/$padname/timeslider
-  app.get('/p/:pad/timeslider', function (req, res, next) {
+  app.get('/p/:pad/timeslider', function(req, res, next) {
     var filePath = path.normalize(__dirname + '/../../static/timeslider.html');
     res.sendfile(filePath, { maxAge: exports.maxAge });
   });
 
   //serve timeslider.html under /p/$padname/timeslider
-  app.get('/p/:pad/:rev?/export/:type', function (req, res, next) {
+  app.get('/p/:pad/:rev?/export/:type', function(req, res, next) {
     var types = ['pdf', 'doc', 'txt', 'html', 'odt', 'dokuwiki'];
 
     //send a 404 if we don't support this filetype
@@ -151,7 +155,7 @@ function attachTimesliderRoutes(app, exportHandler, securityManager) {
 
     res.header('Access-Control-Allow-Origin', '*');
 
-    hasPadAccess(req, res, function () {
+    hasPadAccess(req, res, function() {
       exportHandler.doExport(req, res, req.params.pad, req.params.type);
     }, securityManager);
   });
@@ -163,7 +167,7 @@ function attachTimesliderRoutes(app, exportHandler, securityManager) {
  *  @param  callback  The callback to perform if access is granted
  */
 function hasPadAccess(req, res, callback, securityManager) {
-  securityManager.checkAccess(req.params.pad, req.cookies.sessionid, req.cookies.token, req.cookies.password, function (err, accessObj) {
+  securityManager.checkAccess(req.params.pad, req.cookies.sessionid, req.cookies.token, req.cookies.password, function(err, accessObj) {
     if (asyncStacktrace(err, callback)) {
       return;
     }

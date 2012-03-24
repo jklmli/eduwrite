@@ -4,20 +4,21 @@
 
 var loggedIn = {};
 
-module.exports = {
+module.exports = new function() {
+  var _this = this;
+
   /**
    * Register a new user account (just logs them in)
    */
-  register: function (req, res) {
-    this.login(req, res);
-  },
+  this.register = function(req, res) {
+    _this.login(req, res);
+  };
 
   /**
    * Logs the user in without authentication
    */
-  login: function (req, res) {
-
-    if (!this.isLoggedIn(req.session)) {
+  this.login = function(req, res) {
+    if (!_this.isLoggedIn(req.session)) {
 
       var email = req.param('email');
       var password = req.param('password');
@@ -41,14 +42,14 @@ module.exports = {
       console.log('Error, already logged in as ' + req.session.user.email + '!');
     }
     res.redirect('/');
-  },
+  };
 
   /**
    * Log out of the user's current session
    */
-  logout: function (req, res) {
+  this.logout = function(req, res) {
 
-    if (this.isLoggedIn(req.session)) {
+    if (_this.isLoggedIn(req.session)) {
 
       var email = req.session.user.email;
       loggedIn[email] = false;
@@ -60,15 +61,17 @@ module.exports = {
     } else {
       res.redirect('/');
     }
-  },
+  };
 
   /**
    * Checks if a user is logged in. (Silly implementation)
    *  @param session  The session from the request
    */
-  isLoggedIn: function (session) {
+  this.isLoggedIn = function(session) {
     if (session && session.user)
       console.log("Checking logged in..." + loggedIn[session.user.email]);
     return session && session.user && loggedIn[session.user.email];
-  }
+  };
+
+  return this;
 };

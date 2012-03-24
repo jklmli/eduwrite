@@ -11,7 +11,7 @@ var client = mysql.createClient({
 });
 
 // Create database if it does not exists
-client.query('CREATE DATABASE IF NOT EXISTS ' + databaseName, function (err) {
+client.query('CREATE DATABASE IF NOT EXISTS ' + databaseName, function(err) {
   if (err && err.number) {
     throw err;
   } else {
@@ -56,7 +56,7 @@ Client.prototype.sql = "";
  * Construct a SQL statement to fetch specific columns
  *  @param select columns wanted to fetch
  */
-Client.prototype.select = function (select) {
+Client.prototype.select = function(select) {
   this.sql = "select " + select + " from ";
   return this;
 };
@@ -65,7 +65,7 @@ Client.prototype.select = function (select) {
  * Construct a SQL statement to choose a table
  *  @param table to use
  */
-Client.prototype.from = function (table) {
+Client.prototype.from = function(table) {
   this.sql += table + " ";
   return this;
 };
@@ -74,7 +74,7 @@ Client.prototype.from = function (table) {
  * Construct a SQL statement to fetch all rows of a table
  *  @param table The name of the table from which to get data
  */
-Client.prototype.get = function (table) {
+Client.prototype.get = function(table) {
   this.sql = "select * from " + table + " ";
   return this;
 };
@@ -83,7 +83,7 @@ Client.prototype.get = function (table) {
  * Construct a SQL statement to fetch all rows of a table
  *  @param table The name of the table from which to delete data
  */
-Client.prototype.destroy = function (table) {
+Client.prototype.destroy = function(table) {
   this.sql = "delete from " + table + " ";
   return this;
 };
@@ -92,7 +92,7 @@ Client.prototype.destroy = function (table) {
  * Add a where clause to the current SQL queyr
  *  @param where  The WHERE clause to add
  */
-Client.prototype.where = function (where) {
+Client.prototype.where = function(where) {
   this.sql += "where " + where + " ";
   return this;
 };
@@ -102,7 +102,7 @@ Client.prototype.where = function (where) {
  *  @param targetTable The targetTable of JOIN(inner) caluse
  *  @param condition The condition of JOIN(inner) clause
  */
-Client.prototype.join = function (targetTable, condition) {
+Client.prototype.join = function(targetTable, condition) {
   this.sql += "JOIN " + targetTable + " ON " + condition + " ";
   return this;
 };
@@ -112,7 +112,7 @@ Client.prototype.join = function (targetTable, condition) {
  *  @param limit  The limit of the number of entries to fetch
  *  @param offset The entry number with which to start fetching
  */
-Client.prototype.limit = function (limit, offset) {
+Client.prototype.limit = function(limit, offset) {
   offset = typeof(offset) != 'undefined' ? offset : 0;
   limit = typeof(limit) != 'undefined' ? limit : 10;
   this.sql += " limit " + offset + "," + limit + " ";
@@ -122,7 +122,7 @@ Client.prototype.limit = function (limit, offset) {
 /**
  *  Excutes 'select' based queries
  */
-Client.prototype.execute = function (cb) {
+Client.prototype.execute = function(cb) {
   var q = trim(this.sql);
 
   //prints out the query for debugging purpose
@@ -135,7 +135,7 @@ Client.prototype.execute = function (cb) {
 /**
  *  Helper method to insert data into the database
  */
-Client.prototype.insert = function (table, obj, cb) {
+Client.prototype.insert = function(table, obj, cb) {
   var q = "insert into " + table + " set ";
 
   var values = [];
@@ -153,7 +153,7 @@ Client.prototype.insert = function (table, obj, cb) {
 /**
  *  Helper method to update existing data in the database
  */
-Client.prototype.update = function (table, obj, cb) {
+Client.prototype.update = function(table, obj, cb) {
   var q = "update" + table + " set ";
   var values = [];
   for (var key in obj) {
@@ -171,8 +171,8 @@ Client.prototype.update = function (table, obj, cb) {
  * General function that will feed eturn data from database
  * to the callback method provided
  */
-var returnResult = function (callback) {
-  return function (err, results, fields) {
+var returnResult = function(callback) {
+  return function(err, results, fields) {
     if (err) {
       throw err;
     }
@@ -182,9 +182,13 @@ var returnResult = function (callback) {
   }
 };
 
-module.exports = {
-  database: databaseName,
-  client: client,
-  changeDatabase: changeDatabase,
-  changeHost: changeHost
+module.exports = new function() {
+  var _this = this;
+
+  this.database = databaseName;
+  this.client = client;
+  this.changeDatabase = changeDatabase;
+  this.changeHost = changeHost;
+
+  return this;
 };

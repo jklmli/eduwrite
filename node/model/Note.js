@@ -3,15 +3,17 @@ var user = require('./User.js');
 var api = require("../db/API.js");
 var table = "notes";
 
-module.exports = {
+module.exports = new function() {
+  var _this = this;
+
   /**
    * Get notes that belongs to the user.
    */
-  getByUser: function (user, callback) {
-    this.getByUserId(user.id, callback);
-  },
+  this.getByUser = function(user, callback) {
+    _this.getByUserId(user.id, callback);
+  };
 
-  getByUserId: function (user_id, callback) {
+  this.getByUserId = function(user_id, callback) {
     client
       .get(table)
       .where("user_id='" + user.id + "'")
@@ -32,12 +34,12 @@ module.exports = {
      getByAuthorId(user.aid, callback);
      }
      */
-  },
+  };
 
   /**
    * Get pads that belongs to the lecture_id(group_id)
    */
-  getByLectureId: function (lecture_id, callback) {
+  this.getByLectureId = function(lecture_id, callback) {
     client
       .get(table)
       .where("lecture_id='" + lecture_id + "'")
@@ -51,64 +53,66 @@ module.exports = {
      console.log(group);
      });
      */
-  },
+  };
 
   /**
    *  Create group with groupID
    */
-  createGroup: function (groupID) {
-    api.createGroupIfNotExistsFor(groupID, function (e) {
+  this.createGroup = function(groupID) {
+    api.createGroupIfNotExistsFor(groupID, function(e) {
       console.log(e);
     });
-  },
+  };
 
   /**
    * Get pads that belong to the author_id of the user
    */
-  getByAuthorId: function (aid, name, callback) {
+  this.getByAuthorId = function(aid, name, callback) {
     //TODO:get sessions by user
     //get groups that the author belongs to
     //get pads for each group
-  },
+  };
 
   /**
    * Get pads that belongs to the lecture(group)
    */
-  getByLecture: function (lecture, callback) {
-    this.getByLectureId(lecture.id, callback);
-  },
+  this.getByLecture = function(lecture, callback) {
+    _this.getByLectureId(lecture.id, callback);
+  };
 
   /**
    * Set password for the pad with padID
    */
-  setPassword: function (padID, password, cb) {
-    api.setPassword(padID, password, function (err, response) {
+  this.setPassword = function(padID, password, cb) {
+    api.setPassword(padID, password, function(err, response) {
       if (err)
         throw err;
       cb(response);
     })
-  },
+  };
 
   /**
    * Create pad that does not belong to any group
    */
-  create: function (user_id, lecture_id, callback) {
+  this.create = function(user_id, lecture_id, callback) {
     var note = {user_id: user_id, lecture_id: lecture_id};
-    client.insert(table, note, function (e) {
+    client.insert(table, note, function(e) {
       console.log(e);
     });
 
     //api.createPad(padID, "", function(err,response){
 
     //});
-  },
+  };
 
   /**
    * Destroy pad with specific ID
    */
-  destroy: function (padID, callback) {
-    api.deletePad(padID, function (err, response) {
+  this.destroy = function(padID, callback) {
+    api.deletePad(padID, function(err, response) {
       callback(response);
     });
-  }
+  };
+
+  return this;
 };

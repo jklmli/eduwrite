@@ -1,10 +1,12 @@
 var authentication = require('./MockAuthentication.js');
 
-module.exports = {
+module.exports = new function() {
+  var _this = this;
+
   /**
    * Get a user by his/her id
    */
-  getUser: function (id) {
+  this.getUser = function(id) {
     return {
       id: 1,
       userName: req.session.userName,
@@ -16,12 +18,12 @@ module.exports = {
       },
       courses: [3, 4]
     };
-  },
+  };
 
   /**
    * Get the notes for a user by his/her id
    */
-  getNotesByUserId: function (req, res) {
+  this.getNotesByUserId = function(req, res) {
     var userId = req.body.userId;
     res.contentType('json');
     res.send([
@@ -36,12 +38,12 @@ module.exports = {
         location: "notes\\note5002"
       }
     ]);
-  },
+  };
 
   /**
    * Get the notes for a lecture by its id
    */
-  getNotesByLectureId: function (req, res) {
+  this.getNotesByLectureId = function(req, res) {
     var ret = [];
 
     var lectureId = req.body.lectureId;
@@ -76,12 +78,12 @@ module.exports = {
 
     res.contentType('json');
     res.send(ret);
-  },
+  };
 
   /**
    * Get the lectures for a course by the course's id
    */
-  getLecturesByCourseId: function (req, res) {
+  this.getLecturesByCourseId = function(req, res) {
     var ret = [];
     var courseId = req.body.courseId;
 
@@ -117,9 +119,9 @@ module.exports = {
 
     res.contentType('json');
     res.send(ret);
-  },
+  };
 
-  getCourses: function (req, res) {
+  this.getCourses = function(req, res) {
     var id = req.body.userId;
 
     var courses = [
@@ -137,11 +139,13 @@ module.exports = {
 
     res.contentType('json');
     res.send(courses);
-  },
+  };
 
   // Expose the login/logout functions from authentication
-  login: authentication.login,
-  register: authentication.register,
-  logout: authentication.logout,
-  isLoggedIn: authentication.isLoggedIn
+  this.login = authentication.login;
+  this.register = authentication.register;
+  this.logout = authentication.logout;
+  this.isLoggedIn = authentication.isLoggedIn;
+
+  return this;
 };

@@ -5,15 +5,17 @@ var Lecture = require('../../model/Lecture.js');
 var Authentication = require('../../model/Authentication.js');
 var mailHandler = require("../../../static/node_mailer");
 
-module.exports = {
+module.exports = new function() {
+  var _this = this;
+
   /**
    * Registers a user if they are not already registered.
    */
-  register: function (req, res) {
+  this.register = function(req, res) {
     var email = req.body.email;
 
     // Get the user by email address
-    User.getByEmail(email, function (usersFound) {
+    User.getByEmail(email, function(usersFound) {
       if (Authentication.register(usersFound, req)) {
 
         req.flash("success", "You have been successfully registered to the site");
@@ -48,12 +50,12 @@ module.exports = {
         res.redirect('back');
       }
     });
-  },
+  };
 
   /**
    * Resets a user's password and sends it to them in an e-mail
    */
-  resetPassword: function () {
+  this.resetPassword = function() {
     var user = req.session.user;
     var tempPassword = "";
     //generate a temporary password of 15 random numbers
@@ -61,7 +63,7 @@ module.exports = {
       tempPassword += Math.random();
     }
     user['password'] = encrypt(tempPassword);
-    User.update(user, function (e) {
+    User.update(user, function(e) {
       //send an e-mail to the user with the new password
       var message = "Hello,\n We just received a request to reset the password for your account.";
       message += "Please use the following temporary password to log in and then reset it again immediately.";
@@ -81,23 +83,23 @@ module.exports = {
           username: "my_username",
           password: "my_password"
         },
-        function (err, result) {
+        function(err, result) {
           if (err) {
             console.log(err);
           }
         });
     });
-  },
+  };
 
   /**
    * Login a user if they exist and submit correct credentials, fail otherwise.
    */
-  login: function (req, res) {
+  this.login = function(req, res) {
 
     var email = req.body.email;
     var password = req.body.password;
 
-    User.getByEmailAndPassword(email, password, function (usersFound) {
+    User.getByEmailAndPassword(email, password, function(usersFound) {
 
       // Display login success or failure message based on whether or not the login succeeded
       if (Authentication.login(usersFound, req)) {
@@ -112,66 +114,63 @@ module.exports = {
 
       }
     });
-  },
-
+  };
 
   /**
    * Get the notes for some user
    */
-  getNotes: function (req, res) {
+  this.getNotes = function(req, res) {
     var user = req.session.user;
-    Note.getByUser(user, function (err, notes) {
+    Note.getByUser(user, function(err, notes) {
       console.log(notes);
     });
-  },
-
+  };
 
   /**
    * Get the notes for some user
    */
-  getNotesByUserId: function (req, res) {
+  this.getNotesByUserId = function(req, res) {
     var user = req.session.user;
     if (!user) {
       res.send("{}");
     }
-    Note.getByUser(user, function (notes) {
+    Note.getByUser(user, function(notes) {
       res.contentType('json');
       res.send(notes);
     });
-  },
+  };
 
-
-  getNotesByLectureId: function (req, res) {
+  this.getNotesByLectureId = function(req, res) {
     var lectureId = req.body.lectureId;
-    Note.getByLectureId(lectureId, function (notes) {
+    Note.getByLectureId(lectureId, function(notes) {
       res.contentType('json');
       res.send(notes);
     });
-  },
+  };
 
-  getLecturesByCourseId: function (req, res) {
+  this.getLecturesByCourseId = function(req, res) {
     var courseId = req.body.courseId;
-    Lecture.getByCourseId(courseId, function (lectures) {
+    Lecture.getByCourseId(courseId, function(lectures) {
       res.contentType('json');
       res.send(lectures);
     });
-  },
+  };
 
-  getCourses: function (req, res) {
+  this.getCourses = function(req, res) {
     var user = req.session.user;
     if (!user) {
       res.send("{}");
     }
-    Course.getByUser(user, function (courses) {
+    Course.getByUser(user, function(courses) {
       res.contentType('json');
       res.send(courses);
     });
-  },
+  };
 
   /**
    * Add a new note for some user
    */
-  addNote: function (req, res) {
+  this.addNote = function(req, res) {
     var user = req.session.user;
     if (!user) {
       res.send("Please login first");
@@ -179,5 +178,7 @@ module.exports = {
     Note.create(user.id, 1, null);
     res.send("Hello world");
   }
+
+  return this;
 };
 
