@@ -8,14 +8,14 @@ module.exports = {
   /**
    * Register a new user account (just logs them in)
    */
-  register:function register(req, res) {
+  register:function (req, res) {
     this.login(req, res);
   },
 
   /**
    * Logs the user in without authentication
    */
-  login:function login(req, res) {
+  login:function (req, res) {
 
     if (!this.isLoggedIn(req.session)) {
 
