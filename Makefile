@@ -33,11 +33,7 @@ update-node_modules:
 	@@echo "Updating node modules..."
 	@@npm install -d
 
-build-submodules: build-bootstrap build-jquery
-
-build-bootstrap:
-	@@echo "Building bootstrap..."
-	@@cd static/bootstrap && make bootstrap
+build-submodules: build-jquery
 
 build-jquery:
 	@@echo "Building jquery..."
@@ -56,11 +52,7 @@ clean-node_modules:
 	@@echo "Cleaning node modules..."
 	@@rm -rf node_modules/
 
-clean-submodules: clean-bootstrap clean-jquery
-
-clean-bootstrap:
-	@@echo "Cleaning bootstrap..."
-	@@rm -rf static/bootstrap/bootstrap/
+clean-submodules: clean-jquery
 
 clean-jquery:
 	@@echo "Cleaning jquery..."
