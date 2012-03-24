@@ -46,7 +46,7 @@ module.exports = new function() {
   this.getNotesByLectureId = function(req, res) {
     var ret = [];
 
-    var lectureId = req.body.lectureId;
+    var lectureId = parseInt(req.body.lectureId);
     var notes = [
       {
         id: 9832498,
@@ -85,7 +85,7 @@ module.exports = new function() {
    */
   this.getLecturesByCourseId = function(req, res) {
     var ret = [];
-    var courseId = req.body.courseId;
+    var courseId = parseInt(req.body.courseId);
 
     var lectures = [
       {
