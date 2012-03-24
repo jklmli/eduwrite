@@ -7,7 +7,7 @@ module.exports = {
    *
    * @param usersFound    The user data retrieved from the database
    */
-  login:function (usersFound, req) {
+  login: function (usersFound, req) {
 
     // If we couldn't find a user by this email/password, fail, otherwise, succeed
     if (usersFound.length < 1) {
@@ -28,7 +28,7 @@ module.exports = {
    *
    * @param usersFound  The data retrieved from the database
    */
-  register:function (usersFound, req) {
+  register: function (usersFound, req) {
 
     var email = req.body.email;
     var password = req.body.password;
@@ -39,8 +39,8 @@ module.exports = {
     } else {
 
       var user = {
-        email:email,
-        password:password
+        email: email,
+        password: password
       };
 
       // Register the user

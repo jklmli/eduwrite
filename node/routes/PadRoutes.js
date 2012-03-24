@@ -7,7 +7,7 @@ module.exports = {
   /**
    * Attach pad-specific routes
    */
-  attachPadRoutes:function (app, padManager, exportHTML, importHandler, exportHandler, securityManager, readOnlyManager) {
+  attachPadRoutes: function (app, padManager, exportHTML, importHandler, exportHandler, securityManager, readOnlyManager) {
 
     // Redirects browser to the pad's sanitized url if needed. otherwise, renders the html
     app.param('pad', function (req, res, next, padId) {
@@ -92,7 +92,7 @@ module.exports = {
     //serve pad.html under /p
     app.get('/p/:pad', function (req, res, next) {
       var filePath = path.normalize(__dirname + '/../../static/pad.html');
-      res.sendfile(filePath, { maxAge:exports.maxAge });
+      res.sendfile(filePath, { maxAge: exports.maxAge });
     });
 
     // Attach the routes for handling interaction with the time slider for notes
@@ -116,7 +116,7 @@ module.exports = {
     app.get('/newPad/', function (req, res) {
       var filePath = path.normalize(__dirname + '/../../static/index.html');
       console.log(filePath);
-      res.sendfile(filePath, { maxAge:exports.maxAge });
+      res.sendfile(filePath, { maxAge: exports.maxAge });
     });
   }
 };
@@ -129,7 +129,7 @@ function attachTimesliderRoutes(app, exportHandler, securityManager) {
   //serve timeslider.html under /p/$padname/timeslider
   app.get('/p/:pad/timeslider', function (req, res, next) {
     var filePath = path.normalize(__dirname + '/../../static/timeslider.html');
-    res.sendfile(filePath, { maxAge:exports.maxAge });
+    res.sendfile(filePath, { maxAge: exports.maxAge });
   });
 
   //serve timeslider.html under /p/$padname/timeslider

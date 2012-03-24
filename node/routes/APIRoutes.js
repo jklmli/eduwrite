@@ -6,7 +6,7 @@ module.exports = {
    * Attach API handlers to the server
    * @param app A handle on the HTTP server
    */
-  attachAPIRoutes:function (app) {
+  attachAPIRoutes: function (app) {
 
     // A logger just for API actions
     var apiLogger = log4js.getLogger('API');

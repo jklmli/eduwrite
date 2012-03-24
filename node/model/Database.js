@@ -4,10 +4,10 @@ var mysql = require('mysql');
 var databaseName = "eduwrite";
 var databaseHost = '107.21.246.180';
 var client = mysql.createClient({
-  host:databaseHost,
-  database:databaseName,
-  user:'eduwrite',
-  password:'cs428cs429'
+  host: databaseHost,
+  database: databaseName,
+  user: 'eduwrite',
+  password: 'cs428cs429'
 });
 
 // Create database if it does not exists
@@ -35,9 +35,9 @@ function changeDatabase(newDatabaseName) {
 function changeHost(newDatabaseHost) {
   databaseHost = newDatabaseHost;
   client = mysql.createClient({
-    host:databaseHost,
-    user:client.user,
-    password:client.password
+    host: databaseHost,
+    user: client.user,
+    password: client.password
   });
   client.query('USE ' + databaseName);
 }
@@ -183,8 +183,8 @@ var returnResult = function (callback) {
 };
 
 module.exports = {
-  database:databaseName,
-  client:client,
-  changeDatabase:changeDatabase,
-  changeHost:changeHost
+  database: databaseName,
+  client: client,
+  changeDatabase: changeDatabase,
+  changeHost: changeHost
 };

@@ -2,15 +2,15 @@ module.exports = {
   /**
    * Displays the homepage if the user is logged in, redirects to the login page otherwise.
    */
-  home:function (request, response) {
+  home: function (request, response) {
 
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
       // Render the homepage template
       response.render('home', {
-        title:'EduWrite',
-        loggedIn:true
+        title: 'EduWrite',
+        loggedIn: true
       });
 
     } else {
@@ -21,34 +21,34 @@ module.exports = {
   /**
    * Display the 'about' page with general information about EduWrite
    */
-  about:function (request, response) {
+  about: function (request, response) {
     response.render('about', {
-      title:'About EduWrite'
+      title: 'About EduWrite'
     });
   },
 
   /**
    * Display the user registration page
    */
-  register:function (request, response) {
+  register: function (request, response) {
     response.render('users/register', {
-      title:'Register for EduWrite'
+      title: 'Register for EduWrite'
     });
   },
 
   /**
    * Display the user login page
    */
-  login:function (request, response) {
+  login: function (request, response) {
     response.render('users/login', {
-      title:'Login to EduWrite'
+      title: 'Login to EduWrite'
     });
   },
 
   /**
    * Display the user logout page
    */
-  logout:function (request, response) {
+  logout: function (request, response) {
     request.session.user = null;
     request.flash("success", "You have been successfully logged out from the site");
     response.redirect('/');
@@ -59,7 +59,7 @@ module.exports = {
    * @param request
    * @param response
    */
-  accountManagement:function (request, response) {
+  accountManagement: function (request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
@@ -70,13 +70,13 @@ module.exports = {
     }
   },
 
-  accountManagementProfile:function (request, response) {
+  accountManagementProfile: function (request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
       // Render the accountManagement page template
       response.render('users/accountManagement/profile', {
-        title:'Profile'
+        title: 'Profile'
       });
 
     } else {
@@ -84,13 +84,13 @@ module.exports = {
     }
   },
 
-  accountManagementNotePermissions:function (request, response) {
+  accountManagementNotePermissions: function (request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
       // Render the accountManagement page template
       response.render('users/accountManagement/notePermissions', {
-        title:'Note Permissions'
+        title: 'Note Permissions'
       });
 
     } else {
@@ -98,13 +98,13 @@ module.exports = {
     }
   },
 
-  accountManagementSettings:function (request, response) {
+  accountManagementSettings: function (request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
       // Render the accountManagement page template
       response.render('users/accountManagement/settings', {
-        title:'Settings'
+        title: 'Settings'
       });
 
     } else {
@@ -112,13 +112,13 @@ module.exports = {
     }
   },
 
-  accountManagementHelp:function (request, response) {
+  accountManagementHelp: function (request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
       // Render the accountManagement page template
       response.render('users/accountManagement/help', {
-        title:'Help'
+        title: 'Help'
       });
 
     } else {

@@ -25,7 +25,7 @@ module.exports = {
    *  @param id        The id of the entry to grab
    *  @param callback  The callback to perform on success
    */
-  get:function (id, callback) {
+  get: function (id, callback) {
     client
       .get(table)
       .where("id='" + id + "'")
@@ -38,7 +38,7 @@ module.exports = {
    *  @param email     The id of the entry to grab
    *  @param callback  The callback to perform on success
    */
-  getByEmail:function (email, callback) {
+  getByEmail: function (email, callback) {
     client
       .get(table)
       .where("email='" + email + "'")
@@ -51,7 +51,7 @@ module.exports = {
    *  @param id        The id of the entry to grab
    *  @param callback  The callback to perform on success
    */
-  destroy:function (id, callback) {
+  destroy: function (id, callback) {
     client
       .destroy(table)
       .where("id='" + id + "'")
@@ -62,7 +62,7 @@ module.exports = {
    * Gets an element from a table in the database by its hashed email and password
    *  @param callback  The callback to perform on success
    */
-  getByEmailAndPassword:function (email, password, callback) {
+  getByEmailAndPassword: function (email, password, callback) {
     client.get(table).where("email='" + email + "'").limit(1).execute(function (data) {
       if (data.length < 1) {
         callback(data);
@@ -83,7 +83,7 @@ module.exports = {
    *  @param user      The user data
    *  @param callback  The callback to perform on success
    */
-  insert:function (user, callback) {
+  insert: function (user, callback) {
     user.password = encrypt(user.password);
     client.insert(table, user, callback);
   },
@@ -93,7 +93,7 @@ module.exports = {
    *  @param user      The user
    *  @param callback  The callback to perform on success
    */
-  update:function (user, callback) {
+  update: function (user, callback) {
     client
       .update(table, user, callback)
       .where("id = " + user); //Are you sure you are not feeding in user.id ?

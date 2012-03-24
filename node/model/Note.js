@@ -7,11 +7,11 @@ module.exports = {
   /**
    * Get notes that belongs to the user.
    */
-  getByUser:function (user, callback) {
+  getByUser: function (user, callback) {
     this.getByUserId(user.id, callback);
   },
 
-  getByUserId:function (user_id, callback) {
+  getByUserId: function (user_id, callback) {
     client
       .get(table)
       .where("user_id='" + user.id + "'")
@@ -37,7 +37,7 @@ module.exports = {
   /**
    * Get pads that belongs to the lecture_id(group_id)
    */
-  getByLectureId:function (lecture_id, callback) {
+  getByLectureId: function (lecture_id, callback) {
     client
       .get(table)
       .where("lecture_id='" + lecture_id + "'")
@@ -56,7 +56,7 @@ module.exports = {
   /**
    *  Create group with groupID
    */
-  createGroup:function (groupID) {
+  createGroup: function (groupID) {
     api.createGroupIfNotExistsFor(groupID, function (e) {
       console.log(e);
     });
@@ -65,7 +65,7 @@ module.exports = {
   /**
    * Get pads that belong to the author_id of the user
    */
-  getByAuthorId:function (aid, name, callback) {
+  getByAuthorId: function (aid, name, callback) {
     //TODO:get sessions by user
     //get groups that the author belongs to
     //get pads for each group
@@ -74,14 +74,14 @@ module.exports = {
   /**
    * Get pads that belongs to the lecture(group)
    */
-  getByLecture:function (lecture, callback) {
+  getByLecture: function (lecture, callback) {
     this.getByLectureId(lecture.id, callback);
   },
 
   /**
    * Set password for the pad with padID
    */
-  setPassword:function (padID, password, cb) {
+  setPassword: function (padID, password, cb) {
     api.setPassword(padID, password, function (err, response) {
       if (err)
         throw err;
@@ -92,8 +92,8 @@ module.exports = {
   /**
    * Create pad that does not belong to any group
    */
-  create:function (user_id, lecture_id, callback) {
-    var note = {user_id:user_id, lecture_id:lecture_id};
+  create: function (user_id, lecture_id, callback) {
+    var note = {user_id: user_id, lecture_id: lecture_id};
     client.insert(table, note, function (e) {
       console.log(e);
     });
@@ -106,7 +106,7 @@ module.exports = {
   /**
    * Destroy pad with specific ID
    */
-  destroy:function (padID, callback) {
+  destroy: function (padID, callback) {
     api.deletePad(padID, function (err, response) {
       callback(response);
     });

@@ -10,7 +10,7 @@ module.exports = {
   /*
    * Insert a new lecture into the table
    */
-  insert:function (lecture, cb) {
+  insert: function (lecture, cb) {
     client
       .insert(table, lecture, cb);
   },

@@ -9,7 +9,7 @@ module.exports = {
   /**
    * Registers a user if they are not already registered.
    */
-  register:function (req, res) {
+  register: function (req, res) {
     var email = req.body.email;
 
     // Get the user by email address
@@ -53,7 +53,7 @@ module.exports = {
   /**
    * Resets a user's password and sends it to them in an e-mail
    */
-  resetPassword:function () {
+  resetPassword: function () {
     var user = req.session.user;
     var tempPassword = "";
     //generate a temporary password of 15 random numbers
@@ -69,17 +69,17 @@ module.exports = {
       message += "If you did not request to reset your password, please contact us immediately.";
       message += "\n\nThanks You\n\n The EduWrite Team";
       email.send({
-          host:"localhost",
-          port:"25",
-          ssl:true,
-          domain:"localhost",
-          to:user['email'],
-          from:"admin@eduwrite.com",
-          subject:"[EduWrite] Password Reset",
-          body:message,
-          authentication:"login",
-          username:"my_username",
-          password:"my_password"
+          host: "localhost",
+          port: "25",
+          ssl: true,
+          domain: "localhost",
+          to: user['email'],
+          from: "admin@eduwrite.com",
+          subject: "[EduWrite] Password Reset",
+          body: message,
+          authentication: "login",
+          username: "my_username",
+          password: "my_password"
         },
         function (err, result) {
           if (err) {
@@ -92,7 +92,7 @@ module.exports = {
   /**
    * Login a user if they exist and submit correct credentials, fail otherwise.
    */
-  login:function (req, res) {
+  login: function (req, res) {
 
     var email = req.body.email;
     var password = req.body.password;
@@ -118,7 +118,7 @@ module.exports = {
   /**
    * Get the notes for some user
    */
-  getNotes:function (req, res) {
+  getNotes: function (req, res) {
     var user = req.session.user;
     Note.getByUser(user, function (err, notes) {
       console.log(notes);
@@ -129,7 +129,7 @@ module.exports = {
   /**
    * Get the notes for some user
    */
-  getNotesByUserId:function (req, res) {
+  getNotesByUserId: function (req, res) {
     var user = req.session.user;
     if (!user) {
       res.send("{}");
@@ -141,7 +141,7 @@ module.exports = {
   },
 
 
-  getNotesByLectureId:function (req, res) {
+  getNotesByLectureId: function (req, res) {
     var lectureId = req.body.lectureId;
     Note.getByLectureId(lectureId, function (notes) {
       res.contentType('json');
@@ -149,7 +149,7 @@ module.exports = {
     });
   },
 
-  getLecturesByCourseId:function (req, res) {
+  getLecturesByCourseId: function (req, res) {
     var courseId = req.body.courseId;
     Lecture.getByCourseId(courseId, function (lectures) {
       res.contentType('json');
@@ -157,7 +157,7 @@ module.exports = {
     });
   },
 
-  getCourses:function (req, res) {
+  getCourses: function (req, res) {
     var user = req.session.user;
     if (!user) {
       res.send("{}");
@@ -171,7 +171,7 @@ module.exports = {
   /**
    * Add a new note for some user
    */
-  addNote:function (req, res) {
+  addNote: function (req, res) {
     var user = req.session.user;
     if (!user) {
       res.send("Please login first");
