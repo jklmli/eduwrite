@@ -43,6 +43,7 @@ module.exports = {
    */
   getNotesByLectureId:function (req, res) {
     var ret = [];
+
     var lectureId = req.body.lectureId;
     var notes = [
       {
@@ -66,10 +67,13 @@ module.exports = {
         lectureId:8236
       }
     ];
-    for (i in notes) {
-      if (notes[i].lectureId == lectureId)
+
+    var i, len;
+    for (i = 0, len = notes.length; i < len; i++) {
+      if (notes[i].lectureId === lectureId)
         ret.push(notes[i]);
     }
+
     res.contentType('json');
     res.send(ret);
   },
@@ -80,7 +84,8 @@ module.exports = {
   getLecturesByCourseId:function (req, res) {
     var ret = [];
     var courseId = req.body.courseId;
-    var courses = [
+
+    var lectures = [
       {
         id:8234,
         number:1,
@@ -103,18 +108,21 @@ module.exports = {
         title:"File I/O"
       }
     ];
-    for (i in courses) {
-      if (courses[i].courseId == courseId)
-        ret.push(courses[i]);
+
+    var i, len;
+    for (i = 0, len = lectures.length; i < len; i++) {
+      if (lectures[i].courseId === courseId)
+        ret.push(lectures[i]);
     }
+
     res.contentType('json');
     res.send(ret);
   },
 
   getCourses:function (req, res) {
     var id = req.body.userId;
-    res.contentType('json');
-    res.send([
+
+    var courses = [
       {
         id:3,
         name:"CS 225",
@@ -125,7 +133,10 @@ module.exports = {
         name:"CS 241",
         title:"Systems Programming"
       }
-    ]);
+    ];
+
+    res.contentType('json');
+    res.send(courses);
   },
 
   // Expose the login/logout functions from authentication
