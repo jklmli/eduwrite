@@ -4,7 +4,7 @@ module.exports = new function() {
   /**
    * Displays the homepage if the user is logged in, redirects to the login page otherwise.
    */
-  this.home = function (request, response) {
+  this.home = function(request, response) {
 
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
@@ -23,7 +23,7 @@ module.exports = new function() {
   /**
    * Display the 'about' page with general information about EduWrite
    */
-  this.about = function (request, response) {
+  this.about = function(request, response) {
     response.render('about', {
       title: 'About EduWrite'
     });
@@ -32,7 +32,7 @@ module.exports = new function() {
   /**
    * Display the user registration page
    */
-  this.register = function (request, response) {
+  this.register = function(request, response) {
     response.render('users/register', {
       title: 'Register for EduWrite'
     });
@@ -41,7 +41,7 @@ module.exports = new function() {
   /**
    * Display the user login page
    */
-  this.login = function (request, response) {
+  this.login = function(request, response) {
     response.render('users/login', {
       title: 'Login to EduWrite'
     });
@@ -50,7 +50,7 @@ module.exports = new function() {
   /**
    * Display the user logout page
    */
-  this.logout = function (request, response) {
+  this.logout = function(request, response) {
     request.session.user = null;
     request.flash("success", "You have been successfully logged out from the site");
     response.redirect('/');
@@ -61,7 +61,7 @@ module.exports = new function() {
    * @param request
    * @param response
    */
-  this.accountManagement = function (request, response) {
+  this.accountManagement = function(request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
@@ -72,7 +72,7 @@ module.exports = new function() {
     }
   };
 
-  this.accountManagementProfile = function (request, response) {
+  this.accountManagementProfile = function(request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
@@ -86,7 +86,7 @@ module.exports = new function() {
     }
   };
 
-  this.accountManagementNotePermissions = function (request, response) {
+  this.accountManagementNotePermissions = function(request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
@@ -100,7 +100,7 @@ module.exports = new function() {
     }
   };
 
-  this.accountManagementSettings = function (request, response) {
+  this.accountManagementSettings = function(request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
@@ -114,7 +114,7 @@ module.exports = new function() {
     }
   };
 
-  this.accountManagementHelp = function (request, response) {
+  this.accountManagementHelp = function(request, response) {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
