@@ -35,9 +35,7 @@ update-node_modules:
 
 build-submodules: build-bootstrap build-jquery
 
-# Need to do a rm -rf/ hack since the Makefile is broken.
-# See https://github.com/twitter/bootstrap/pull/1672
-build-bootstrap: clean-bootstrap
+build-bootstrap:
 	@@echo "Building bootstrap..."
 	@@cd static/bootstrap && make bootstrap
 
