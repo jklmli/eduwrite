@@ -4,12 +4,11 @@ var mysql = require('mysql');
 var databaseName = "eduwrite";
 var databaseHost = '107.21.246.180';
 var client = mysql.createClient({
-  host:    databaseHost,
+  host:databaseHost,
   database:databaseName,
-  user:    'eduwrite',
+  user:'eduwrite',
   password:'cs428cs429'
 });
-
 
 // Create database if it does not exists
 client.query('CREATE DATABASE IF NOT EXISTS ' + databaseName, function (err) {
@@ -20,7 +19,6 @@ client.query('CREATE DATABASE IF NOT EXISTS ' + databaseName, function (err) {
   }
 });
 
-
 /**
  * Change the active database
  *  @param  newDatabaseName The name of the new database to use
@@ -30,7 +28,6 @@ function changeDatabase(newDatabaseName) {
   client.query('USE ' + newDatabaseName);
 }
 
-
 /**
  * Change the host of the database
  *  @param  newDatabaseHost The new hostname for the database
@@ -38,14 +35,14 @@ function changeDatabase(newDatabaseName) {
 function changeHost(newDatabaseHost) {
   databaseHost = newDatabaseHost;
   client = mysql.createClient({
-    host:     databaseHost,
-    user:     client.user,
-    password: client.password
+    host:databaseHost,
+    user:client.user,
+    password:client.password
   });
   client.query('USE ' + databaseName);
 }
 
-function trim(str){
+function trim(str) {
   return str.replace(/^\s*|\s*$/g, '');
 }
 
@@ -57,10 +54,10 @@ var Client = mysql.Client;
 Client.prototype.sql = "";
 /**
  * Construct a SQL statement to fetch specific columns
- *  @param columns wanted to fetch
+ *  @param select columns wanted to fetch
  */
 Client.prototype.select = function (select) {
-  this.sql = "select "+select+" from ";
+  this.sql = "select " + select + " from ";
   return this;
 };
 
@@ -68,30 +65,28 @@ Client.prototype.select = function (select) {
  * Construct a SQL statement to choose a table
  *  @param table to use
  */
-Client.prototype.from = function (table){
-  this.sql+=table+" ";
+Client.prototype.from = function (table) {
+  this.sql += table + " ";
   return this;
-}
+};
 
 /**
  * Construct a SQL statement to fetch all rows of a table
  *  @param table The name of the table from which to get data
  */
 Client.prototype.get = function (table) {
-  this.sql = "select * from " + table+" ";
+  this.sql = "select * from " + table + " ";
   return this;
 };
-
 
 /**
  * Construct a SQL statement to fetch all rows of a table
  *  @param table The name of the table from which to delete data
  */
 Client.prototype.destroy = function (table) {
-  this.sql = "delete from " + table+" ";
+  this.sql = "delete from " + table + " ";
   return this;
 };
-
 
 /**
  * Add a where clause to the current SQL queyr
@@ -107,11 +102,10 @@ Client.prototype.where = function (where) {
  *  @param targetTable The targetTable of JOIN(inner) caluse
  *  @param condition The condition of JOIN(inner) clause
  */
-Client.prototype.join = function(targetTable,condition){
-  this.sql += "JOIN "+targetTable+" ON "+condition+" ";
+Client.prototype.join = function (targetTable, condition) {
+  this.sql += "JOIN " + targetTable + " ON " + condition + " ";
   return this;
-}
-
+};
 
 /**
  * Add a limit/offset clause to the current SQL query
@@ -124,7 +118,6 @@ Client.prototype.limit = function (limit, offset) {
   this.sql += " limit " + offset + "," + limit + " ";
   return this;
 };
-
 
 /**
  *  Excutes 'select' based queries
@@ -139,7 +132,6 @@ Client.prototype.execute = function (cb) {
   client.query(q, returnResult(cb));
 };
 
-
 /**
  *  Helper method to insert data into the database
  */
@@ -148,14 +140,15 @@ Client.prototype.insert = function (table, obj, cb) {
 
   var values = [];
   for (var key in obj) {
-    q += key + " = ?,";
-    values.push(obj[key]);
+    if (obj.hasOwnProperty(key)) {
+      q += key + " = ?,";
+      values.push(obj[key]);
+    }
   }
   //remove last comma
   q = q.substring(0, q.length - 1);
   client.query(q, values, returnResult(cb));
 };
-
 
 /**
  *  Helper method to update existing data in the database
@@ -164,14 +157,15 @@ Client.prototype.update = function (table, obj, cb) {
   var q = "update" + table + " set ";
   var values = [];
   for (var key in obj) {
-    query += key + " = ?, ";
-    values.push(obj[key]);
+    if (obj.hasOwnProperty(key)) {
+      query += key + " = ?, ";
+      values.push(obj[key]);
+    }
   }
   //remove the dangling comma
   q = q.substring(0, q.length - 1);
   client.query(q, values, returnResult(cb));
 };
-
 
 /**
  * General function that will feed eturn data from database
@@ -188,7 +182,9 @@ var returnResult = function (callback) {
   }
 };
 
-exports.database = databaseName;
-exports.client = client;
-exports.changeDatabase = changeDatabase;
-exports.changeHost = changeHost;
+module.exports = {
+  database:databaseName,
+  client:client,
+  changeDatabase:changeDatabase,
+  changeHost:changeHost
+};
