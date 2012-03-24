@@ -7,7 +7,7 @@ var facade;
 //process.argv[2] = portnum
 //process.argv[3] = type of server
 var type = process.argv[3];
-if (type != null && type == "live") {
+if (type !== null && type === "live") {
   console.log("live facade running");
   facade = liveFacade;
 } else {
@@ -15,37 +15,42 @@ if (type != null && type == "live") {
   facade = mockFacade;
 }
 
-module.exports = {
+methods = [
   // User registration functions
-  getUser:facade.getUser,
-  closeAccount:facade.closeAccount,
-  register:facade.register,
+  'getUser',
+  'closeAccount',
+  'register',
 
   // User permissions functions
-  setPermissions:facade.setPermissions,
+  'setPermissions',
 
   // User notes functions
-  getNotes:facade.getNotes,
-  addNote:facade.addNote,
-  removeNote:facade.removeNote,
-  getNotesByUserId:facade.getNotesByUserId,
-  updateNote:facade.updateNote,
+  'getNotes',
+  'addNote',
+  'removeNote',
+  'getNotesByUserId',
+  'updateNote',
 
   // User lectures functions
-  getNotesByLectureId:facade.getNotesByLectureId,
+  'getNotesByLectureId',
 
   // User classes functions
-  getLecturesByCourseId:facade.getLecturesByCourseId,
-  getCourses:facade.getCourses,
-  getInstructor:facade.getInstructor,
+  'getLecturesByCourseId',
+  'getCourses',
+  'getInstructor',
 
   // Instructor functions
-  addLecture:facade.addLecture,
-  addClass:facade.addClass,
-  removeUser:facade.removeUser,
+  'addLecture',
+  'addClass',
+  'removeUser',
 
   // User + instructor account functionality
-  login:facade.login,
-  logout:facade.logout,
-  isLoggedIn:facade.isLoggedIn
+  'login',
+  'logout',
+  'isLoggedIn'
+];
+
+var i, len;
+for (i = 0, len = methods.length; i < len; i++) {
+  module.exports[methods[i]] = facade[methods[i]];
 }
