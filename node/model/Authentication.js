@@ -35,9 +35,7 @@ exports.register = function register(usersFound, req) {
   var role = req.body.role;
   // If we found a user with this email, fail, otherwise, succeed
   if (usersFound.length > 0) {
-
     return false;
-
   } else {
 
     var user = {
@@ -48,6 +46,9 @@ exports.register = function register(usersFound, req) {
     // Register the user
     User.insert(user,function(e){
       var userId = e.insertId;
+      Role.assignByRoleName(userId,role,function(r){
+        
+      });
       //TODO: insert into roles once role model is implemented
     });
 

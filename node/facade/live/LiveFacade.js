@@ -5,6 +5,8 @@ var Lecture = require('../../model/Lecture.js');
 var Authentication = require('../../model/Authentication.js');
 var mailHandler = require("../../../static/node_mailer");
 
+
+
 /**
  * Registers a user if they are not already registered.
  */
@@ -14,27 +16,34 @@ exports.register = function (req, res) {
   // Get the user by email address
   User.getByEmail(email, function (usersFound) {
     if (Authentication.register(usersFound, req)) {
+
       req.flash("success", "You have been successfully registered to the site");
       res.redirect('/');
 	  //send an e-mail confirmation to user
+    //it does not seem to work yet
+    /*
 	  var message = "Hello,\n Thank you for registering with EduWrite.  You can now log in and begin looking ";
 	  message += "for the notes associate with your classes.  If you did not sign up for an account with us, ";
 	  message += "please use the following link to remove your information from our system.";
-	  email.send({
-        host : "localhost",
-        port : "25",
-        ssl: true,
-        domain : "localhost",
+	  mailHandler.send({
+        domain : "eduwrite.com",
         to : email,
         from : "admin@eduwrite.com",
         subject : "[EduWrite] Registration Confirmation",
         body: message,
-        authentication : "login",
-	    username : "my_username",
-        password : "my_password" },
+        debug:true,
+        //uses SMTP server
+        host : "smtp.gmail.com",
+        port : "465",
+        ssl: true,
+        authentication: "login",
+        username : "eduwrite.com@gmail.com",
+        password : "cs428cs429"
+      },
         function(err, result){
           if(err){ console.log(err); }
       });
+    */
     } else {
       req.flash("error", "User with the email " + email + " already exists");
       res.redirect('back');

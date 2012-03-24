@@ -22,7 +22,7 @@ exports.get = function (id, callback) {
  *  @param name     The name of the entry to grab
  *  @param callback  The callback to perform on success
  */
-exports.getByName = function (name, callback) {
+exports.getByName = getByName = function (name, callback) {
   client
     .get(table)
     .where("name='" + name + "'")
@@ -48,8 +48,8 @@ exports.getByUserId = getByUserId = function(userId, callback){
   //1. inner join user.id and relationTable.user_id
   //2. uses result from 1 to get roles
   //3. retur data
-  var condition1 = relationTable+".user_id="+userId;
-  var condition2 = relationTable+".role_id="+table+".id";
+  var condition1 = relationTable+".userId="+userId;
+  var condition2 = relationTable+".roleId="+table+".id";
   var condition = condition1+" AND "+condition2;
   client
     .get(table)
@@ -58,7 +58,7 @@ exports.getByUserId = getByUserId = function(userId, callback){
 }
 
 /**
- * Checks if user has role
+ * Checks if user has a rolewith roleName
  *  @param userId The user id
  *  @param roleName Name of the role
  *  @return 
@@ -86,6 +86,17 @@ exports.assignByRoleName = function(userId, roleName, callback){
       //do nothing if user already has the role
       return;
     } else {
+      var roleId;
+      getByName(roleName,function(result){
+        if(result.length<=0){
+          console.log("Role with roleName "+roleName+" not found in database table "+table);
+        } else {
+          roleId = result[0].id;
+          var role_user = {roleId:roleId,userId:userId};
+          client
+            .insert(relationTable,role_user);
+        }
+      });
     } 
   });
 }
