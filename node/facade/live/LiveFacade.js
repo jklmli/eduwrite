@@ -3,7 +3,7 @@ var Note = require('../../model/Note.js');
 var Course = require('../../model/Course.js');
 var Lecture = require('../../model/Lecture.js');
 var Authentication = require('../../model/Authentication.js');
-var mailHandler = require("../../../static/node_mailer");
+var mailHandler = require('mailer');
 
 module.exports = new function() {
   var _this = this;
