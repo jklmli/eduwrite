@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var $ = require('jquery');
 
 // Database connection information
 var databaseName = "eduwrite";
