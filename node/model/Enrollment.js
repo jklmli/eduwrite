@@ -12,51 +12,51 @@ module.exports = new function() {
   /**
    *  Get an enrollment record by its unique id
    */
-  this.get = function(id, cb) {
+  this.get = function(id) {
     client
       .get(table)
       .where("id='" + id + "'")
       .limit(1)
-      .execute(cb);
+      .execute();
   };
 
   /**
    *  Get all students in a course
    */
-  this.getByCourseId = function(courseId, cb) {
+  this.getByCourseId = function(courseId) {
     client
       .get(table)
       .where("course_id = " + courseId)
-      .execute(cb)
+      .execute();
   };
 
   /**
    *  Get the instructor(s) for a course
    */
-  this.getByCourseAndRole = function(courseId, role, cb) {
+  this.getByCourseAndRole = function(courseId, role) {
     client
       .get(table)
       .where("course_id = " + courseId + " and role = '" + role + "'")
-      .execute(cb)
+      .execute();
   };
 
   /**
    *  Get a student in a course by netid
    */
-  this.getByCourseAndUser = function(courseId, studentId, cb) {
+  this.getByCourseAndUser = function(courseId, studentId) {
     client
       .get(table)
       .where("course_id = " + courseId + " and student_id = '" + studentId + "'")
       .limit(1)
-      .execute(cb)
+      .execute();
   };
 
   /**
    *  Insert a new enrollment record into the database
    */
-  this.insert = function(enrollment, cb) {
+  this.insert = function(enrollment) {
     client
-      .insert(table, course, cb); // TODO: invalid parameter course
+      .insert(table, course); // TODO: invalid parameter course
   };
 
   return this;
