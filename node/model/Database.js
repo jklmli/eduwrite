@@ -150,6 +150,19 @@ Client.prototype.insert = function(table, obj, cb) {
   client.query(q, values, returnResult(cb));
 };
 
+function deferredQuery(sql, params) {
+  return $.Deferred(function(){
+    client.query(sql, params,
+      function(err, results, fields) {
+        if (err)
+          throw err;
+        else
+          this.resolveWith(results);
+      }
+    );
+  });
+}
+
 /**
  *  Helper method to update existing data in the database
  */
