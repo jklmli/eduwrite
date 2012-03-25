@@ -13,7 +13,7 @@ module.exports = new function() {
    * Insert a new lecture into the table
    */
   this.insert = function(lecture) {
-    client
+    return client
       .insert(table, lecture);
   };
 
@@ -21,7 +21,7 @@ module.exports = new function() {
    * Get the entire record lecture record by its numerical id
    */
   this.get = function(id) {
-    client
+    return client
       .get(table)
       .where("id='" + id + "'")
       .limit(1)
@@ -32,7 +32,7 @@ module.exports = new function() {
    * Get all of the lectures for a given course using the course_id
    */
   this.getByCourseId = function(courseId) {
-    client
+    return client
       .get(table)
       .where("course_id='" + courseId + "'")
       .execute();
@@ -42,7 +42,7 @@ module.exports = new function() {
    * Get the lecture that occurred on a particular date
    */
   this.getByDate = function(day) {
-    client
+    return client
       .get(table)
       .where("day='" + day + "'")
       .execute();

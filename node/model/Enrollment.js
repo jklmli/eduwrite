@@ -13,7 +13,7 @@ module.exports = new function() {
    *  Get an enrollment record by its unique id
    */
   this.get = function(id) {
-    client
+    return client
       .get(table)
       .where("id='" + id + "'")
       .limit(1)
@@ -24,7 +24,7 @@ module.exports = new function() {
    *  Get all students in a course
    */
   this.getByCourseId = function(courseId) {
-    client
+    return client
       .get(table)
       .where("course_id = " + courseId)
       .execute();
@@ -34,7 +34,7 @@ module.exports = new function() {
    *  Get the instructor(s) for a course
    */
   this.getByCourseAndRole = function(courseId, role) {
-    client
+    return client
       .get(table)
       .where("course_id = " + courseId + " and role = '" + role + "'")
       .execute();
@@ -44,7 +44,7 @@ module.exports = new function() {
    *  Get a student in a course by netid
    */
   this.getByCourseAndUser = function(courseId, studentId) {
-    client
+    return client
       .get(table)
       .where("course_id = " + courseId + " and student_id = '" + studentId + "'")
       .limit(1)
@@ -55,7 +55,7 @@ module.exports = new function() {
    *  Insert a new enrollment record into the database
    */
   this.insert = function(enrollment) {
-    client
+    return client
       .insert(table, course); // TODO: invalid parameter course
   };
 

@@ -10,11 +10,11 @@ module.exports = new function() {
    * Get notes that belongs to the user.
    */
   this.getByUser = function(user) {
-    _this.getByUserId(user.id);
+    return _this.getByUserId(user.id);
   };
 
   this.getByUserId = function(user_id) {
-    client
+    return client
       .get(table)
       .where("user_id='" + user.id + "'")
       .limit(30)
@@ -40,7 +40,7 @@ module.exports = new function() {
    * Get pads that belongs to the lecture_id(group_id)
    */
   this.getByLectureId = function(lecture_id) {
-    client
+    return client
       .get(table)
       .where("lecture_id='" + lecture_id + "'")
       .limit(30)
@@ -77,7 +77,7 @@ module.exports = new function() {
    * Get pads that belongs to the lecture(group)
    */
   this.getByLecture = function(lecture) {
-    _this.getByLectureId(lecture.id);
+    return _this.getByLectureId(lecture.id);
   };
 
   /**
@@ -96,7 +96,7 @@ module.exports = new function() {
    */
   this.create = function(user_id, lecture_id) {
     var note = {user_id: user_id, lecture_id: lecture_id};
-    client.insert(table, note);
+    return client.insert(table, note);
 
     //api.createPad(padID, "", function(err,response){
 

@@ -5,7 +5,7 @@ module.exports = new function() {
   var _this = this;
 
   this.get = function(id) {
-    client
+    return client
       .get(table)
       .where("id='" + id + "'")
       .limit(1)
@@ -13,35 +13,35 @@ module.exports = new function() {
   };
 
   this.getBySchoolId = function(schoolId) {
-    client
+    return client
       .get(table)
       .where("school_id='" + schoolId + "'")
       .execute();
   };
 
   this.getByName = function(name) {
-    client
+    return client
       .get(table)
       .where("name='" + name + "'")
       .execute();
   };
 
   this.getByCourseNumber = function(number) {
-    client
+    return client
       .get(table)
       .where("course_number='" + number + "'")
       .execute();
   };
 
   this.getByTerm = function(term) {
-    client
+    return client
       .get(table)
       .where("term='" + term + "'")
       .execute();
   };
 
   this.insert = function(course) {
-    client
+    return client
       .insert(table, course);
   };
 
