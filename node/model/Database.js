@@ -120,7 +120,7 @@ Client.prototype.limit = function(limit, offset) {
 };
 
 /**
- *  Excutes 'select' based queries
+ *  Executes 'select' based queries
  */
 Client.prototype.execute = function(cb) {
   var q = trim(this.sql);
