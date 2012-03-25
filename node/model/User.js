@@ -25,79 +25,82 @@ module.exports = new function() {
   /**
    * Gets an element from a table in the database given its id
    *  @param id        The id of the entry to grab
-   *  @param callback  The callback to perform on success
    */
-  this.get = function(id, callback) {
-    client
+  this.get = function(id) {
+    return client
       .get(table)
       .where("id='" + id + "'")
       .limit(1)
-      .execute(callback);
+      .execute();
   };
 
   /**
    * Gets an element from a table in the database by its email
    *  @param email     The id of the entry to grab
-   *  @param callback  The callback to perform on success
    */
-  this.getByEmail = function(email, callback) {
-    client
+  this.getByEmail = function(email) {
+    return client
       .get(table)
       .where("email='" + email + "'")
       .limit(1)
-      .execute(callback);
+      .execute();
   };
 
   /**
    * Removes an element from a table in the database given its id
    *  @param id        The id of the entry to grab
-   *  @param callback  The callback to perform on success
    */
-  this.destroy = function(id, callback) {
-    client
+  this.destroy = function(id) {
+    return client
       .destroy(table)
       .where("id='" + id + "'")
-      .execute(callback);
+      .execute();
   };
 
   /**
    * Gets an element from a table in the database by its hashed email and password
-   *  @param callback  The callback to perform on success
    */
-  this.getByEmailAndPassword = function(email, password, callback) {
-    client.get(table).where("email='" + email + "'").limit(1).execute(function(data) {
-      if (data.length < 1) {
-        callback(data);
-      } else {
-        var user = data[0];
-        var pwd = user.password;
-        if (comparePassword(password, pwd)) {
-          callback(data);
-        } else {
-          callback([]);
+  this.getByEmailAndPassword = function(email, password) {
+    return client
+      .get(table)
+      .where("email='" + email + "'")
+      .limit(1)
+      .execute()
+      .pipe(function(data){
+        if (data.length < 1) {
+          return data;
         }
-      }
-    });
+        else {
+          var user = data[0];
+          var pwd = user.password;
+          if (comparePassword(password, pwd)) {
+            return data;
+          }
+          else {
+            return [];
+          }
+        }
+      });
   };
 
   /**
    * Inserts a user into the database
    *  @param user      The user data
-   *  @param callback  The callback to perform on success
    */
-  this.insert = function(user, callback) {
+  this.insert = function(user) {
     user.password = encrypt(user.password);
-    client.insert(table, user, callback);
+    return client
+      .insert(table, user);
   };
 
   /**
    * Updates a user into the database
    *  @param user      The user
-   *  @param callback  The callback to perform on success
    */
-  this.update = function(user, callback) {
-    client
-      .update(table, user, callback)
+  this.update = function(user) {
+    return client
+      .update(table, user)
+      // FIXME: invalid SQL query modification after execution
       .where("id = " + user); //Are you sure you are not feeding in user.id ?
   };
 
