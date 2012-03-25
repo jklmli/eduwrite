@@ -12,40 +12,40 @@ module.exports = new function() {
   /*
    * Insert a new lecture into the table
    */
-  this.insert = function(lecture, cb) {
+  this.insert = function(lecture) {
     client
-      .insert(table, lecture, cb);
+      .insert(table, lecture);
   };
 
   /*
    * Get the entire record lecture record by its numerical id
    */
-  this.get = function(id, cb) {
+  this.get = function(id) {
     client
       .get(table)
       .where("id='" + id + "'")
       .limit(1)
-      .execute(cb);
+      .execute();
   };
 
   /*
    * Get all of the lectures for a given course using the course_id
    */
-  this.getByCourseId = function(courseId, cb) {
+  this.getByCourseId = function(courseId) {
     client
       .get(table)
       .where("course_id='" + courseId + "'")
-      .execute(cb);
+      .execute();
   };
 
   /*
    * Get the lecture that occurred on a particular date
    */
-  this.getByDate = function(day, cb) {
+  this.getByDate = function(day) {
     client
       .get(table)
       .where("day='" + day + "'")
-      .execute(cb);
+      .execute();
   };
 
   return this;
