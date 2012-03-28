@@ -24,39 +24,39 @@ function assertCoursesEqual(actualCourse, expectedCourse) {
 
 // Sample data
 var distributedSystemsCourse = {
-  id:           1,
-  school_id:    1,
-  term:         'Spring 2012',
-  name:         'Distributed Systems',
-  course_number:'CS 425'
+  id: 1,
+  school_id: 1,
+  term: 'Spring 2012',
+  name: 'Distributed Systems',
+  course_number: 'CS 425'
 };
 
 
 /**
  * Test that Course.getById
  */
-describe('Course getById', function () {
+describe('Course getById', function() {
 
-  it('should return empty array when ID not found', function (done) {
-    Course.get(6, function (courseData) {
-
-      // Check that no course was found
-      assert.equal(0, courseData.length);
-      done();
-
-    });
+  it('should return empty array when ID not found', function(done) {
+    Course.get(6)
+      .then(function(courseData) {
+        // Check that no course was found
+        assert.equal(0, courseData.length);
+        done();
+      });
   });
 
-  it('should return the correct result if the ID exists', function (done) {
-    Course.get(1, function (courseData) {
+  it('should return the correct result if the ID exists', function(done) {
+    Course.get(1)
+      .then(function(courseData) {
 
-      // Check that we found exactly one course, and that it's the course we expected
-      assert.equal(1, courseData.length);
-      var course = courseData[0];
-      assertCoursesEqual(course, distributedSystemsCourse);
-      done();
+        // Check that we found exactly one course, and that it's the course we expected
+        assert.equal(1, courseData.length);
+        var course = courseData[0];
+        assertCoursesEqual(course, distributedSystemsCourse);
+        done();
 
-    });
+      });
   });
 });
 
@@ -64,29 +64,31 @@ describe('Course getById', function () {
 /**
  * Check that Course.getBySchoolId behaves correctly
  */
-describe('Course getBySchoolId', function () {
+describe('Course getBySchoolId', function() {
 
-  it('should return empty array when class not found', function (done) {
-    Course.getBySchoolId(-1, function (courseData) {
+  it('should return empty array when class not found', function(done) {
+    Course.getBySchoolId(-1)
+      .then(function(courseData) {
 
-      // Check that no courses were found
-      assert.equal(0, courseData.length);
-      done();
+        // Check that no courses were found
+        assert.equal(0, courseData.length);
+        done();
 
-    });
+      });
   });
 
-  it('should return array of correct results when class found', function (done) {
-    Course.getBySchoolId(1, function (courseData) {
+  it('should return array of correct results when class found', function(done) {
+    Course.getBySchoolId(1)
+      .then(function(courseData) {
 
-      // Check that courses were returned, and that
-      assert.ok(courseData.length > 0);
-      for (var i = 0; i < courseData.length; i++) {
-        assert.equal(courseData[i].school_id, 1);
-      }
-      done();
+        // Check that courses were returned, and that
+        assert.ok(courseData.length > 0);
+        for (var i = 0; i < courseData.length; i++) {
+          assert.equal(courseData[i].school_id, 1);
+        }
+        done();
 
-    });
+      });
   });
 });
 
@@ -94,27 +96,29 @@ describe('Course getBySchoolId', function () {
 /**
  * Check that Course.getByName behaves correctly
  */
-describe('Course getByName', function () {
+describe('Course getByName', function() {
 
-  it('should return empty array when class name not found', function (done) {
-    Course.getByName('someCourseNameThatDoesntExist', function (courseData) {
+  it('should return empty array when class name not found', function(done) {
+    Course.getByName('someCourseNameThatDoesntExist')
+      .then(function(courseData) {
 
-      // Check that no courses were found
-      assert.equal(courseData.length, 0);
-      done();
+        // Check that no courses were found
+        assert.equal(courseData.length, 0);
+        done();
 
-    });
+      });
   });
 
-  it('should return array of correct results when class name found', function (done) {
-    Course.getByName('Distributed Systems', function (courseData) {
+  it('should return array of correct results when class name found', function(done) {
+    Course.getByName('Distributed Systems')
+      .then(function(courseData) {
 
-      // Check that the correct course was found
-      assert.ok(courseData.length === 1);
-      assertCoursesEqual(courseData[0], distributedSystemsCourse);
-      done();
+        // Check that the correct course was found
+        assert.ok(courseData.length === 1);
+        assertCoursesEqual(courseData[0], distributedSystemsCourse);
+        done();
 
-    });
+      });
   });
 });
 
@@ -122,27 +126,29 @@ describe('Course getByName', function () {
 /**
  * Test that Course.getByCourseNumber behaves correctly
  */
-describe('Course getByCourseNumber', function () {
+describe('Course getByCourseNumber', function() {
 
-  it('should return empty array when course number not found', function (done) {
-    Course.getByCourseNumber('someCourseNumberThatDoesntExist', function (courseData) {
+  it('should return empty array when course number not found', function(done) {
+    Course.getByCourseNumber('someCourseNumberThatDoesntExist')
+      .then(function(courseData) {
 
-      // Check that no corresponding course data was found
-      assert.equal(courseData.length, 0);
-      done();
+        // Check that no corresponding course data was found
+        assert.equal(courseData.length, 0);
+        done();
 
-    });
+      });
   });
 
-  it('should return array of correct results', function (done) {
-    Course.getByCourseNumber(distributedSystemsCourse.course_number, function (courseData) {
+  it('should return array of correct results', function(done) {
+    Course.getByCourseNumber(distributedSystemsCourse.course_number)
+      .then(function(courseData) {
 
-      // Check that we found the course
-      assert.ok(courseData.length > 0);
-      assertCoursesEqual(courseData[0], distributedSystemsCourse);
-      done();
+        // Check that we found the course
+        assert.ok(courseData.length > 0);
+        assertCoursesEqual(courseData[0], distributedSystemsCourse);
+        done();
 
-    });
+      });
   });
 });
 
@@ -150,28 +156,30 @@ describe('Course getByCourseNumber', function () {
 /**
  * Check that Course.getByTerm works behaves correctly
  */
-describe('Course getByTerm', function () {
+describe('Course getByTerm', function() {
 
-  it('should return empty array if term not found', function (done) {
-    Course.getByTerm('someTermThatDoesntExist', function (courseData) {
+  it('should return empty array if term not found', function(done) {
+    Course.getByTerm('someTermThatDoesntExist')
+      .then(function(courseData) {
 
-      // Check that no course was found
-      assert.equal(courseData.length, 0);
-      done();
+        // Check that no course was found
+        assert.equal(courseData.length, 0);
+        done();
 
-    });
+      });
   });
 
-  it('should return array of correct results', function (done) {
-    Course.getByTerm('Spring 2012', function (courseData) {
+  it('should return array of correct results', function(done) {
+    Course.getByTerm('Spring 2012')
+      .then(function(courseData) {
 
-      // Check that some correct course data was returned
-      assert.ok(courseData.length > 0);
-      for (var i = 0; i < courseData.length; i++) {
-        assert.equal(courseData[i].term, 'Spring 2012');
-      }
-      done();
+        // Check that some correct course data was returned
+        assert.ok(courseData.length > 0);
+        for (var i = 0; i < courseData.length; i++) {
+          assert.equal(courseData[i].term, 'Spring 2012');
+        }
+        done();
 
-    });
+      });
   });
 });
