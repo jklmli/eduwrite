@@ -1,3 +1,8 @@
+/**
+ * Note.js
+ * Model for Notes for different user and classes
+ */
+
 var client = require("./Database.js").client;
 var user = require('./User.js');
 var api = require("../db/API.js");
@@ -7,16 +12,21 @@ module.exports = new function() {
   var _this = this;
 
   /**
-   * Get notes that belongs to the user.
+   * Get notes that belongs to the user
+   * @param user User object
    */
   this.getByUser = function(user) {
     return _this.getByUserId(user.id);
   };
 
+  /*
+   * Get most recent 30 notes by user
+   * @param user_id unique id of the user
+   */
   this.getByUserId = function(user_id) {
     return client
       .get(table)
-      .where("user_id='" + user.id + "'")
+      .where("userId='" + user.id + "'")
       .limit(30)
       .execute();
     /*
@@ -38,11 +48,12 @@ module.exports = new function() {
 
   /**
    * Get pads that belongs to the lecture_id(group_id)
+   * @param lectureId the unique id of the lecture
    */
-  this.getByLectureId = function(lecture_id) {
+  this.getByLectureId = function(lectureId) {
     return client
       .get(table)
-      .where("lecture_id='" + lecture_id + "'")
+      .where("lectureId='" + lectureId + "'")
       .limit(30)
       .execute();
 
@@ -58,8 +69,8 @@ module.exports = new function() {
   /**
    *  Create group with groupID
    */
-  this.createGroup = function(groupID) {
-    api.createGroupIfNotExistsFor(groupID, function(e) {
+  this.createGroup = function(groupId) {
+    api.createGroupIfNotExistsFor(groupId, function(e) {
       console.log(e);
     });
   };
@@ -83,8 +94,8 @@ module.exports = new function() {
   /**
    * Set password for the pad with padID
    */
-  this.setPassword = function(padID, password, cb) {
-    api.setPassword(padID, password, function(err, response) {
+  this.setPassword = function(padId, password, cb) {
+    api.setPassword(padId, password, function(err, response) {
       if (err)
         throw err;
       cb(response);
@@ -94,8 +105,8 @@ module.exports = new function() {
   /**
    * Create pad that does not belong to any group
    */
-  this.create = function(user_id, lecture_id) {
-    var note = {user_id: user_id, lecture_id: lecture_id};
+  this.create = function(userId, lectureId) {
+    var note = {user_id: userId, lectureId: lectureId};
     return client.insert(table, note);
 
     //api.createPad(padID, "", function(err,response){
@@ -106,8 +117,8 @@ module.exports = new function() {
   /**
    * Destroy pad with specific ID
    */
-  this.destroy = function(padID, callback) {
-    api.deletePad(padID, function(err, response) {
+  this.destroy = function(padId, callback) {
+    api.deletePad(padId, function(err, response) {
       callback(response);
     });
   };
