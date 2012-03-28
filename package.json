@@ -23,7 +23,8 @@
                       "docco-husky"         : "0.3.1",
                       "mailer"              : "0.6.7",
                       "simplesmtp"          : "0.1.13",
-                      "jquery"              : "1.6.3"
+                      "jquery"              : "1.6.3",
+                      "jsdom"               : ""
                      },
   "devDependencies": {
                       "jshint"  : "*",
