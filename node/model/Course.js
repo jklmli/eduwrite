@@ -4,45 +4,45 @@ var table = "courses";
 module.exports = new function() {
   var _this = this;
 
-  this.get = function(id, cb) {
-    client
+  this.get = function(id) {
+    return client
       .get(table)
       .where("id='" + id + "'")
       .limit(1)
-      .execute(cb);
+      .execute();
   };
 
-  this.getBySchoolId = function(schoolId, cb) {
-    client
+  this.getBySchoolId = function(schoolId) {
+    return client
       .get(table)
       .where("school_id='" + schoolId + "'")
-      .execute(cb);
+      .execute();
   };
 
-  this.getByName = function(name, cb) {
-    client
+  this.getByName = function(name) {
+    return client
       .get(table)
       .where("name='" + name + "'")
-      .execute(cb);
+      .execute();
   };
 
-  this.getByCourseNumber = function(number, cb) {
-    client
+  this.getByCourseNumber = function(number) {
+    return client
       .get(table)
       .where("course_number='" + number + "'")
-      .execute(cb);
+      .execute();
   };
 
-  this.getByTerm = function(term, cb) {
-    client
+  this.getByTerm = function(term) {
+    return client
       .get(table)
       .where("term='" + term + "'")
-      .execute(cb);
+      .execute();
   };
 
-  this.insert = function(course, cb) {
-    client
-      .insert(table, course, cb);
+  this.insert = function(course) {
+    return client
+      .insert(table, course);
   };
 
   return this;

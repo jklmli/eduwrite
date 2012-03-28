@@ -9,16 +9,16 @@ module.exports = new function() {
   /**
    * Get notes that belongs to the user.
    */
-  this.getByUser = function(user, callback) {
-    _this.getByUserId(user.id, callback);
+  this.getByUser = function(user) {
+    return _this.getByUserId(user.id);
   };
 
-  this.getByUserId = function(user_id, callback) {
-    client
+  this.getByUserId = function(user_id) {
+    return client
       .get(table)
       .where("user_id='" + user.id + "'")
       .limit(30)
-      .execute(callback);
+      .execute();
     /*
      * Will be used later
      *
@@ -39,12 +39,12 @@ module.exports = new function() {
   /**
    * Get pads that belongs to the lecture_id(group_id)
    */
-  this.getByLectureId = function(lecture_id, callback) {
-    client
+  this.getByLectureId = function(lecture_id) {
+    return client
       .get(table)
       .where("lecture_id='" + lecture_id + "'")
       .limit(30)
-      .execute(callback);
+      .execute();
 
     /*
      api.createGroupIfNotExistsFor(lecture_id, function (error, group) {
@@ -67,7 +67,7 @@ module.exports = new function() {
   /**
    * Get pads that belong to the author_id of the user
    */
-  this.getByAuthorId = function(aid, name, callback) {
+  this.getByAuthorId = function(aid, name) {
     //TODO:get sessions by user
     //get groups that the author belongs to
     //get pads for each group
@@ -76,8 +76,8 @@ module.exports = new function() {
   /**
    * Get pads that belongs to the lecture(group)
    */
-  this.getByLecture = function(lecture, callback) {
-    _this.getByLectureId(lecture.id, callback);
+  this.getByLecture = function(lecture) {
+    return _this.getByLectureId(lecture.id);
   };
 
   /**
@@ -94,11 +94,9 @@ module.exports = new function() {
   /**
    * Create pad that does not belong to any group
    */
-  this.create = function(user_id, lecture_id, callback) {
+  this.create = function(user_id, lecture_id) {
     var note = {user_id: user_id, lecture_id: lecture_id};
-    client.insert(table, note, function(e) {
-      console.log(e);
-    });
+    return client.insert(table, note);
 
     //api.createPad(padID, "", function(err,response){
 

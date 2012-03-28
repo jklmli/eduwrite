@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var $ = require('jquery');
 
 // Database connection information
 var databaseName = "eduwrite";
@@ -10,14 +11,10 @@ var client = mysql.createClient({
   password: 'cs428cs429'
 });
 
-// Create database if it does not exists
-client.query('CREATE DATABASE IF NOT EXISTS ' + databaseName, function(err) {
-  if (err && err.number) {
-    throw err;
-  } else {
+deferredQuery('CREATE DATABASE IF NOT EXISTS ' + databaseName)
+  .then(function(){
     changeDatabase(databaseName);
-  }
-});
+  });
 
 /**
  * Change the active database
@@ -25,7 +22,7 @@ client.query('CREATE DATABASE IF NOT EXISTS ' + databaseName, function(err) {
  */
 function changeDatabase(newDatabaseName) {
   databaseName = newDatabaseName;
-  client.query('USE ' + newDatabaseName);
+  return deferredQuery('USE ' + newDatabaseName);
 }
 
 /**
@@ -39,7 +36,7 @@ function changeHost(newDatabaseHost) {
     user: client.user,
     password: client.password
   });
-  client.query('USE ' + databaseName);
+  return deferredQuery('USE ' + databaseName);
 }
 
 function trim(str) {
@@ -120,22 +117,19 @@ Client.prototype.limit = function(limit, offset) {
 };
 
 /**
- *  Excutes 'select' based queries
+ *  Executes 'select' based queries
  */
-Client.prototype.execute = function(cb) {
+Client.prototype.execute = function() {
   var q = trim(this.sql);
-
-  //prints out the query for debugging purpose
   console.log(q);
 
-
-  client.query(q, returnResult(cb));
+  return deferredQuery(q);
 };
 
 /**
  *  Helper method to insert data into the database
  */
-Client.prototype.insert = function(table, obj, cb) {
+Client.prototype.insert = function(table, obj) {
   var q = "insert into " + table + " set ";
 
   var values = [];
@@ -145,42 +139,50 @@ Client.prototype.insert = function(table, obj, cb) {
       values.push(obj[key]);
     }
   }
-  //remove last comma
+  // remove dangling comma
   q = q.substring(0, q.length - 1);
-  client.query(q, values, returnResult(cb));
+  return deferredQuery(q, values);
 };
 
 /**
  *  Helper method to update existing data in the database
  */
-Client.prototype.update = function(table, obj, cb) {
+Client.prototype.update = function(table, obj) {
   var q = "update" + table + " set ";
   var values = [];
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
-      query += key + " = ?, ";
+      query += key + " = ?, "; // FIXME: query represents a global object here
       values.push(obj[key]);
     }
   }
-  //remove the dangling comma
+  // remove dangling comma
   q = q.substring(0, q.length - 1);
-  client.query(q, values, returnResult(cb));
+  return deferredQuery(q, values);
 };
 
-/**
- * General function that will feed eturn data from database
- * to the callback method provided
- */
-var returnResult = function(callback) {
-  return function(err, results, fields) {
-    if (err) {
-      throw err;
+function deferredQuery(sql, params) {
+  return $.Deferred(function() {
+    // Need to save scope so we can access in callback of MySQL query
+    var that = this;
+    if (params === undefined) {
+      params = [];
     }
-    if (callback) {
-      callback(results);
-    }
-  }
-};
+
+    client.query(sql, params,
+      function(err, results, fields) {
+        if (err) {
+          that.reject();
+          // TODO: Should we that.reject(err)?
+          throw err;
+        }
+        else{
+          that.resolve(results);
+        }
+      }
+    );
+  });
+}
 
 module.exports = new function() {
   var _this = this;
