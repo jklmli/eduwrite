@@ -93,9 +93,9 @@ module.exports = new function() {
                 console.log("Role with roleName " + roleName + " not found in database table " + table);
               } else {
                 var roleId = result[0].id;
-                var role_user = {roleId: roleId, userId: userId};
+                var roleUser = {roleId: roleId, userId: userId};
                 return client
-                  .insert(relationTable, role_user);
+                  .insert(relationTable, roleUser);
               }
             });
         }

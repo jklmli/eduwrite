@@ -26,7 +26,7 @@ module.exports = new function() {
   this.getByCourseId = function(courseId) {
     return client
       .get(table)
-      .where("course_id = " + courseId)
+      .where("courseId = " + courseId)
       .execute();
   };
 
@@ -36,7 +36,7 @@ module.exports = new function() {
   this.getByCourseAndRole = function(courseId, role) {
     return client
       .get(table)
-      .where("course_id = " + courseId + " and role = '" + role + "'")
+      .where("courseId = " + courseId + " and role = '" + role + "'")
       .execute();
   };
 
@@ -46,7 +46,7 @@ module.exports = new function() {
   this.getByCourseAndUser = function(courseId, studentId) {
     return client
       .get(table)
-      .where("course_id = " + courseId + " and student_id = '" + studentId + "'")
+      .where("courseId = " + courseId + " and studentId = '" + studentId + "'")
       .limit(1)
       .execute();
   };

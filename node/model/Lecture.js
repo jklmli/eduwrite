@@ -34,7 +34,7 @@ module.exports = new function() {
   this.getByCourseId = function(courseId) {
     return client
       .get(table)
-      .where("course_id='" + courseId + "'")
+      .where("courseId='" + courseId + "'")
       .execute();
   };
 
