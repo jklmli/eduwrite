@@ -33,6 +33,7 @@ function loadLecturesIntoModal(data){
       // Add the lecture to the modal
       $("#newNoteLecture").append($("<option></option>")
         .attr("value", i)
+        .attr("id", data[i].id)
         .text(data[i].title));
     }
   }
@@ -45,6 +46,7 @@ function loadCoursesIntoModal(data){
     if (courses.hasOwnProperty(i)) {
       $("#newNoteCourse").append($("<option></option>")
         .attr("value", i)
+        .attr("id", courses[i].data.id)
         .text(courses[i].data.title));
       // load the first classes lectures into the lecture modal!
       if(i == 0){
