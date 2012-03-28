@@ -24,7 +24,7 @@
                       "mailer"              : "0.6.7",
                       "simplesmtp"          : "0.1.13",
                       "jquery"              : "1.6.3",
-                      "jsdom"               : ""
+                      "jsdom"               : "0.2.0"
                      },
   "devDependencies": {
                       "jshint"  : "*",
