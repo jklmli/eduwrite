@@ -172,12 +172,13 @@ function deferredQuery(sql, params) {
     client.query(sql, params,
       function(err, results, fields) {
         if (err) {
-          that.fail();
-          // TODO: Should we failWith(err)?
+          that.reject();
+          // TODO: Should we that.reject(err)?
           throw err;
         }
-        else
-          that.resolveWith(results);
+        else{
+          that.resolve(results);
+        }
       }
     );
   });
