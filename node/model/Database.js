@@ -163,15 +163,21 @@ Client.prototype.update = function(table, obj) {
 
 function deferredQuery(sql, params) {
   return $.Deferred(function() {
+    // Need to save scope so we can access in callback of MySQL query
+    var that = this;
+    if (params === undefined) {
+      params = [];
+    }
+
     client.query(sql, params,
       function(err, results, fields) {
         if (err) {
-          this.fail();
+          that.fail();
           // TODO: Should we failWith(err)?
           throw err;
         }
         else
-          this.resolveWith(results);
+          that.resolveWith(results);
       }
     );
   });
