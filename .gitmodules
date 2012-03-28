@@ -4,3 +4,6 @@
 [submodule "static/jquery"]
 	path = static/jquery
 	url = git@github.com:jquery/jquery.git
+[submodule "static/jstile"]
+	path = static/jstile
+	url = git@github.com:jiaweihli/jstile.git

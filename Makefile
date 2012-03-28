@@ -33,11 +33,15 @@ update-node_modules:
 	@@echo "Updating node modules..."
 	@@npm install -d
 
-build-submodules: build-jquery
+build-submodules: build-jquery build-jstile
 
 build-jquery:
 	@@echo "Building jquery..."
 	@@cd static/jquery && make core
+
+build-jstile:
+	@@echo "Building jstile..."
+	@@cd static/jstile && make build
 
 compile-less:
 	@@echo "Compiling .less files..."
@@ -52,11 +56,15 @@ clean-node_modules:
 	@@echo "Cleaning node modules..."
 	@@rm -rf node_modules/
 
-clean-submodules: clean-jquery
+clean-submodules: clean-jquery clean-jstile
 
 clean-jquery:
 	@@echo "Cleaning jquery..."
 	@@cd static/jquery && make clean
+
+clean-jstile:
+	@@echo "Cleaning jstile..."
+	@@cd static/jstile && make clean
 
 run: build
 	@@bin/run.sh
