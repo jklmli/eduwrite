@@ -234,7 +234,7 @@ function loadUserNotesCallback(data) {
   notes = [];
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      notes[i] = {data:data[i], attr:{id:"user_note" + data[i].id, href:data[i].location}};
+      notes[i] = {data:data[i], attr:{id:"note" + data[i].id, href:data[i].location}};
     }
   }
   return notes;
@@ -245,6 +245,9 @@ function loadUserNotesCallback(data) {
  */
 function loadNoteIntoUserSpace(event, data) {
   var id = data.rslt.obj.attr("id");
+  // remove the "note" part of the li id.
+  id = id.replace("note", "");
+  console.log(id);
 //  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
-  $('.content').html("<iframe class='noteFrame' src='/newPad/'></iframe>");
+  $('.content').html("<iframe class='noteFrame' src='/p/" +  id + "'></iframe>");
 }
