@@ -11,7 +11,7 @@ describe('User get', function() {
       .then(function(e) {
         assert.equal(0, e.length);
         done()
-      })
+      });
   });
 
   it('should return the correct result if the ID exists', function(done) {
@@ -19,7 +19,7 @@ describe('User get', function() {
       .then(function(e) {
         assert.equal(1, e.length);
         done()
-      })
+      });
   });
 });
 
@@ -30,7 +30,7 @@ describe('User get_by_email', function() {
       .then(function(e) {
         assert.equal(0, e.length);
         done()
-      })
+      });
   });
 
   it('should return array consisting of single User when User with the email is found', function(done) {

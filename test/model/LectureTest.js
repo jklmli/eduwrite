@@ -17,8 +17,8 @@ describe("Lecture get by id", function() {
     Lecture.get(-1)
       .then(function(e) {
         assert.equal(0, e.length);
-        done()
-      })
+        done();
+      });
   });
 
   /*
@@ -28,8 +28,8 @@ describe("Lecture get by id", function() {
     Lecture.get(1)
       .then(function(e) {
         assert.equal(1, e.length);
-        done()
-      })
+        done();
+      });
   });
 });
 
@@ -44,8 +44,8 @@ describe("Lecture get by course id", function() {
     Lecture.getByCourseId(-1)
       .then(function(e) {
         assert.equal(0, e.length);
-        done()
-      })
+        done();
+      });
   });
 
   /*
@@ -55,8 +55,8 @@ describe("Lecture get by course id", function() {
     Lecture.getByCourseId(2)
       .then(function(e) {
         assert.equal(2, e.length);
-        done()
-      })
+        done();
+      });
   });
 });
 
@@ -71,8 +71,8 @@ describe("Lecture get by date", function() {
     Lecture.getByDate('2011-12-05')
       .then(function(e) {
         assert.equal(0, e.length);
-        done()
-      })
+        done();
+      });
   });
 
   /*
@@ -82,7 +82,7 @@ describe("Lecture get by date", function() {
     Lecture.getByDate('2012-03-05')
       .then(function(e) {
         assert.equal(1, e.length);
-        done()
-      })
+        done();
+      });
   });
 });
