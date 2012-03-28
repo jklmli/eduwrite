@@ -1,10 +1,16 @@
+/**
+ * User.js
+ * Model for users of the system
+ */
+
 var client = require("./Database.js").client;
 var Hashes = require('jshashes');
 var table = "users";
 var bcrypt = require('bcrypt');
 
 /**
- *  Encrypt the password and return hash value. This is a synchronous method.
+ *  Encrypt the password and return hash value. This is a synchronous method
+ *  @param password plaintext of the password
  */
 var encrypt = function(password) {
   //we are using Sync method
@@ -13,7 +19,9 @@ var encrypt = function(password) {
 };
 
 /**
- *  Compare password with hash from db.
+ *  Compare password with hash from db
+ *  @param password plaintext of the password
+ *  @param hash hash to compare to the plaintext after encryption
  */
 var comparePassword = function(password, hash) {
   return bcrypt.compareSync(password, hash);
@@ -24,7 +32,7 @@ module.exports = new function() {
 
   /**
    * Gets an element from a table in the database given its id
-   *  @param id        The id of the entry to grab
+   *  @param id the id of the entry to grab
    */
   this.get = function(id) {
     return client
@@ -36,7 +44,7 @@ module.exports = new function() {
 
   /**
    * Gets an element from a table in the database by its email
-   *  @param email     The id of the entry to grab
+   *  @param email the id of the entry to grab
    */
   this.getByEmail = function(email) {
     return client
@@ -48,7 +56,7 @@ module.exports = new function() {
 
   /**
    * Removes an element from a table in the database given its id
-   *  @param id        The id of the entry to grab
+   *  @param id the id of the entry to grab
    */
   this.destroy = function(id) {
     return client
@@ -59,6 +67,8 @@ module.exports = new function() {
 
   /**
    * Gets an element from a table in the database by its hashed email and password
+   * @param email string e-mail address of the user
+   * @param password plaintext password for the user
    */
   this.getByEmailAndPassword = function(email, password) {
     return client
@@ -85,7 +95,7 @@ module.exports = new function() {
 
   /**
    * Inserts a user into the database
-   *  @param user      The user data
+   *  @param user the user data
    */
   this.insert = function(user) {
     user.password = encrypt(user.password);
@@ -95,7 +105,7 @@ module.exports = new function() {
 
   /**
    * Updates a user into the database
-   *  @param user      The user
+   *  @param user the user
    */
   this.update = function(user) {
     return client

@@ -1,3 +1,8 @@
+/**
+ * Role.js
+ * Model for roles that different users have
+ */
+
 var client = require("./Database.js").client;
 var table = "roles";
 var relationTable = "roles_users";
@@ -7,7 +12,7 @@ module.exports = new function() {
 
   /**
    * Gets an element from a table in the database given its id
-   *  @param id        The id of the entry to grab
+   *  @param id the id of the entry to grab
    */
   this.get = function(id) {
     return client
@@ -19,7 +24,7 @@ module.exports = new function() {
 
   /**
    * Gets an role from a table in the database by its name
-   *  @param name     The name of the entry to grab
+   *  @param name the name of the entry to grab
    */
   this.getByName = function(name) {
     return client
@@ -31,7 +36,7 @@ module.exports = new function() {
 
   /**
    * Gets all roles that has been assigned to users
-   *  @param user      The user object
+   *  @param user the user object
    */
   this.getByUser = function(user) {
     return _this.getByUserId(user.id);
@@ -39,7 +44,7 @@ module.exports = new function() {
 
   /**
    * Gets all roles that has been assgined to user with userId
-   *  @param userId    The user id of user
+   *  @param userId the user id of user
    */
   this.getByUserId = function(userId) {
     //1. inner join user.id and relationTable.user_id
@@ -77,7 +82,7 @@ module.exports = new function() {
 
   /**
    * Assign a role specified by name to the user
-   *  @param userId   The user id of user
+   *  @param userId the user id of user
    */
   this.assignByRoleName = function(userId, roleName) {
     return _this.hasRole(userId, roleName)
@@ -108,7 +113,7 @@ module.exports = new function() {
 
   /**
    * Removes an element from a table in the database given its id
-   *  @param id        The id of the entry to grab
+   *  @param id the id of the entry to grab
    */
   this.destroy = function(id) {
     return client
@@ -119,7 +124,7 @@ module.exports = new function() {
 
   /**
    * Inserts a role into the database
-   *  @param role      The role object data
+   *  @param role the role object data
    */
   this.insert = function(role) {
     return client
@@ -128,7 +133,7 @@ module.exports = new function() {
 
   /**
    * Updates a role into the database
-   *  @param role      The role
+   *  @param role the role
    */
   this.update = function(role) {
     return client

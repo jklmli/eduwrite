@@ -1,3 +1,8 @@
+/**
+ * Note.js
+ * Model for Notes for different user and classes
+ */
+
 var client = require("./Database.js").client;
 var user = require('./User.js');
 var api = require("../db/API.js");
@@ -7,12 +12,17 @@ module.exports = new function() {
   var _this = this;
 
   /**
-   * Get notes that belongs to the user.
+   * Get notes that belongs to the user
+   * @param user User object
    */
   this.getByUser = function(user) {
     return _this.getByUserId(user.id);
   };
 
+  /*
+   * Get most recent 30 notes by user
+   * @param user_id unique id of the user
+   */
   this.getByUserId = function(user_id) {
     return client
       .get(table)
@@ -38,6 +48,7 @@ module.exports = new function() {
 
   /**
    * Get pads that belongs to the lecture_id(group_id)
+   * @param lectureId the unique id of the lecture
    */
   this.getByLectureId = function(lectureId) {
     return client

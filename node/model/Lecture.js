@@ -11,6 +11,7 @@ module.exports = new function() {
 
   /*
    * Insert a new lecture into the table
+   * @param lecture the Lecture object to insert
    */
   this.insert = function(lecture) {
     return client
@@ -19,6 +20,7 @@ module.exports = new function() {
 
   /*
    * Get the entire record lecture record by its numerical id
+   * @param id the unique identifier for the client
    */
   this.get = function(id) {
     return client
@@ -30,6 +32,7 @@ module.exports = new function() {
 
   /*
    * Get all of the lectures for a given course using the course_id
+   * @param courseId the unique id for the course
    */
   this.getByCourseId = function(courseId) {
     return client
@@ -40,6 +43,7 @@ module.exports = new function() {
 
   /*
    * Get the lecture that occurred on a particular date
+   * @param day date string
    */
   this.getByDate = function(day) {
     return client
