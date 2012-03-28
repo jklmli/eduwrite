@@ -247,7 +247,6 @@ function loadNoteIntoUserSpace(event, data) {
   var id = data.rslt.obj.attr("id");
   // remove the "note" part of the li id.
   id = id.replace("note", "");
-  console.log(id);
 //  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
   $('.content').html("<iframe class='noteFrame' src='/p/" +  id + "'></iframe>");
 }
