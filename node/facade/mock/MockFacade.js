@@ -118,13 +118,18 @@ exports.getCourses = function getCourses(req, res) {
   res.send([
     {
       id:   3,
-      name: "CS 225",
-      title:"Data Structures"
+      name:"Data Structures",
+      course_number: "CS 225",
+      term: "Sp 12",
+      school_id: "1"
+
     },
     {
       id:   4,
-      name: "CS 241",
-      title:"Systems Programming"
+      name:"Systems Programming",
+      course_number: "CS 241",
+      term: "Sp 12",
+      school_id: "1"
     }
   ]);
 };

@@ -93,7 +93,7 @@ function loadCoursesCallback(data) {
   courses = [];
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      courses[i] = {data:data[i], attr:{id:"course" + data[i].id, rel: "course"}};
+      courses[i] = {data:data[i].name, attr:{id:"course" + data[i].id, rel: "course"}};
     }
   }
   return courses;
@@ -141,6 +141,7 @@ function loadNotesByLectureIdCallback(data) {
 
 /**
  * Triggers the callback to load the user note data.
+ * Generates a tree at the user-notes div
  */
 function loadUserNotes() {
 
@@ -186,6 +187,6 @@ function loadUserNotesCallback(data) {
  */
 function loadNoteIntoUserSpace(event, data) {
   var id = data.rslt.obj.attr("id");
-//  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
-  $('.content').html("<iframe class='noteFrame' src='/newPad/'></iframe>");
+  $('.content').html("<iframe class='noteFrame' src='/p/"+id+"'></iframe>");
+  //$('.content').html("<iframe class='noteFrame' src='/newPad/'></iframe>");
 }
