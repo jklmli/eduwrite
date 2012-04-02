@@ -64,7 +64,10 @@ function loadCoursesIntoModal(data){
 /**
  * Add event handler for when the new note button is clicked
  */
+function createNoteClicked() {
+    $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
 
+}
 
 /**
  * Function for placing /newPad/ frame
