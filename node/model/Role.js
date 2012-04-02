@@ -1,132 +1,146 @@
+/**
+ * Role.js
+ * Model for roles that different users have
+ */
+
 var client = require("./Database.js").client;
 var table = "roles";
 var relationTable = "roles_users";
 
+module.exports = new function() {
+  var _this = this;
 
-/**
- * Gets an element from a table in the database given its id
- *  @param id        The id of the entry to grab
- *  @param callback  The callback to perform on success
- */
-exports.get = function (id, callback) {
-  client
-    .get(table)
-    .where("id='" + id + "'")
-    .limit(1)
-    .execute(callback);
-};
+  /**
+   * Gets an element from a table in the database given its id
+   *  @param id the id of the entry to grab
+   */
+  this.get = function(id) {
+    return client
+      .get(table)
+      .where("id='" + id + "'")
+      .limit(1)
+      .execute();
+  };
 
+  /**
+   * Gets an role from a table in the database by its name
+   *  @param name the name of the entry to grab
+   */
+  this.getByName = function(name) {
+    return client
+      .get(table)
+      .where("name='" + name + "'")
+      .limit(1)
+      .execute();
+  };
 
-/**
- * Gets an role from a table in the database by its name
- *  @param name     The name of the entry to grab
- *  @param callback  The callback to perform on success
- */
-exports.getByName = function (name, callback) {
-  client
-    .get(table)
-    .where("name='" + name + "'")
-    .limit(1)
-    .execute(callback);
-};
+  /**
+   * Gets all roles that has been assigned to users
+   *  @param user the user object
+   */
+  this.getByUser = function(user) {
+    return _this.getByUserId(user.id);
+  };
 
-/**
- * Gets all roles that has been assigned to users
- *  @param user      The user object
- *  @param callback  The callback to perform on success
- */
-exports.getByUser = function (user, callback){
-  getByUserId(user.id,callback);
-}
+  /**
+   * Gets all roles that has been assgined to user with userId
+   *  @param userId the user id of user
+   */
+  this.getByUserId = function(userId) {
+    //1. inner join user.id and relationTable.user_id
+    //2. uses result from 1 to get roles
+    //3. retur data
+    var condition1 = relationTable + ".userId=" + userId;
+    var condition2 = relationTable + ".roleId=" + table + ".id";
+    var condition = condition1 + " AND " + condition2;
 
-/**
- * Gets all roles that has been assgined to user with userId
- *  @param userId    The user id of user
- *  @param callback  The callback to perform on success
- */
-exports.getByUserId = getByUserId = function(userId, callback){
-  //1. inner join user.id and relationTable.user_id
-  //2. uses result from 1 to get roles
-  //3. retur data
-  var condition1 = relationTable+".user_id="+userId;
-  var condition2 = relationTable+".role_id="+table+".id";
-  var condition = condition1+" AND "+condition2;
-  client
-    .get(table)
-    .join(relationTable,condition)
-    .execute(callback);   
-}
+    return client
+      .get(table)
+      .join(relationTable, condition)
+      .execute();
+  };
 
-/**
- * Checks if user has role
- *  @param userId The user id
- *  @param roleName Name of the role
- *  @return 
- */
-exports.hasRole = hasRole = function(userId, roleName, callback){
-  getByUserId(userId,function(results){
-    for(var i = 0; i<results.length;i++){
-      var role = results[i];
-      if(role.name==roleName){
-        callback(true);
-      }
-    }
-    callback(false);
-  });
-}
+  /**
+   * Checks if user has a rolewith roleName
+   *  @param userId The user id
+   *  @param roleName Name of the role
+   *  @return
+   */
+  this.hasRole = function(userId, roleName) {
+    return _this.getByUserId(userId)
+      .pipe(function(results) {
+        var i, len, role;
+        for (i = 0, len = results.length; i < len; i++) {
+          role = results[i];
+          if (role.name == roleName) {
+            return true;
+          }
+        }
+        return false;
+      });
+  };
 
-/**
- * Assign a role specified by name to the user
- *  @param userId   The user id of user
- *  @param callback The callback to perform on success
- */
-exports.assignByRoleName = function(userId, roleName, callback){
-  hasRole(userId,roleName,function(hasRole){
-    if(hasRole===true){
-      //do nothing if user already has the role
-      return;
-    } else {
-    } 
-  });
-}
+  /**
+   * Assign a role specified by name to the user
+   *  @param userId the user id of user
+   */
+  this.assignByRoleName = function(userId, roleName) {
+    return _this.hasRole(userId, roleName)
+      .pipe(function(hasRole) {
+        if (hasRole === true) {
+          // do nothing if user already has the role
+          return
+        }
+        else {
+          return _this.getByName(roleName)
+            .pipe(function(result) {
+              if (result.length <= 0) {
+                console.log("Role with roleName " + roleName + " not found in database table " + table);
+              } else {
+                var roleId = result[0].id;
+                var roleUser = {roleId: roleId, userId: userId};
+                return client
+                  .insert(relationTable, roleUser);
+              }
+            });
+        }
+      })
+  };
 
+  this.assignByRoleId = function(userId, roleId) {
 
+  };
 
-exports.assignByRoleId = function(userId, roleId, callback){
+  /**
+   * Removes an element from a table in the database given its id
+   *  @param id the id of the entry to grab
+   */
+  this.destroy = function(id) {
+    return client
+      .destroy(table)
+      .where("id='" + id + "'")
+      .execute();
+  };
 
-}
+  /**
+   * Inserts a role into the database
+   *  @param role the role object data
+   */
+  this.insert = function(role) {
+    return client
+      .insert(table, role);
+  };
 
-  
+  /**
+   * Updates a role into the database
+   *  @param role the role
+   */
+  this.update = function(role) {
+    return client
+      .update(table, role)
+      // FIXME: invalid parameter 'user' and SQL query modification after execution
+      .where("id = " + user);
+  };
 
-/**
- * Removes an element from a table in the database given its id
- *  @param id        The id of the entry to grab
- *  @param callback  The callback to perform on success
- */
-exports.destroy = function (id, callback) {
-  client
-    .destroy(table)
-    .where("id='" + id + "'")
-    .execute(callback);
-};
-
-/**
- * Inserts a role into the database
- *  @param role      The role object data
- *  @param callback  The callback to perform on success
- */
-exports.insert = function (role, callback) {
-  client.insert(table, role, callback);
-};
-
-
-/**
- * Updates a role into the database
- *  @param role      The role
- *  @param callback  The callback to perform on success
- */
-exports.update = function (role, callback) {
-  client
-    .update(table, role, callback)
-    .where("id = " + user);
+  return this;
 };

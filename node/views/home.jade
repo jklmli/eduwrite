@@ -2,46 +2,62 @@ extends layout
 
 block append head
   link(rel='stylesheet', href='/static/css/home.css')
-  script(type='text/javascript', src='http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js')
+  script(type='text/javascript', src='static/bootstrap/js/bootstrap-tab.js')
   script(type='text/javascript', src='static/bootstrap/js/bootstrap-modal.js')
-  script(type='text/javascript', src='static/js/site/homeNoteNavigation.js')
+  script(type='text/javascript', src='static/js/site/home.js')
   script(type='text/javascript', src='static/jstree/jquery.jstree.js')
-
-.modal#newNoteModal
-  .modal-header
-    a.close(data-dismiss="modal")
-    h3
-      Modal Header
+  script(type='text/javascript', src='static/jstile/dist/jstile.js')
 
 block content
   .container-fluid
     .row-fluid
-      .span2
+      .span3
         .well
           .tabbable
+
             #newNoteModal.modal.hide.fade
               .modal-header
                 a.close(data-dismiss="modal")
-                h4 Create a new note
+                h2 Create a new note
               .modal-body
-                form
-                  table.table
-                    tbody
-                      tr
-                        td Name
-                        td
-                          form
-                            input.text
+                form.form-horizontal
+                  fieldset
+                    .control-group
+                      label.control-label(for="newNoteName") Name
+                      .controls
+                        input.input-xlarge#newNoteName(type="text)
+                    .control-group
+                      label.control-label(for="newNoteCourse") Course
+                      .controls
+                        select#newNoteCourse
+                          option CS 225
+                          option CS 428
+                    .control-group
+                      label.control-label(for="newNoteLecture") Lecture
+                      .controls
+                        select#newNoteLecture
+                          option Fun
+                          option 428 class
+                    .control-group
+                      label.control-label(for="newNotePrivacy") Privacy
+                      .controls
+                        select#newNotePrivacy
+                          option Only me
+                          option Share with class
+                          option Public
+
               .modal-footer
                 a.btn(data-dismiss="modal") Cancel
                 a.btn.btn-primary(href="#") Create Note
-            a.btn#new-note-button(data-toggle="modal", href="#newNoteModal") New Note
+
             ul.nav.nav-tabs
               li.active
                 a(data-toggle='tab', href='#1') All Notes
               li
                 a(data-toggle='tab', href='#2') Your Notes
-
+              button.btn.new-note-button(rel='tootltip', title='Create a new note', data-toggle="modal", href="#newNoteModal")
+                i.icon-plus
+                i.icon-file
             .tab-content
 
               .tab-pane#1.active
@@ -52,14 +68,15 @@ block content
 
                 #user-notes
 
-      .span8
+
+      .span6
         .content
 
           center.hero-unit
             h1=title
             p Put some content here..
 
-      .span2
+      .span3
         .well
 
           .form-search

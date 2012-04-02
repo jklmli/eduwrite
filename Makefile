@@ -33,17 +33,11 @@ update-node_modules:
 	@@echo "Updating node modules..."
 	@@npm install -d
 
-build-submodules: build-bootstrap build-jquery
+build-submodules: build-jstile
 
-# Need to do a rm -rf/ hack since the Makefile is broken.
-# See https://github.com/twitter/bootstrap/pull/1672
-build-bootstrap: clean-bootstrap
-	@@echo "Building bootstrap..."
-	@@cd static/bootstrap && make bootstrap
-
-build-jquery:
-	@@echo "Building jquery..."
-	@@cd static/jquery && make core
+build-jstile:
+	@@echo "Building jstile..."
+	@@cd static/jstile && make build
 
 compile-less:
 	@@echo "Compiling .less files..."
@@ -58,15 +52,11 @@ clean-node_modules:
 	@@echo "Cleaning node modules..."
 	@@rm -rf node_modules/
 
-clean-submodules: clean-bootstrap clean-jquery
+clean-submodules: clean-jstile
 
-clean-bootstrap:
-	@@echo "Cleaning bootstrap..."
-	@@rm -rf static/bootstrap/bootstrap/
-
-clean-jquery:
-	@@echo "Cleaning jquery..."
-	@@cd static/jquery && make clean
+clean-jstile:
+	@@echo "Cleaning jstile..."
+	@@cd static/jstile && make clean
 
 run: build
 	@@bin/run.sh
