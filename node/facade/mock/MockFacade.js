@@ -86,27 +86,6 @@ module.exports = new function() {
   this.getLecturesByCourseId = function(req, res) {
     var ret = [];
     var courseId = parseInt(req.body.courseId);
-
-<<<<<<< HEAD
-exports.getCourses = function getCourses(req, res) {
-  var id = req.body.userId;
-  res.contentType('json');
-  res.send([
-    {
-      id:   3,
-      name:"Data Structures",
-      course_number: "CS 225",
-      term: "Sp 12",
-      school_id: "1"
-
-    },
-    {
-      id:   4,
-      name:"Systems Programming",
-      course_number: "CS 241",
-      term: "Sp 12",
-      school_id: "1"
-=======
     var lectures = [
       {
         id: 8234,
@@ -135,7 +114,6 @@ exports.getCourses = function getCourses(req, res) {
     for (i = 0, len = lectures.length; i < len; i++) {
       if (lectures[i].courseId === courseId)
         ret.push(lectures[i]);
->>>>>>> 9d9fd209d60360596914c9632d01c656f8720140
     }
 
     res.contentType('json');
