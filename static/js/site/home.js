@@ -66,7 +66,7 @@ function loadCoursesIntoModal(data){
  */
 function createNoteClicked() {
     $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
-
+    $('#newNoteModal').modal('hide');
 }
 
 /**
