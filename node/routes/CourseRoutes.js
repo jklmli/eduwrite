@@ -15,17 +15,19 @@ module.exports = new function() {
 
   /*
      New page to create a course
+     Only professor should be able to create a course
   */
   this.add = function(req,res){
+    //check if the user has Professor as one of the roles
     res.render('courses/add',{});
   };
 
   /**
     Create a course
-    This should be only done by users with
-    role as a professor
+    Only professors should be able to create a course
     **/
   this.create = function(req,res){
+    //check if the user has Professor as one of the roles
     res.redirect('/courses/'+id);
   };
 
@@ -41,6 +43,7 @@ module.exports = new function() {
      Edit a course
   */
   this.edit = function(req,res){
+    //check if the user is owner of the course (or just any professor can edit?)
     res.render('courses/edit',{});
   };
 
@@ -48,6 +51,7 @@ module.exports = new function() {
     Update a course
     **/
   this.update = function(req,res){
+    //check if the user is owner of the course (or just any professor can update?)
     res.redirect('/courses/'+id);
   };
 
@@ -55,6 +59,7 @@ module.exports = new function() {
     Remove a course
     **/
   this.destroy = function(req,res){
+    //check the permission
     //remove all dependent lectures
     res.redirect('/courses/');
   };
