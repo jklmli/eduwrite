@@ -103,7 +103,7 @@ function asyncImport(callback) {
   facadeRoutes = require('./routes/FacadeRoutes.js');
   pageRoutes = require('./routes/PageRoutes.js');
   lectureRoutes = require('./routes/LectureRoutes.js');
-  CourseRoutes = require('./routes/CourseRoutes.js');
+  courseRoutes = require('./routes/CourseRoutes.js');
 
   callback(null);
 }
