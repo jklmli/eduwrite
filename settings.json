@@ -8,15 +8,6 @@
   "ip": "0.0.0.0",
   "port" : 9001,
   
-  //The Type of the database. You can choose between dirty, sqlite and mysql
-  //You should use mysql or sqlite for anything else than testing or development
-  //"dbType" : "mysql",
-  //the database specific settings
-  /*
-  "dbSettings" : {
-                   "filename" : "../var/dirty.db"
-                 },
-  */
                  
   //An Example of MySQL Configuration
    "dbType" : "mysql",

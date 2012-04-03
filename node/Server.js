@@ -33,6 +33,8 @@ var socketIORouter;
 // EduWrite routes
 var facadeRoutes;
 var pageRoutes;
+var lectureRoutes;
+var courseRoutes;
 
 
 // Parse application port from parameter
@@ -100,6 +102,8 @@ function asyncImport(callback) {
   //
   facadeRoutes = require('./routes/FacadeRoutes.js');
   pageRoutes = require('./routes/PageRoutes.js');
+  lectureRoutes = require('./routes/LectureRoutes.js');
+  CourseRoutes = require('./routes/CourseRoutes.js');
 
   callback(null);
 }
@@ -198,11 +202,26 @@ function attachEduWriteRoutes(app) {
   app.get('/register', pageRoutes.register);
   app.get('/login', pageRoutes.login);
   app.get('/logout', pageRoutes.logout);
+
+  // Account Management
   app.get('/accountManagement', pageRoutes.accountManagement);
   app.get('/accountManagement/profile', pageRoutes.accountManagementProfile);
   app.get('/accountManagement/notePermissions', pageRoutes.accountManagementNotePermissions);
   app.get('/accountManagement/settings', pageRoutes.accountManagementSettings);
   app.get('/accountManagement/help', pageRoutes.accountManagementHelp);
+
+  // Courses
+  app.get('/courses/', courseRoutes.index);
+  app.get('/courses/create', courseRoutes.create);
+  app.post('/courses/create', facadeRoutes.createCourse);
+
+  /*
+    TODO:     Will be implemented
+  // Lectures
+  app.get('/lectures/', pageRoutes.getLectures);
+  app.get('/lectures/new', pageRoutes.newLecture);
+  app.post('/lectures/create', facadeRoutes.createLecture);
+  */
 
   // Facade routes
   app.post('/getUser', facadeRoutes.getUser);
@@ -227,6 +246,8 @@ function attachEduWriteRoutes(app) {
   app.post('/login', facadeRoutes.login);
   app.post('/logout', facadeRoutes.logout);
   app.get('/notes/', facadeRoutes.getNotes);
+
+  
 }
 
 
