@@ -26,7 +26,7 @@ describe('Enrollment get', function() {
       .then(function(enrollmentData) {
 
         assert.equal(1, enrollmentData.length);
-        assert.equal(2, enrollmentData[0].student_id);
+        assert.equal(2, enrollmentData[0].studentId);
         done();
 
       });

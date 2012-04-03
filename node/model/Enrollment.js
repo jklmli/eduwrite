@@ -26,7 +26,7 @@ module.exports = new function() {
    *  @param studentId the unique id of the user
    */
   this.getCoursesByStudentId = function(studentId) {
-    var condition = table + ".course_id = courses.id";
+    var condition = table + ".courseId = courses.id";
     return client
       .get(table)
       .join("courses", condition)
