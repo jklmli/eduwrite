@@ -105,8 +105,8 @@ module.exports = new function() {
   /**
    * Create pad that does not belong to any group
    */
-  this.create = function(userId, lectureId) {
-    var note = {user_id: userId, lectureId: lectureId};
+  this.create = function(userId, lectureId, title) {
+    var note = {user_id: userId, lectureId: lectureId, title: title};
     return client.insert(table, note);
 
     //api.createPad(padID, "", function(err,response){

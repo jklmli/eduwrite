@@ -181,6 +181,8 @@ module.exports = new function() {
    */
   this.addNote = function(req, res) {
     var user = req.session.user;
+    var lectureId = req.body.lectureId;
+    var title = req.body.title;
     if (!user) {
       res.send("Please login first");
     }

@@ -3,7 +3,8 @@ var $ = require('jquery');
 
 // Database connection information
 var databaseName = "eduwrite";
-var databaseHost = '107.21.246.180';
+//var databaseHost = '107.21.246.180';
+var databaseHost = '127.0.0.1';
 var client = mysql.createClient({
   host: databaseHost,
   database: databaseName,

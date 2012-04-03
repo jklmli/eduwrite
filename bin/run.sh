@@ -27,7 +27,7 @@ bin/installDeps.sh || exit 1
 echo "start..."
 cd "node"
 port=9001
-type='live'
+type='mock'
 if [ -n "$1" ]
 then
   port=$1

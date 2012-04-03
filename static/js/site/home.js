@@ -65,8 +65,19 @@ function loadCoursesIntoModal(data){
  * Add event handler for when the new note button is clicked
  */
 function createNoteClicked() {
+    // Create Etherpad frame with name from newNoteName Input box
     $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
     $('#newNoteModal').modal('hide');
+
+    // Get lectureId by Lecture name
+
+    // Pass lecture ID and Title to the the server to be placed in database
+    $.post("/addNote",{lectureId: id, title:$("#newNoteName")}, createNoteClickedCallback())
+
+}
+
+function createNoteClickedCallback(data) {
+
 }
 
 /**
