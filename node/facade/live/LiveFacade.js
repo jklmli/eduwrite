@@ -17,8 +17,7 @@ module.exports = new function() {
     // Get the user by email address
     User.getByEmail(email)
       .then(function(usersFound) {
-        Authentication.register(usersFound, req)
-          .then(function(status) {
+        var status = Authentication.register(usersFound, req)
             if (status === true) {
               req.flash("success", "You have been successfully registered to the site");
               res.redirect('/');
@@ -52,7 +51,6 @@ module.exports = new function() {
               req.flash("error", "User with the email " + email + " already exists");
               res.redirect('back');
             }
-          });
       });
   };
 
