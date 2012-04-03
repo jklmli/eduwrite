@@ -22,6 +22,19 @@ module.exports = new function() {
   };
 
   /**
+   *  Get all courses that studentId is enrolled in
+   *  @param studentId the unique id of the user
+   */
+  this.getCoursesByStudentId = function(studentId) {
+    var condition = table + ".course_id = courses.id";
+    return client
+      .get(table)
+      .join("courses", condition)
+      .where("studentId = " + studentId)
+      .execute();
+  };
+
+  /**
    *  Get all students in a course
    *  @param courseId the unique id of the course
    */
