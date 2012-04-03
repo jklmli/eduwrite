@@ -5,11 +5,19 @@ module.exports = new function() {
 
   /**
     List all courses
+    TODO: pagination sometime later
     **/
   this.index = function(req,res){
-    res.render('lectures/index', {
-        title: 'Help'
+    res.render('courses/index', {
     });
+  };
+
+
+  /*
+     New page to create a course
+  */
+  this.add = function(req,res){
+    res.render('courses/add',{});
   };
 
   /**
@@ -18,48 +26,37 @@ module.exports = new function() {
     role as a professor
     **/
   this.create = function(req,res){
-    //if req = GET
-
-    //if req = POST
-  }
+    res.redirect('/courses/'+id);
+  };
 
   /**
     Show a course
     **/
   this.show = function(req,res){
+    //get course with params[id]
+    res.render('courses/show',{});
+  };
 
-  }
+  /*
+     Edit a course
+  */
+  this.edit = function(req,res){
+    res.render('courses/edit',{});
+  };
 
   /**
-    Edit/update a course
+    Update a course
     **/
   this.update = function(req,res){
-    //if req = GET
-
-    //if req = POSt
-    res.redirect('/lectures/'+id');
-  }
+    res.redirect('/courses/'+id);
+  };
 
   /**
     Remove a course
     **/
   this.destroy = function(req,res){
-    
-
     //remove all dependent lectures
-    res.redirect('/lectures/');
-  }
-
-
-
-  this.accountManagementHelp = function(request, response) {
-    // Show index if logged in, redirect otherwise
-    if (request && request.session.user) {
-
-      // Render the accountManagement page template
-      
-    } else {
-    }
+    res.redirect('/courses/');
   };
 
   return this;
