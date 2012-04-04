@@ -10,7 +10,7 @@ block content
           -each course in courses
             tr
               td
-               a=course.name
+               a(href="/courses/#{course.id}")=course.name
       .span9
         h2
           p Lectures
