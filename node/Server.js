@@ -152,6 +152,7 @@ function initializeHTTPServer(callback) {
   attachEduWriteRoutes(app);
 
   // Add dynamic helpers
+  // Dynamic helpers can be directly used from views
   app.dynamicHelpers({
     error:   function (req, res) {
       return req.flash('error');
@@ -170,6 +171,11 @@ function initializeHTTPServer(callback) {
     },
     user:    function (req, res) {
       return req.session.user;
+    },
+
+    //TODO: 
+    isProfessor: function (req, res){
+      return true;
     }
   });
 

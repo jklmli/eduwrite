@@ -14,6 +14,9 @@ module.exports = new function() {
    *  @param id the unique id number of the course
    */
   this.get = function(id) {
+    if(id===undefined){
+      return client.get(table).execute();
+    }
     return client
       .get(table)
       .where("id='" + id + "'")

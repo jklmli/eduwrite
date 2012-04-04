@@ -1,3 +1,6 @@
+var Course = require("../model/Course.js");
+
+
 /** Routes for lecture related operations 
   Following RESTful routing **/
 module.exports = new function() {
@@ -8,8 +11,10 @@ module.exports = new function() {
     TODO: pagination sometime later
     **/
   this.index = function(req,res){
-    res.render('courses/index', {
-    });
+    Course.get().then(function(courses){
+      
+      res.render('courses/index', {title:"List of couses",courses:courses})
+    });;
   };
 
 
