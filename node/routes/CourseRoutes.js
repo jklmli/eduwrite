@@ -41,6 +41,7 @@ module.exports = new function() {
     **/
   this.show = function(req,res){
     //get course with params[id]
+    
     res.render('courses/show',{});
   };
 
