@@ -25,6 +25,21 @@ module.exports = new function() {
   };
 
   /**
+   *  Retrive course by ID
+   *  @param id the unique id number of the course
+   */
+  this.get = function(id) {
+      if(id===undefined){
+          return client.get(table).execute();
+      }
+      return client
+          .get(table)
+          .where("id='" + id + "'")
+          .limit(1)
+          .execute();
+  };
+
+  /**
    *  Retrive course by school id
    *  @param schoolId unique id number for the school
    */
