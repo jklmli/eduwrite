@@ -13,7 +13,7 @@ module.exports = new function() {
    *  Retrive course by ID
    *  @param id the unique id number of the course
    */
-  this.get = function(id) {
+  this.getByUser = function(id) {
     if(id===undefined){
       return client.get(table).execute();
     }
