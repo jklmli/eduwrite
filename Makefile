@@ -7,7 +7,7 @@ LESS = static/css/less/
 .PHONY: run test
 
 # Hacky fix so build-bootstrap can access node_modules tools
-PATH := ${PATH}:../../node_modules/less/bin:../../node_modules/uglify-js/bin
+PATH := ${PATH}:../../node_modules/less/bin:../../node_modules/uglify-js/bin:../../node_modules/coffee-script/bin
 export PATH
 
 build: update-submodules update-node_modules build-submodules core
