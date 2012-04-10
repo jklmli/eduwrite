@@ -13,15 +13,8 @@ module.exports = new function() {
    *  Retrive course by ID
    *  @param id the unique id number of the course
    */
-  this.getByUser = function(id) {
-    if(id===undefined){
-      return client.get(table).execute();
-    }
-    return client
-      .get(table)
-      .where("id='" + id + "'")
-      .limit(1)
-      .execute();
+  this.getByUser = function(user) {
+      return _this.get(user.id);
   };
 
   /**

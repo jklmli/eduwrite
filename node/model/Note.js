@@ -26,7 +26,7 @@ module.exports = new function() {
   this.getByUserId = function(userId) {
     return client
       .get(table)
-      .where("userId='" + user.id + "'")
+      .where("userId='" + userId + "'")
       .limit(30)
       .execute();
     /*

@@ -126,8 +126,9 @@ module.exports = new function() {
   this.getNotes = function(req, res) {
     var user = req.session.user;
     Note.getByUser(user)
-      .then(function(err, notes) {
-        console.log(notes);
+      .then(function(notes) {
+        res.contentType('json');
+        res.send(notes);
       });
   };
 

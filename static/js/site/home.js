@@ -73,10 +73,11 @@ function createNoteClicked() {
 
     // Pass lecture ID and Title to the the server to be placed in database
     $.post("/addNote",{lectureId: id, title:$("#newNoteName").val()}, createNoteClickedCallback());
-
 }
 
 function createNoteClickedCallback(data) {
+    loadUserNotes();
+    loadCourses();
     return;
 }
 
@@ -225,7 +226,7 @@ function loadUserNotes() {
       "json_data":{
         "ajax":{
           "type":"POST",
-          "url":"/getNotesByUserId",
+          "url":"/getNotes",
           "success":loadUserNotesCallback
         }
       },
@@ -251,7 +252,7 @@ function loadUserNotesCallback(data) {
   notes = [];
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      notes[i] = {data:data[i], attr:{id:"note" + data[i].id, href:data[i].location}};
+      notes[i] = {data:data[i], attr:{id:"note" + data[i].id, title: data[i].title, href:data[i].location}};
     }
   }
   return notes;
@@ -261,9 +262,8 @@ function loadUserNotesCallback(data) {
  * Executed when a user clicks on a note from the sidebar, triggers loading a note.
  */
 function loadNoteIntoUserSpace(event, data) {
-  var id = data.rslt.obj.attr("id");
+  var title = data.rslt.obj.attr("title");
   // remove the "note" part of the li id.
-  id = id.replace("note", "");
-//  $('.content').html("<iframe class='noteFrame' src='/pad/"+id+"'></iframe>");
-  $('.content').html("<iframe class='noteFrame' src='/p/" +  id + "'></iframe>");
+  //id = id.replace("note", "");
+  $('.content').html("<iframe class='noteFrame' src='/p/" +  title + "'></iframe>");
 }

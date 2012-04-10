@@ -24,19 +24,24 @@ module.exports = new function() {
   /**
    * Get the notes for a user by his/her id
    */
-  this.getNotesByUserId = function(req, res) {
+  this.getNotes = function(req, res) {
     var userId = req.body.userId;
     res.contentType('json');
     res.send([
       {
         id: 3,
-        title: "Lecture 12",
-        location: "notes\\note5001"
+        userId: "93",
+        padId:"5",
+        lectureId: "1",
+        title: "new"
+
       },
       {
         id: 4,
-        title: "My Second Note",
-        location: "notes\\note5002"
+        userId: "5",
+        padId: "6",
+        lectureId: "1",
+        title: "My Second Note"
       }
     ]);
   };
