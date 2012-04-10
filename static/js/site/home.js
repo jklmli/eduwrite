@@ -68,16 +68,16 @@ function createNoteClicked() {
     // Create Etherpad frame with name from newNoteName Input box
     $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
     $('#newNoteModal').modal('hide');
-
+    var id = 1;
     // Get lectureId by Lecture name
 
     // Pass lecture ID and Title to the the server to be placed in database
-    $.post("/addNote",{lectureId: id, title:$("#newNoteName")}, createNoteClickedCallback())
+    $.post("/addNote",{lectureId: id, title:$("#newNoteName").val()}, createNoteClickedCallback());
 
 }
 
 function createNoteClickedCallback(data) {
-
+    return;
 }
 
 /**

@@ -186,7 +186,7 @@ module.exports = new function() {
     if (!user) {
       res.send("Please login first");
     }
-    Note.create(user.id, 1);
+    Note.create(user.id, lectureId,title);
     res.send("Hello world");
   };
 
