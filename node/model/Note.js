@@ -21,9 +21,9 @@ module.exports = new function() {
 
   /*
    * Get most recent 30 notes by user
-   * @param user_id unique id of the user
+   * @param userId unique id of the user
    */
-  this.getByUserId = function(user_id) {
+  this.getByUserId = function(userId) {
     return client
       .get(table)
       .where("userId='" + user.id + "'")
@@ -106,7 +106,7 @@ module.exports = new function() {
    * Create pad that does not belong to any group
    */
   this.create = function(userId, lectureId, title) {
-    var note = {user_id: userId, lectureId: lectureId, title: title};
+    var note = {userId: userId, lectureId: lectureId, title: title};
     return client.insert(table, note);
 
     //api.createPad(padID, "", function(err,response){
