@@ -1,4 +1,16 @@
 extends ../accountManagement
 
 block accountManagementContent
-  h3 Update E-mail Address
+  form.form-horizontal(action="/changeEmail/", method="post")
+    fieldset
+      legend Update Your Email
+      .control-group
+        label.control-label(for='email-input') New Email
+        .controls
+          input#email-input.input-large(type='text', name='newemail')
+      .control-group
+        label.control-label(for='confirm-email-input') Confirm New Email
+        .controls
+          input#confirm-email-input.input-large(type='password', name='confirmemail')
+      .form-actions
+        button.btn.btn-primary(type='submit') Update
