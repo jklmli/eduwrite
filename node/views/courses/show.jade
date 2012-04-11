@@ -4,8 +4,7 @@ block content
   .container
     .row
       .span3
-        p 
-          a.btn Add new student
+        h2 List of students
         table.table
           tr
             td
@@ -13,9 +12,11 @@ block content
           tr
             td
               p Student 2
+
+        p 
+          a.btn Add new student
       .span9
-        h2
-          p List of lectures
+        h2 List of lectures
         table.table
           tr
             td
@@ -26,5 +27,11 @@ block content
           tr
             td
               p Lecture 3
+          -each lecture in course.lectures
+            tr
+              td
+                p Lecture #{lecture.day}
+        p
+          a.btn(href="/courses/4/lectures/add") Add new lecture
            
 

@@ -1,3 +1,6 @@
+var Course = require("../model/Course.js");
+var Lecture = require("../model/Lecture.js");
+
 /** Routes for lecture related operations 
   Following RESTful routing **/
 module.exports = new function() {
@@ -8,9 +11,20 @@ module.exports = new function() {
   };
 
   this.create = function(req,res){
-    //if req = GET
+    var lecture = req.body.lecture;
+    Lecture.insert(lecture).then(function(result){
+      var courseId = lecture.courseId;
+      res.redirect('/courses/'+courseId);
+    });
 
-    //if req = POST
+  }
+
+  this.add = function(req,res){
+    var courseId = req.params.courseId;
+    Course.get(courseId).then(function(courses){
+      var course = courses[0];
+      res.render('lectures/add',{course:course});
+    });
   }
 
   this.show = function(req,res){
@@ -26,22 +40,6 @@ module.exports = new function() {
   this.destroy = function(req,res){
     
   }
-
-
-
-  this.accountManagementHelp = function(request, response) {
-    // Show index if logged in, redirect otherwise
-    if (request && request.session.user) {
-
-      // Render the accountManagement page template
-      response.render('users/accountManagement/help', {
-        title: 'Help'
-      });
-
-    } else {
-      response.redirect('/login/');
-    }
-  };
 
   return this;
 };

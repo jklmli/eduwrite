@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      .span3
+        table.table
+      .span9
+        form.form-horizontal(action="/courses/#{course.id}/lectures/", method="POST")
+          input(type="hidden", name="lecture[courseId]", value="#{course.id}")
+          fieldset
+            legend Add new lecture to #{course.name}
+            
+            label Day
+            input.span3(type="text", name="lecture[day]",placeholder="2012-04-11",id="datepicker")
+
+           p
+            p 
+              button.btn(type="submit") Submit
+       script
+         $("#datepicker").datepicker();
+         $("#datepicker").datepicker("option","dateFormat","yy-mm-dd");
+
+
+            

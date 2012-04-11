@@ -3,14 +3,17 @@ extends ../layout
 block content
   .container
     .row
-      .span3
-        p 
-          a.btn(href="/courses/add") Add new course
+      .span12
+        h2 List of courses
         table.table
+          tr
+            th department
+            th number
+            th name
           -each course in courses
             tr
+              td=course.department
+              td=course.number
               td
-               a(href="/courses/#{course.id}")=course.name
-      .span9
-        h2
-          p Lectures
+                a(href="/courses/#{course.id}")=course.name
+        a.btn(href="/courses/add") Add new course
