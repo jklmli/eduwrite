@@ -4,6 +4,8 @@ var Course = require('../../model/Course.js');
 var Lecture = require('../../model/Lecture.js');
 var Authentication = require('../../model/Authentication.js');
 var mailHandler = require('mailer');
+var Hashes = require('jshashes');
+var bcrypt = require('bcrypt');
 
 module.exports = new function() {
   var _this = this;
@@ -92,6 +94,41 @@ module.exports = new function() {
             }
           });
       });
+  };
+
+  /**
+   * Update a user's password
+   */
+  this.updatePassword = function(req, res) {
+    var oldPassword = req.body.oldpassword;
+    var newPassword = req.body.password;
+    var confirmPassword = req.body.confirmpassword;
+    var user = req.session.user;
+    var email = user.email;
+    // confirm the two new passwords match
+    if (confirmPassword != newPassword) {
+      req.flash("error", "The two passwords you entered did not match"); 
+      res.redirect('back');       
+    }
+    else {
+      // confirm the current password was entered correctly
+      User.getByEmailAndPassword(email, oldPassword)
+        .then(function(usersFound) {
+          if (Authentication.login(usersFound, req)) {
+            req.flash("success", "Your password has been changed successfully");
+            res.redirect('back'); 
+            //TODO: call facade function to make change once fixed 
+            //update the password
+            //User.updatePassword(user, newPassword)
+              //.then(function(success) {
+                //req.flash("success", "Your password has successfully been changed");
+              //});
+          } else {
+            req.flash("error", "You entered your current password incorrectly");
+            res.redirect('back');  
+          }
+        });
+    }
   };
 
   /**

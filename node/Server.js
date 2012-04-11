@@ -260,6 +260,7 @@ function attachEduWriteRoutes(app) {
   app.post('/login', facadeRoutes.login);
   app.post('/logout', facadeRoutes.logout);
   app.get('/notes/', facadeRoutes.getNotes);
+  app.post('/accountManagement/changePassword/', facadeRoutes.updatePassword);
 
   
 }

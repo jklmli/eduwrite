@@ -47,7 +47,8 @@ methods = [
   // User + instructor account functionality
   'login',
   'logout',
-  'isLoggedIn'
+  'isLoggedIn', 
+  'updatePassword'
 ];
 
 var i, len;

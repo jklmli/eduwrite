@@ -87,13 +87,22 @@ Client.prototype.destroy = function(table) {
 };
 
 /**
- * Add a where clause to the current SQL queyr
+ * Add a where clause to the current SQL query
  *  @param where  The WHERE clause to add
  */
 Client.prototype.where = function(where) {
   this.sql += "where " + where + " ";
   return this;
 };
+
+/**
+ *  Add a set clause to the current SQL query
+ *  @param set the SET clause to add
+ */
+Client.prototype.set = function(set) {
+  this.sql += "set " + set + " ";
+  return this;
+}
 
 /**
  * Add a join clause to the current SQL query
@@ -153,7 +162,7 @@ Client.prototype.update = function(table, obj) {
   var values = [];
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
-      query += key + " = ?, "; // FIXME: query represents a global object here
+      q += key + " = ?, "; // FIXME: query represents a global object here
       values.push(obj[key]);
     }
   }

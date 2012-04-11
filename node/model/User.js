@@ -111,7 +111,19 @@ module.exports = new function() {
     return client
       .update(table, user)
       // FIXME: invalid SQL query modification after execution
-      .where("id = " + user); //Are you sure you are not feeding in user.id ?
+      .where("id = " + user.id); //Are you sure you are not feeding in user.id ?
+  };
+
+  /**
+   * Update the user's password
+   * @param id the user's id
+   * @param pasword the user's password
+   */
+  this.updatePassword = function(user, password) {
+    user.password = encrypt(password);
+    return client
+      .update(table, user)
+      .where("id = " + user.id)
   };
 
   return this;
