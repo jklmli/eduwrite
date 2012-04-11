@@ -218,14 +218,17 @@ function attachEduWriteRoutes(app) {
   app.get('/accountManagement/changePassword', pageRoutes.accountManagementChangePassword);
   app.get('/accountManagement/changeEmail', pageRoutes.accountManagementChangeEmail);
 
-  // Courses in RESTful routing
+  // Courses in RESTful routing (Using GET/POST/PUT/DELETE)
   app.get('/courses/', courseRoutes.index);
-  app.get('/courses/add', courseRoutes.add);
-  app.post('/courses/create', courseRoutes.create);
   app.get('/courses/:id',courseRoutes.show);
+
+  app.get('/courses/add', courseRoutes.add);
+  app.post('/courses/', courseRoutes.create);
+
   app.get('/courses/:id/edit',courseRoutes.edit);
-  app.post('/courses/update',courseRoutes.update);
-  app.post('/courses/:id/destroy',courseRoutes.destroy);
+  app.put('/courses/:id',courseRoutes.update);
+
+  app.delete('/courses/:id',courseRoutes.destroy);
 
 
   /*

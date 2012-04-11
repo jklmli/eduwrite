@@ -12,9 +12,17 @@ module.exports = new function() {
     **/
   this.index = function(req,res){
     Course.get().then(function(courses){
-      
       res.render('courses/index', {title:"List of couses",courses:courses})
     });;
+  };
+
+  /**
+    Show a course
+    **/
+  this.show = function(req,res){
+    //get course with params[id]
+    
+    res.render('courses/show',{});
   };
 
 
@@ -34,15 +42,6 @@ module.exports = new function() {
   this.create = function(req,res){
     //check if the user has Professor as one of the roles
     res.redirect('/courses/'+id);
-  };
-
-  /**
-    Show a course
-    **/
-  this.show = function(req,res){
-    //get course with params[id]
-    
-    res.render('courses/show',{});
   };
 
   /*
