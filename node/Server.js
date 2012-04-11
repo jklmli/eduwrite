@@ -215,6 +215,8 @@ function attachEduWriteRoutes(app) {
   app.get('/accountManagement/notePermissions', pageRoutes.accountManagementNotePermissions);
   app.get('/accountManagement/settings', pageRoutes.accountManagementSettings);
   app.get('/accountManagement/help', pageRoutes.accountManagementHelp);
+  app.get('/accountManagement/changePassword', pageRoutes.accountManagementChangePassword);
+  app.get('/accountManagement/changeEmail', pageRoutes.accountManagementChangeEmail);
 
   // Courses in RESTful routing
   app.get('/courses/', courseRoutes.index);

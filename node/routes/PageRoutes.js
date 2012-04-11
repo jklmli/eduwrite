@@ -65,10 +65,46 @@ module.exports = new function() {
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
 
-      response.redirect('/accountManagement/profile')
+      response.redirect('/accountManagement/profile');
 
     } else {
       response.redirect('/login/');
+    }
+  };
+
+  /**
+   *  Redirect to /accountManagement/changeEmail
+   *  @param request
+   *  @param response
+   */
+  this.accountManagementChangeEmail = function(request, response) {
+    // Confirm if user is logged in, redirect otherwise
+    if(request && request.session.user) {
+ 
+      response.render('users/accountManagement/changeEmail', {
+        title: 'Update E-mail'
+      });
+
+    } else {
+      response.redirect('/login/');
+    }
+  };
+
+  /**
+   * Redirect to /accountManagement/changePassword
+   * @param request
+   * @param response
+   */
+  this.accountManagementChangePassword = function(request, response) {
+    // Confirm if user is logged in, redirect otherwise
+    if(request && request.session.user) {
+
+      response.render('users/accountManagement/changePassword', {
+        title: 'Update Password'
+      });
+
+    } else {
+        response.redirect('/login/');
     }
   };
 
