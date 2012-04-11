@@ -132,6 +132,42 @@ module.exports = new function() {
   };
 
   /**
+   * Update a user's email address
+   */
+  this.updateEmail = function(req, res) {
+    var newEmail = req.body.newemail;
+    var confirmEmail = req.body.confirmemail;
+    var password = req.body.password;
+    var user = req.session.user;
+    var email = user.email;
+    // confirm the two new emails match
+    if (confirmEmail != newEmail) {
+      req.flash("error", "The two emails you entered did not match"); 
+      res.redirect('back');       
+    }
+    else {
+      // confirm the password was entered correctly
+      User.getByEmailAndPassword(email, password)
+        .then(function(usersFound) {
+          if (Authentication.login(usersFound, req)) {
+            req.flash("success", "Your email has been updated successfully");
+            res.redirect('back'); 
+            //TODO: call facade function to make change once fixed 
+            //update the email
+            //User.updateEmail(user, newPassword)
+              //.then(function(success) {
+                //req.flash("success", "Your email has successfully been updated");
+              //});
+          } else {
+            req.flash("error", "You entered your password incorrectly");
+            res.redirect('back');  
+          }
+        });
+    }
+  };
+
+
+  /**
    * Login a user if they exist and submit correct credentials, fail otherwise.
    */
   this.login = function(req, res) {

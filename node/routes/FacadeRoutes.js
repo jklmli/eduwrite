@@ -48,7 +48,8 @@ methods = [
   'login',
   'logout',
   'isLoggedIn', 
-  'updatePassword'
+  'updatePassword',
+  'updateEmail'
 ];
 
 var i, len;
