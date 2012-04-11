@@ -19,18 +19,12 @@ block content
         h2 List of lectures
         table.table
           tr
-            td
-              p Lecture 1
-          tr
-            td
-              p Lecture 2
-          tr
-            td
-              p Lecture 3
+            th Name
+            th Date
           -each lecture in course.lectures
             tr
-              td
-                p Lecture #{lecture.day}
+              td #{lecture.name}
+              td #{lecture.day}
         p
           a.btn(href="/courses/#{course.id}/lectures/add") Add new lecture
            

@@ -10,9 +10,13 @@ block content
           input(type="hidden", name="lecture[courseId]", value="#{course.id}")
           fieldset
             legend Add new lecture to #{course.name}
+
+            label Name
+            input.span3(type="text", name="lecture[name]",placeholder="DFS/BFS algorithm")
             
             label Day
             input.span3(type="text", name="lecture[day]",placeholder="2012-04-11",id="datepicker")
+            
 
            p
             p 
