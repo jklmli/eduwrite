@@ -1,6 +1,6 @@
 var Course = require("../model/Course.js");
-
-
+var Lecture = require("../model/Lecture.js");
+var Enrollment = require("../model/Enrollment.js");
 /** Routes for lecture related operations 
   Following RESTful routing **/
 module.exports = new function() {
@@ -21,8 +21,20 @@ module.exports = new function() {
     **/
   this.show = function(req,res){
     //get course with params[id]
-    
-    res.render('courses/show',{});
+    var id = req.params.id;
+    Course.get(id).then(function(courses){
+      var course = courses[0];
+      //get related courses
+      Lecture.getByCourseId(course.id).then(function(lectures){
+        course.lectures = lectures;
+
+        //get student enrollments
+        Enrollment.getByCourseId(course.id).then(function(enrollments){
+          course.enrollments = enrollments;
+          res.render('courses/show',{course:course});
+        });
+      });
+    });
   };
 
 
@@ -31,8 +43,10 @@ module.exports = new function() {
      Only professor should be able to create a course
   */
   this.add = function(req,res){
-    //check if the user has Professor as one of the roles
-    res.render('courses/add',{});
+    //check if the user has a role called 'Professor' as one of the roles
+    Course.get().then(function(courses){
+      res.render('courses/add',{courses:courses});
+    });
   };
 
   /**
@@ -40,8 +54,12 @@ module.exports = new function() {
     Only professors should be able to create a course
     **/
   this.create = function(req,res){
-    //check if the user has Professor as one of the roles
-    res.redirect('/courses/'+id);
+    //TODO:check if the user has Professor as one of the roles
+    var course = req.body.course;
+    Course.insert(course).then(function(result){
+      var id = result.insertId;
+      res.redirect('/courses/'+id);
+    });
   };
 
   /*

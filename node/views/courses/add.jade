@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      .span3
+        p 
+          a.btn(href="/courses/add") Add new course
+        table.table
+          -each course in courses
+            tr
+              td
+               a(href="/courses/#{course.id}")=course.name
+      .span9
+        form.form-horizontal(action="/courses/", method="POST")
+          fieldset
+            legend Add new course
+            
+            label Course name
+            input.span3(type="text", name="course[name]",placeholder="Algorithms")
+
+            label Department
+            input.span3(type="text", name="course[department]", placeholder="CS")
+
+            label Number
+            input.span3(type="text", name="course[number]",placeholder="473")
+
+            p
+            p 
+              button.btn(type="submit") Submit
+
+
+            

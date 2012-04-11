@@ -220,12 +220,15 @@ function attachEduWriteRoutes(app) {
 
   // Courses in RESTful routing (Using GET/POST/PUT/DELETE)
   app.get('/courses/', courseRoutes.index);
-  app.get('/courses/:id',courseRoutes.show);
 
   app.get('/courses/add', courseRoutes.add);
-  app.post('/courses/', courseRoutes.create);
+  
+  app.get('/courses/:id',courseRoutes.show);
 
   app.get('/courses/:id/edit',courseRoutes.edit);
+
+  app.post('/courses/', courseRoutes.create);
+
   app.put('/courses/:id',courseRoutes.update);
 
   app.delete('/courses/:id',courseRoutes.destroy);
