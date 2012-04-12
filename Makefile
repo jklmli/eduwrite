@@ -61,7 +61,11 @@ clean-jstile:
 run: build
 	@@bin/run.sh
 
-test: easysync-tests model-tests 
+test: update-test-database easysync-tests model-tests 
+
+update-test-database:
+	@@echo "Creating test DB"
+	@@mysql -u eduwrite -pcs428cs429 < test/model/database/SetupTestDatabase.sql
 
 model-tests: update-node_modules
 	@@NODE_ENV=test node_modules/mocha/bin/mocha \
