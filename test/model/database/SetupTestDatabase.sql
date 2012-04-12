@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `courses` (
 CREATE TABLE IF NOT EXISTS `lectures` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `courseId` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `day` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
@@ -58,10 +59,10 @@ INSERT INTO `courses` (`id`, `schoolId`, `term`, `name`, `course_number`) VALUES
 (4, 1, 'Spring 2012', 'Database Systems', 'CS 411'),
 (5, 1, 'Spring 2012', 'Computer Architecture II', 'CS 232');
 
-INSERT INTO `lectures` (`id`, `courseId`, `day`) VALUES
-(1, 4, '2012-03-05'),
-(2, 2, '2012-03-08'),
-(3, 2, '2012-03-06');
+INSERT INTO `lectures` (`id`, `courseId`,`name`, `day`) VALUES
+(1, 4,'name1', '2012-03-05'),
+(2, 2,'name2', '2012-03-08'),
+(3, 2,'name3', '2012-03-06');
 
 INSERT INTO `notes` (`id`, `userId`, `noteId`, `lectureId`) VALUES
 (1, 0, '', 1),

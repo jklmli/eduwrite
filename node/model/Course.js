@@ -131,5 +131,12 @@ module.exports = new function() {
       .insert(table, course);
   };
 
+  this.destroy = function(id) {
+    return client
+      .destroy(table)
+      .where("id='" + id + "'")
+      .execute();
+  };
+
   return this;
 };

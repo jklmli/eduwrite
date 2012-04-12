@@ -162,7 +162,7 @@ Client.prototype.update = function(table, obj) {
   var values = [];
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
-      q += key + " = ?, "; // FIXME: query represents a global object here
+      q += key + " = ?,"; // FIXME: query represents a global object here
       values.push(obj[key]);
     }
   }

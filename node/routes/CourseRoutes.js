@@ -27,6 +27,10 @@ module.exports = new function() {
       //get related courses
       Lecture.getByCourseId(course.id).then(function(lectures){
         course.lectures = lectures;
+        var lecture = lectures[0];
+        console.log(lecture.day);
+        console.log(typeof(lecture.day));
+
 
         //get student enrollments
         Enrollment.getByCourseId(course.id).then(function(enrollments){
@@ -82,9 +86,9 @@ module.exports = new function() {
     Remove a course
     **/
   this.destroy = function(req,res){
-    //check the permission
-    //remove all dependent lectures
-    res.redirect('/courses/');
+    Course.destroy(req.params.id).then(function(result){     
+      res.redirect('/courses/');
+    });
   };
 
   return this;

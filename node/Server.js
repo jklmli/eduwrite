@@ -226,7 +226,7 @@ function attachEduWriteRoutes(app) {
   app.post('/courses/', courseRoutes.create);
   app.put('/courses/:id',courseRoutes.update);
   app.delete('/courses/:id',courseRoutes.destroy);
-  app.get('/courses/:id',courseRoutes.destroy);
+  app.get('/courses/:id/destroy',courseRoutes.destroy);
 
   app.get('/courses/:courseId/lectures/add',lectureRoutes.add);
   app.post('/courses/:courseId/lectures/',lectureRoutes.create);

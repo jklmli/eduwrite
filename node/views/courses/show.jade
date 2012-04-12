@@ -24,7 +24,7 @@ block content
           -each lecture in course.lectures
             tr
               td #{lecture.name}
-              td #{lecture.day}
+              td #{lecture.day.toLocaleDateString()}
         p
           a.btn(href="/courses/#{course.id}/lectures/add") Add new lecture
            
