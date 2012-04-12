@@ -76,7 +76,7 @@ module.exports = new function() {
         message += "If you did not request to reset your password, please contact us immediately.";
         message += "\n\nThanks You\n\n The EduWrite Team";
         email.send({
-            host: "localhost",
+            host: "express-smtp.cites.uiuc.edu",
             port: "25",
             ssl: true,
             domain: "localhost",
@@ -84,9 +84,6 @@ module.exports = new function() {
             from: "admin@eduwrite.com",
             subject: "[EduWrite] Password Reset",
             body: message,
-            authentication: "login",
-            username: "my_username",
-            password: "my_password"
           },
           function(err, result) {
             if (err) {
