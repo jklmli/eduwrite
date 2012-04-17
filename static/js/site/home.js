@@ -1,3 +1,5 @@
+// The jstile data structure
+var numberOfNotes = 0;
 var mosaic;
 
 // Loads course data and user notes on page load
@@ -276,24 +278,38 @@ function onNewNoteButtonClick(event, data) {
  */
 function loadNoteIntoUserSpace(title){
 
-  $('.content').find('.hero-unit').remove();
+  // Remove the placeholder if there is
+  if(numberOfNotes === 0) {
+    $('.content').find('.hero-unit').remove();
+  }
+  numberOfNotes++;
 
-
+  // Add the frame for the new note
   var newElement = $(
     "<div class='tileChild'>" +
       "<table class='noteHeader'>" +
         "<tr>" +
           "<td style='width:90%;'><h3>" + title + "</h3></td>" +
-          "<td style='width:10%;'><button class='btn'><i class='icon-remove'></i></button></td>" +
+          "<td style='width:10%;'>" +
+            "<button class='btn closeNoteButton'>" +
+              "<i class='icon-remove'></i>" +
+            "</button>" +
+          "</td>" +
         "</tr>" +
       "</table>" +
       "<iframe class='noteFrame' src='/p/" +  title + "'></iframe>" +
     "</div>");
-  mosaic.add(newElement);
 
+  var newTileAndSibling = mosaic.add(newElement);
+
+  // Attach a listener to remove this tile when the close button is clicked
+  newElement.find('.closeNoteButton').click(function() {
+    var thisTile = newTileAndSibling[newTileAndSibling.length-1];
+    mosaic.remove(thisTile);
+  });
+
+  // Attach a callback to resize the note frames once the page is loaded
   newElement.ready(function() {
-    console.log(newElement);
-    console.log(newElement.height());
     $('.noteFrame').css('overflow-y', 'scroll');
     $('.noteFrame').each(function() {
       $(this).height($(this).parent().height()-$(this).siblings('.noteHeader').height());
