@@ -26,6 +26,8 @@ update-submodules:
 			git submodule update --init --recursive; \
 		else \
 			git submodule update --init --recursive --merge; \
+			git submodule foreach git checkout master; \
+			git submodule foreach git pull; \
 		fi; \
 	fi;
 
