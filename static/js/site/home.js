@@ -280,4 +280,7 @@ function loadNoteIntoUserSpace(title){
   //id = id.replace("note", "");
   var newElement = $("<div><h2 >" + title + "</h2><iframe class='noteFrame' src='/p/" +  title + "'></iframe></div>");
   mosaic.add(newElement);
+  newElement.ready(function() {
+    $('iframe').css('overflow-y', 'scroll')}
+  );
 }
