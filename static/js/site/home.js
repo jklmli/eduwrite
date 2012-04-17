@@ -1,3 +1,5 @@
+var mosaic;
+
 // Loads course data and user notes on page load
 $(document).ready(
   function load() {
@@ -23,6 +25,7 @@ $(document).ready(
         "json"
       );
     });
+    mosaic = $('.content').jstile();
   }
 );
 
@@ -272,10 +275,9 @@ function onNewNoteButtonClick(event, data) {
  * @param title
  */
 function loadNoteIntoUserSpace(title){
+  $('.content').find('.hero-unit').remove();
   // remove the "note" part of the li id.
   //id = id.replace("note", "");
-  $('.content').html("<iframe class='noteFrame' src='/p/" +  title + "'></iframe>");
-  // display the note's title
-  $('#note-title').removeClass('hidden');
-  $('#note-title').text(title);
+  var newElement = $("<div><h2 >" + title + "</h2><iframe class='noteFrame' src='/p/" +  title + "'></iframe></div>");
+  mosaic.add(newElement);
 }
