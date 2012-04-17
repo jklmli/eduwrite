@@ -278,9 +278,15 @@ function loadNoteIntoUserSpace(title){
 
   $('.content').find('.hero-unit').remove();
 
+
   var newElement = $(
     "<div class='tileChild'>" +
-      "<h2 class='tileTitle'>" + title + "</h2>" +
+      "<table class='noteHeader'>" +
+        "<tr>" +
+          "<td style='width:90%;'><h3>" + title + "</h3></td>" +
+          "<td style='width:10%;'><button class='btn'><i class='icon-remove'></i></button></td>" +
+        "</tr>" +
+      "</table>" +
       "<iframe class='noteFrame' src='/p/" +  title + "'></iframe>" +
     "</div>");
   mosaic.add(newElement);
@@ -290,7 +296,7 @@ function loadNoteIntoUserSpace(title){
     console.log(newElement.height());
     $('.noteFrame').css('overflow-y', 'scroll');
     $('.noteFrame').each(function() {
-      $(this).height($(this).parent().height()-40);
+      $(this).height($(this).parent().height()-$(this).siblings('.noteHeader').height());
     });
   });
 }
