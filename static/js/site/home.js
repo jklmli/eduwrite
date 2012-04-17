@@ -272,14 +272,15 @@ function onNewNoteButtonClick(event, data) {
 
 /**
  * Loads the note based on the title onto the page
- * @param title
+ * @param title The title of the new note
  */
 function loadNoteIntoUserSpace(title){
+
   $('.content').find('.hero-unit').remove();
-  // remove the "note" part of the li id.
-  //id = id.replace("note", "");
-  var newElement = $("<div><h2 >" + title + "</h2><iframe class='noteFrame' src='/p/" +  title + "'></iframe></div>");
+
+  var newElement = $("<div><h2>" + title + "</h2><br/><iframe class='noteFrame' src='/p/" +  title + "'></iframe></div>");
   mosaic.add(newElement);
+
   newElement.ready(function() {
     $('iframe').css('overflow-y', 'scroll')}
   );
