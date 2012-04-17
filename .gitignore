@@ -1,9 +1,6 @@
 ### Etherpad-lite
 node_modules
 settings.json
-static/bootstrap/*
-static/js/jquery.js
-static/js/prefixfree.js
 APIKEY.txt
 bin/abiword.exe
 bin/node.exe
@@ -20,3 +17,9 @@ bin/convertSettings.json
 ### Auto-generated
 docs/
 static/css/*.*
+static/bootstrap/*
+static/js/jquery.js
+static/js/prefixfree.js
+
+### Project Content
+uml
