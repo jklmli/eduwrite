@@ -264,7 +264,6 @@ function loadUserNotesCallback(data) {
  */
 function onNewNoteButtonClick(event, data) {
   var title = data.rslt.obj.attr("title");
-  console.log(title)
   loadNoteIntoUserSpace(title);
 }
 
