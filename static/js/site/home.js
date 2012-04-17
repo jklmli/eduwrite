@@ -66,7 +66,8 @@ function loadCoursesIntoModal(data){
  */
 function createNoteClicked() {
     // Create Etherpad frame with name from newNoteName Input box
-    $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
+//    $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
+    loadNoteIntoUserSpace($('#newNoteName').val());
     $('#newNoteModal').modal('hide');
     var id = 1;
     // Get lectureId by Lecture name
@@ -133,7 +134,7 @@ function loadCourses() {
               "select_node" : function(node){
                 // put node in data so it works with the function
                 data = {rslt: {obj: node}};
-                loadNoteIntoUserSpace("select_node",data)
+                onNewNoteButtonClick("select_node",data)
               }
             },
             "lecture" : {
@@ -234,7 +235,7 @@ function loadUserNotes() {
         "themes", "json_data", "crrm", "ui", "sort"
       ]
     })
-    .bind("select_node.jstree", loadNoteIntoUserSpace)
+    .bind("select_node.jstree", onNewNoteButtonClick)
     // 2) if not using the UI plugin - the Anchor tags work as expected
     //    so if the anchor has a HREF attirbute - the page will be changed
     //    you can actually prevent the default, etc (normal jquery usage)
@@ -261,9 +262,21 @@ function loadUserNotesCallback(data) {
 /**
  * Executed when a user clicks on a note from the sidebar, triggers loading a note.
  */
-function loadNoteIntoUserSpace(event, data) {
+function onNewNoteButtonClick(event, data) {
   var title = data.rslt.obj.attr("title");
+  console.log(title)
+  loadNoteIntoUserSpace(title);
+}
+
+/**
+ * Loads the note based on the title onto the page
+ * @param title
+ */
+function loadNoteIntoUserSpace(title){
   // remove the "note" part of the li id.
   //id = id.replace("note", "");
   $('.content').html("<iframe class='noteFrame' src='/p/" +  title + "'></iframe>");
+  // display the note's title
+  $('#note-title').removeClass('hidden');
+  $('#note-title').text(title);
 }
