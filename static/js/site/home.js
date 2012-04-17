@@ -278,10 +278,19 @@ function loadNoteIntoUserSpace(title){
 
   $('.content').find('.hero-unit').remove();
 
-  var newElement = $("<div><h2>" + title + "</h2><br/><iframe class='noteFrame' src='/p/" +  title + "'></iframe></div>");
+  var newElement = $(
+    "<div class='tileChild'>" +
+      "<h2 class='tileTitle'>" + title + "</h2>" +
+      "<iframe class='noteFrame' src='/p/" +  title + "'></iframe>" +
+    "</div>");
   mosaic.add(newElement);
 
   newElement.ready(function() {
-    $('iframe').css('overflow-y', 'scroll')}
-  );
+    console.log(newElement);
+    console.log(newElement.height());
+    $('.noteFrame').css('overflow-y', 'scroll');
+    $('.noteFrame').each(function() {
+      $(this).height($(this).parent().height()-40);
+    });
+  });
 }
