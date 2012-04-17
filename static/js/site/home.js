@@ -306,13 +306,16 @@ function loadNoteIntoUserSpace(title){
   newElement.find('.closeNoteButton').click(function() {
     var thisTile = newTileAndSibling[newTileAndSibling.length-1];
     mosaic.remove(thisTile);
+    pack();
   });
 
   // Attach a callback to resize the note frames once the page is loaded
-  newElement.ready(function() {
-    $('.noteFrame').css('overflow-y', 'scroll');
-    $('.noteFrame').each(function() {
-      $(this).height($(this).parent().height()-$(this).siblings('.noteHeader').height());
-    });
+  newElement.ready(pack);
+}
+
+function pack() {
+  $('.noteFrame').css('overflow-y', 'scroll');
+  $('.noteFrame').each(function() {
+    $(this).height($(this).parent().height()-$(this).siblings('.noteHeader').height());
   });
 }
