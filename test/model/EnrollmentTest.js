@@ -53,8 +53,8 @@ describe('Enrollment getByCourseId', function() {
       .then(function(enrollmentData) {
 
         assert.equal(2, enrollmentData.length);
-        assert.equal(1, enrollmentData[0].id);
-        assert.equal(2, enrollmentData[1].id);
+        assert.equal(1, enrollmentData[0].courseId);
+        assert.equal(1, enrollmentData[1].courseId);
         done();
 
       });
@@ -110,7 +110,7 @@ describe('Enrollment getByCourseAndUser', function() {
       .then(function(enrollmentData) {
 
         assert.equal(1, enrollmentData.length);
-        assert.equal(1, enrollmentData[0].id);
+        assert.equal(1, enrollmentData[0].userId);
         done();
 
       });
