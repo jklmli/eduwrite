@@ -24,17 +24,16 @@ INSERT INTO `courses` (`id`, `schoolId`, `semester`, `year`, `name`, `department
 
 
 CREATE TABLE IF NOT EXISTS `enrollment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `studentId` int(30) NOT NULL,
+  `userId` int(30) NOT NULL,
   `courseId` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `netid` (`studentId`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  PRIMARY KEY (`userId`,`courseId`),
+  KEY `netid` (`userId`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO `enrollment` (`id`, `studentId`, `courseId`) VALUES
-(1, 1, 1),
-(2, 2, 1),
-(3, 1, 2);
+(1, 1),
+(2, 1),
+(1, 2);
 
 
 CREATE TABLE IF NOT EXISTS `lectures` (

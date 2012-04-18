@@ -11,8 +11,8 @@ Database.changeHost('localhost');
  */
 describe('Enrollment get', function() {
 
-  it('should return empty array when ID not found', function(done) {
-    Enrollment.get(5)
+  it('should return empty array when pair is not found', function(done) {
+    Enrollment.getByUserIdAndCourseId(5,5)
       .then(function(enrollmentData) {
 
         assert.equal(0, enrollmentData.length);
@@ -22,11 +22,11 @@ describe('Enrollment get', function() {
   });
 
   it('should return correct result if ID exists', function(done) {
-    Enrollment.get(2)
+    Enrollment.getByUserIdAndCourseId(1,1)
       .then(function(enrollmentData) {
 
         assert.equal(1, enrollmentData.length);
-        assert.equal(2, enrollmentData[0].studentId);
+        assert.equal(1, enrollmentData[0].userId);
         done();
 
       });
