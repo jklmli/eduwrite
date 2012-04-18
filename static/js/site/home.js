@@ -1,3 +1,7 @@
+// The jstile data structure
+var numberOfNotes = 0;
+var mosaic;
+
 // Loads course data and user notes on page load
 $(document).ready(
   function load() {
@@ -23,6 +27,7 @@ $(document).ready(
         "json"
       );
     });
+    mosaic = $('.content').jstile();
   }
 );
 
@@ -66,7 +71,8 @@ function loadCoursesIntoModal(data){
  */
 function createNoteClicked() {
     // Create Etherpad frame with name from newNoteName Input box
-    $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
+//    $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
+    loadNoteIntoUserSpace($('#newNoteName').val());
     $('#newNoteModal').modal('hide');
     var id = 1;
     // Get lectureId by Lecture name
@@ -133,7 +139,7 @@ function loadCourses() {
               "select_node" : function(node){
                 // put node in data so it works with the function
                 data = {rslt: {obj: node}};
-                loadNoteIntoUserSpace("select_node",data)
+                onNewNoteButtonClick("select_node",data)
               }
             },
             "lecture" : {
@@ -234,7 +240,7 @@ function loadUserNotes() {
         "themes", "json_data", "crrm", "ui", "sort"
       ]
     })
-    .bind("select_node.jstree", loadNoteIntoUserSpace)
+    .bind("select_node.jstree", onNewNoteButtonClick)
     // 2) if not using the UI plugin - the Anchor tags work as expected
     //    so if the anchor has a HREF attirbute - the page will be changed
     //    you can actually prevent the default, etc (normal jquery usage)
@@ -261,9 +267,55 @@ function loadUserNotesCallback(data) {
 /**
  * Executed when a user clicks on a note from the sidebar, triggers loading a note.
  */
-function loadNoteIntoUserSpace(event, data) {
+function onNewNoteButtonClick(event, data) {
   var title = data.rslt.obj.attr("title");
-  // remove the "note" part of the li id.
-  //id = id.replace("note", "");
-  $('.content').html("<iframe class='noteFrame' src='/p/" +  title + "'></iframe>");
+  loadNoteIntoUserSpace(title);
+}
+
+/**
+ * Loads the note based on the title onto the page
+ * @param title The title of the new note
+ */
+function loadNoteIntoUserSpace(title){
+
+  // Remove the placeholder if there is
+  if(numberOfNotes === 0) {
+    $('.content').find('.hero-unit').remove();
+  }
+  numberOfNotes++;
+
+  // Add the frame for the new note
+  var newElement = $(
+    "<div class='tileChild'>" +
+      "<table class='noteHeader'>" +
+        "<tr>" +
+          "<td style='width:90%;'><h3>" + title + "</h3></td>" +
+          "<td style='width:10%;'>" +
+            "<button class='btn closeNoteButton'>" +
+              "<i class='icon-remove'></i>" +
+            "</button>" +
+          "</td>" +
+        "</tr>" +
+      "</table>" +
+      "<iframe class='noteFrame' src='/p/" +  title + "'></iframe>" +
+    "</div>");
+
+  var newTileAndSibling = mosaic.add(newElement);
+
+  // Attach a listener to remove this tile when the close button is clicked
+  newElement.find('.closeNoteButton').click(function() {
+    var thisTile = newTileAndSibling[newTileAndSibling.length-1];
+    mosaic.remove(thisTile);
+    pack();
+  });
+
+  // Attach a callback to resize the note frames once the page is loaded
+  newElement.ready(pack);
+}
+
+function pack() {
+  $('.noteFrame').css('overflow-y', 'scroll');
+  $('.noteFrame').each(function() {
+    $(this).height($(this).parent().height()-$(this).siblings('.noteHeader').height());
+  });
 }

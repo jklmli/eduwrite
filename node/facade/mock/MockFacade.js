@@ -11,31 +11,18 @@ module.exports = new function() {
     var oldPassword = req.body.oldpassword;
     var newPassword = req.body.password;
     var confirmPassword = req.body.confirmpassword;
-    var user = req.session.user;
-    var email = user.email;
-    // confirm the two new passwords match
     if (confirmPassword != newPassword) {
       req.flash("error", "The two passwords you entered did not match"); 
       res.redirect('back');       
-    }
-    else {
-      // confirm the current password was entered correctly
-      User.getByEmailAndPassword(email, oldPassword)
-        .then(function(usersFound) {
-          if (Authentication.login(usersFound, req)) {
-            req.flash("success", "Your password has been changed successfully");
-            res.redirect('back'); 
-            //TODO: call facade function to make change once fixed 
-            //update the password
-            //User.updatePassword(user, newPassword)
-              //.then(function(success) {
-                //req.flash("success", "Your password has successfully been changed");
-              //});
-          } else {
-            req.flash("error", "You entered your current password incorrectly");
-            res.redirect('back');  
-          }
-        });
+    } else if (oldPassword != req.session.user.password) {
+      req.flash("error", "The password you entered was incorrect"); 
+      res.redirect('back'); 
+    } else {
+      req.session.user = {
+        email: req.session.user.email, 
+        password: newPassword}
+      req.flash("success", "Your password has been changed successfully");
+      res.redirect('/accountManagement/profile'); 
     }
   };
 
@@ -46,31 +33,18 @@ module.exports = new function() {
     var newEmail = req.body.newemail;
     var confirmEmail = req.body.confirmemail;
     var password = req.body.password;
-    var user = req.session.user;
-    var email = user.email;
-    // confirm the two new emails match
     if (confirmEmail != newEmail) {
       req.flash("error", "The two emails you entered did not match"); 
-      res.redirect('back');       
-    }
-    else {
-      // confirm the password was entered correctly
-      User.getByEmailAndPassword(email, password)
-        .then(function(usersFound) {
-          if (Authentication.login(usersFound, req)) {
-            req.flash("success", "Your email has been updated successfully");
-            res.redirect('back'); 
-            //TODO: call facade function to make change once fixed 
-            //update the email
-            //User.updateEmail(user, newPassword)
-              //.then(function(success) {
-                //req.flash("success", "Your email has successfully been updated");
-              //});
-          } else {
-            req.flash("error", "You entered your password incorrectly");
-            res.redirect('back');  
-          }
-        });
+      res.redirect('back');  
+    } else if (req.session.user.password != password) {
+      req.flash("error", "The password you entered was incorrect"); 
+      res.redirect('back'); 
+    } else {
+      req.session.user = {
+        email: newEmail, 
+        password: req.session.user.password}
+      req.flash("success", "Your email has been updated successfully");
+      res.redirect('/accountManagement/profile'); 
     }
   };
 
