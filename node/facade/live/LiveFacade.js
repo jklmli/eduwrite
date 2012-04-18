@@ -57,6 +57,13 @@ module.exports = new function() {
   };
 
   /**
+   *  Sends an e-mail with the provided contents
+   */
+  this.sendEmail = function(to, subject, body) {
+    
+  }
+
+  /**
    * Resets a user's password and sends it to them in an e-mail
    */
   this.resetPassword = function() {
