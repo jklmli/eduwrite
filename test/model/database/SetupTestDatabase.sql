@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `enrollment` (
   KEY `netid` (`userId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-INSERT INTO `enrollment` (`id`, `studentId`, `courseId`) VALUES
+INSERT INTO `enrollment` (`studentId`, `courseId`) VALUES
 (1, 1),
 (2, 1),
 (1, 2);
