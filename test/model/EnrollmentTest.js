@@ -65,30 +65,30 @@ describe('Enrollment getByCourseId', function() {
 /**
  *  Test Enrollment.getByCourseAndRole(CourseId, role, callback)
  */
-describe('Enrollment getByCourseAndRole', function() {
-
-  it('should return empty array if course, role pair not found', function(done) {
-    Enrollment.getByCourseAndRole(2, 'Student')
-      .then(function(enrollmentData) {
-
-        assert.equal(0, enrollmentData.length);
-        done();
-
-      });
-  });
-
-  it('should return correct result if exists', function(done) {
-    Enrollment.getByCourseAndRole(1, 'student')
-      .then(function(enrollmentData) {
-
-        assert.equal(1, enrollmentData.length);
-        assert.equal(1, enrollmentData[0].id);
-        done();
-
-      });
-  });
-
-});
+//describe('Enrollment getByCourseAndRole', function() {
+//
+//  it('should return empty array if course, role pair not found', function(done) {
+//    Enrollment.getByCourseAndRole(2, 'Student')
+//      .then(function(enrollmentData) {
+//
+//        assert.equal(0, enrollmentData.length);
+//        done();
+//
+//      });
+//  });
+//
+//  it('should return correct result if exists', function(done) {
+//    Enrollment.getByCourseAndRole(1, 'student')
+//      .then(function(enrollmentData) {
+//
+//        assert.equal(1, enrollmentData.length);
+//        assert.equal(1, enrollmentData[0].id);
+//        done();
+//
+//      });
+//  });
+//
+//});
 
 /**
  *  Test Enrollment.getByCourseAndUser(courseId, studentId, callback)
