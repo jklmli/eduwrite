@@ -168,7 +168,8 @@ Client.prototype.update = function(table, obj) {
   }
   // remove dangling comma
   q = q.substring(0, q.length - 1);
-  return deferredQuery(q, values);
+  q = q+" ";
+  return this;
 };
 
 function deferredQuery(sql, params) {

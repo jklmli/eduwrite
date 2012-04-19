@@ -123,5 +123,19 @@ module.exports = new function() {
     });
   };
 
+
+  /**
+   * Updates a note
+   *  @param note the note object
+   */
+  this.update = function(note) {
+    return client
+      .update(table, note)
+      .where("id = " + note.id);  
+      .execute();
+  };
+
+
+
   return this;
 };

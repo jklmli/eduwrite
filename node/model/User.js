@@ -112,6 +112,7 @@ module.exports = new function() {
       .update(table, user)
       // FIXME: invalid SQL query modification after execution
       .where("id = " + user.id); //Are you sure you are not feeding in user.id ?
+      .execute();
   };
 
   /**
@@ -124,6 +125,7 @@ module.exports = new function() {
     return client
       .update(table, user)
       .where("id = " + user.id)
+      .execute();
   };
 
   return this;
