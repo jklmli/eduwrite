@@ -131,7 +131,7 @@ module.exports = new function() {
   this.update = function(note) {
     return client
       .update(table, note)
-      .where("id = " + note.id);  
+      .where("id = " + note.id)
       .execute();
   };
 
