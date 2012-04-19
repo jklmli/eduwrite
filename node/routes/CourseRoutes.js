@@ -12,7 +12,7 @@ module.exports = new function() {
     **/
   this.index = function(req,res){
     Course.get().then(function(courses){
-      res.render('courses/index', {title:"List of couses",courses:courses})
+      res.render('courses/index', {title:"List of courses",courses:courses})
     });;
   };
 
