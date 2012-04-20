@@ -3,6 +3,6 @@
  */
 $(document).ready(function() {
   setTimeout(function() {
-    $('.alert').fadeOut();
+    $('.alert').fadeOut('fast');
   }, 2000);
 });
