@@ -70,12 +70,11 @@ function loadCoursesIntoModal(data){
  * Add event handler for when the new note button is clicked
  */
 function createNoteClicked() {
+
     // Create Etherpad frame with name from newNoteName Input box
-//    $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
     loadNoteIntoUserSpace($('#newNoteName').val());
     $('#newNoteModal').modal('hide');
     var id = 1;
-    // Get lectureId by Lecture name
 
     // Pass lecture ID and Title to the the server to be placed in database
     $.post("/addNote",{lectureId: id, title:$("#newNoteName").val()}, createNoteClickedCallback());
@@ -277,6 +276,9 @@ function onNewNoteButtonClick(event, data) {
  * @param title The title of the new note
  */
 function loadNoteIntoUserSpace(title){
+
+  // Set content div to absolute height of 800px
+  $('.content').height(800);
 
   // Remove the placeholder if there is
   if(numberOfNotes === 0) {

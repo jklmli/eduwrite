@@ -4,7 +4,6 @@
 
 .content {
     /* Could be used when we impelement drag & drop */
-    height: 800px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
     background-color: whiteSmoke;
