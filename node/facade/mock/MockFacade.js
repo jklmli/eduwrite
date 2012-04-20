@@ -20,7 +20,8 @@ module.exports = new function() {
     } else {
       req.session.user = {
         email: req.session.user.email, 
-        password: newPassword}
+        password: newPassword
+      };
       req.flash("success", "Your password has been changed successfully");
       res.redirect('/accountManagement/profile'); 
     }
@@ -42,7 +43,8 @@ module.exports = new function() {
     } else {
       req.session.user = {
         email: newEmail, 
-        password: req.session.user.password}
+        password: req.session.user.password
+      };
       req.flash("success", "Your email has been updated successfully");
       res.redirect('/accountManagement/profile'); 
     }
