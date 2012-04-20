@@ -1,7 +1,8 @@
 extends ../accountManagement
 
 block accountManagementContent
-  h3 Default Note Permissions
+  h3 Default Note Privacy
+  br
   table.table
       tbody
         tr
@@ -12,5 +13,18 @@ block accountManagementContent
                 .control-group
                   .controls
                     select
+                      option Only me
+                      option Share with class
+                      option Public
+
         tr
           td Class Notes
+          td
+            form.form-horizontal
+              fieldset
+                .control-group
+                  .controls
+                    select
+                      option Only me
+                      option Share with class
+                      option Public
