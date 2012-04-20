@@ -131,8 +131,6 @@ Client.prototype.limit = function(limit, offset) {
  */
 Client.prototype.execute = function() {
   var q = trim(this.sql);
-  console.log(q);
-
   return deferredQuery(q);
 };
 
