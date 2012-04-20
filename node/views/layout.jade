@@ -27,6 +27,9 @@ script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery
 script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js')
 script(type='text/javascript', src='/static/bootstrap/js/bootstrap-collapse.js')
 script(type='text/javascript', src='/static/bootstrap/js/bootstrap-dropdown.js')
+script(type='text/javascript', src='/static/bootstrap/js/bootstrap-alert.js')
+
+script(type='text/javascript', src='/static/js/site/alerts.js')
 
 
 block head
@@ -66,14 +69,8 @@ block titlebar
               | Welcome, #{user.email}
               &nbsp;&nbsp;
               a(href="/logout/") logout
-
-
-
             else
               | Real-time collaborative note-taking
-
-
-
 
     -if (error !== undefined && error != "")
       .alert.alert-error
