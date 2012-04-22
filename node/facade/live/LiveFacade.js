@@ -264,8 +264,11 @@ module.exports = new function() {
     if (!user) {
       res.send("Please login first");
     }
-    Note.create(user.id, lectureId,title);
-    res.send("Hello world");
+    Note.create(user.id, lectureId,title)
+        .then(function(result){
+            res.contentType('json');
+            res.send(result);
+        });
   };
 
   return this;
