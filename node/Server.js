@@ -233,6 +233,7 @@ function attachEduWriteRoutes(app) {
   app.post('/courses/:courseId/lectures/',lectureRoutes.create);
 
   app.get('/courses/:courseId/enroll',courseRoutes.enroll);
+  app.get('/courses/:courseId/unroll',courseRoutes.unroll);
 
 
 

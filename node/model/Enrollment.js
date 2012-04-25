@@ -79,5 +79,16 @@ module.exports = new function() {
       .insert(table, enrollment);   
   };
 
+  /**
+   * Remove a enrollment record from the table
+   * @param enrollment the Enrollment object to remove
+   */
+
+  this.destroy = function(enrollment){
+    return client
+      .destroy(table)
+      .where("userId='" + enrollment.userId + "' AND courseId='" + enrollment.courseId +"'")
+      .execute();
+  };
   return this;
 };

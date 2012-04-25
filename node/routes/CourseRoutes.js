@@ -12,7 +12,14 @@ module.exports = new function() {
     **/
   this.index = function(req,res){
     Course.get().then(function(courses){
-      res.render('courses/index', {title:"List of courses",courses:courses})
+      if(req.session.user){
+        Enrollment.getCoursesByStudentId(req.session.user.id).then(function(coursesTaking){
+          res.render('courses/index', {title:"List of courses",courses:courses,coursesTaking:coursesTaking})
+      });
+      } else {
+        res.render('courses/index', {title:"List of courses",courses:courses})
+
+      }
     });
   };
 
@@ -110,6 +117,32 @@ module.exports = new function() {
           });
         }
       });
+    }
+  }
+  /**
+   * Unroll a user from the course
+   */
+  this.unroll = function(req,res){
+    var courseId = req.params.courseId;
+    var user = req.session.user;
+    if(typeof(user)=='undefined'){
+      res.redirect('/courses/'+courseId);
+    } else {
+      var userId = user.id;
+      
+      Enrollment.getByUserIdAndCourseId(userId,courseId).then(function(result){
+        if(result.length == 0){
+          req.flash("error", "You are not  enrolled to the course");
+          res.redirect('/courses/'+courseId);
+        }else{
+          var enrollment = {courseId:courseId,userId:user.id};
+          Enrollment.destroy(enrollment).then(function(result){
+            req.flash("success", "You have been successfully unrolled from the course");
+            res.redirect('/courses/');
+          });
+        }
+      });
+
     }
   }
 

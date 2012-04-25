@@ -20,3 +20,20 @@ block content
               td
                 a.btn(href="/courses/#{course.id}/destroy") Delete
         a.btn(href="/courses/add") Add new course
+        -if(loggedIn)
+          h2 Courses taking
+          table.table
+            tr
+              th Department
+              th Number
+              th Name
+              th Actions
+            -each course in coursesTaking
+              tr
+                td=course.department
+                td=course.number
+                td
+                  a(href="/courses/#{course.id}")=course.name
+                td
+                  a.btn(href="/courses/#{course.id}/unroll") Unroll
+
