@@ -3,6 +3,7 @@ var Note = require('../../model/Note.js');
 var Course = require('../../model/Course.js');
 var Lecture = require('../../model/Lecture.js');
 var Authentication = require('../../model/Authentication.js');
+var Enrollment = require("../../model/Enrollment.js");
 var mailHandler = require('mailer');
 var Hashes = require('jshashes');
 var bcrypt = require('bcrypt');
@@ -246,12 +247,13 @@ module.exports = new function() {
     var user = req.session.user;
     if (!user) {
       res.send("{}");
+    } else {
+      Enrollment.getCoursesByStudentId(user.id)
+        .then(function(courses) {
+          res.contentType('json');
+          res.send(courses);
+        });
     }
-    Course.getByUser(user)
-      .then(function(courses) {
-        res.contentType('json');
-        res.send(courses);
-      });
   };
 
   /**

@@ -31,8 +31,8 @@ block content
                       label.control-label(for="newNoteCourse") Course
                       .controls
                         select#newNoteCourse
-                          option CS 225
-                          option CS 428
+                          -each course in courses
+                            option=course.name
                     .control-group
                       label.control-label(for="newNoteLecture") Lecture
                       .controls

@@ -1,3 +1,4 @@
+var Enrollment = require("../model/Enrollment.js");
 module.exports = new function() {
   var _this = this;
 
@@ -8,12 +9,15 @@ module.exports = new function() {
 
     // Show index if logged in, redirect otherwise
     if (request && request.session.user) {
+      Enrollment.getCoursesByStudentId(request.session.user.id).then(function(coursesTaking){
 
       // Render the homepage template
-      response.render('home', {
-        title: 'EduWrite',
-        loggedIn: true
-      });
+        response.render('home', {
+          title: 'EduWrite',
+          loggedIn: true,
+          courses: coursesTaking
+        });
+      })
 
     } else {
       response.redirect('/login/');
