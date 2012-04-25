@@ -70,18 +70,23 @@ function loadCoursesIntoModal(data){
  * Add event handler for when the new note button is clicked
  */
 function createNoteClicked() {
-    // Create Etherpad frame with name from newNoteName Input box
-//    $('.content').html("<iframe class='noteFrame' src='/p/"+$("#newNoteName").val()+"'></iframe>");
-    loadNoteIntoUserSpace($('#newNoteName').val());
-    $('#newNoteModal').modal('hide');
+
+    // TODO: get lecture ID from modal
     var id = 1;
-    // Get lectureId by Lecture name
 
     // Pass lecture ID and Title to the the server to be placed in database
-    $.post("/addNote",{lectureId: id, title:$("#newNoteName").val()}, createNoteClickedCallback());
+    $.post("/addNote",{lectureId: id, title:$("#newNoteName").val()}, createNoteClickedCallback,"json");
+
+
+    $('#newNoteModal').modal('hide');
+
 }
 
 function createNoteClickedCallback(data) {
+
+    // Create Etherpad frame with name from newNoteName Input box
+    loadNoteIntoUserSpace($('#newNoteName').val(),data.insertId);
+
     loadUserNotes();
     loadCourses();
     return;
@@ -215,7 +220,7 @@ function loadNotesByLectureIdCallback(data) {
   var note;
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      note = {data:data[i], attr:{id:"note" + data[i].id, rel: "note"}};
+      note = {data:data[i], attr:{id:data[i].id, rel: "note"}};
       $("#notes-tree").jstree("create_node", $("#lecture" + data[i].lectureId), "inside", note);
     }
   }
@@ -258,7 +263,7 @@ function loadUserNotesCallback(data) {
   notes = [];
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      notes[i] = {data:data[i], attr:{id:"note" + data[i].id, title: data[i].title, href:data[i].location}};
+      notes[i] = {data:data[i], attr:{id:data[i].id, title: data[i].title, href:data[i].location}};
     }
   }
   return notes;
@@ -269,14 +274,18 @@ function loadUserNotesCallback(data) {
  */
 function onNewNoteButtonClick(event, data) {
   var title = data.rslt.obj.attr("title");
-  loadNoteIntoUserSpace(title);
+  var id = data.rslt.obj.attr("id");
+  loadNoteIntoUserSpace(title,id);
 }
 
 /**
  * Loads the note based on the title onto the page
  * @param title The title of the new note
  */
-function loadNoteIntoUserSpace(title){
+function loadNoteIntoUserSpace(title, id){
+
+  // Set content div to absolute height of 800px
+  $('.content').height(800);
 
   // Remove the placeholder if there is
   if(numberOfNotes === 0) {
@@ -297,7 +306,7 @@ function loadNoteIntoUserSpace(title){
           "</td>" +
         "</tr>" +
       "</table>" +
-      "<iframe class='noteFrame' src='/p/" +  title + "'></iframe>" +
+      "<iframe class='noteFrame' src='/p/" +  id + "'></iframe>" +
     "</div>");
 
   var newTileAndSibling = mosaic.add(newElement);

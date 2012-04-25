@@ -3,8 +3,7 @@ var $ = require('jquery');
 
 // Database connection information
 var databaseName = "eduwrite";
-//var databaseHost = '107.21.246.180';
-var databaseHost = '127.0.0.1';
+var databaseHost = '107.21.246.180';
 var client = mysql.createClient({
   host: databaseHost,
   database: databaseName,
@@ -131,8 +130,6 @@ Client.prototype.limit = function(limit, offset) {
  */
 Client.prototype.execute = function() {
   var q = trim(this.sql);
-  console.log(q);
-
   return deferredQuery(q);
 };
 
@@ -162,13 +159,14 @@ Client.prototype.update = function(table, obj) {
   var values = [];
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
-      q += key + " = ?, "; // FIXME: query represents a global object here
+      q += key + " = ?,"; // FIXME: query represents a global object here
       values.push(obj[key]);
     }
   }
   // remove dangling comma
   q = q.substring(0, q.length - 1);
-  return deferredQuery(q, values);
+  q = q+" ";
+  return this;
 };
 
 function deferredQuery(sql, params) {

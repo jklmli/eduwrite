@@ -28,6 +28,8 @@ script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery
 script(type='text/javascript', src='/static/bootstrap/js/bootstrap-collapse.js')
 script(type='text/javascript', src='/static/bootstrap/js/bootstrap-dropdown.js')
 
+script(type='text/javascript', src='/static/js/site/alerts.js')
+
 
 block head
 
@@ -62,20 +64,12 @@ block titlebar
                       li
                         a(href="/accountManagement/notePermissions") Privacy
                       li
-                        a(href="/accountManagement/settings") Settings
-                      li
                         a(href="/accountManagement/help") Help
               | Welcome, #{user.email}
               &nbsp;&nbsp;
               a(href="/logout/") logout
-
-
-
             else
               | Real-time collaborative note-taking
-
-
-
 
     -if (error !== undefined && error != "")
       .alert.alert-error
@@ -89,3 +83,8 @@ block titlebar
 
 
 block content
+
+block footer
+    footer
+        center
+            &copy 2012 EduWrite Team

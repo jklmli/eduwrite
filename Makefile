@@ -87,3 +87,4 @@ easysync-tests: update-node_modules
 
 docs: update-node_modules
 	@@node_modules/docco-husky/bin/generate -name "Eduwrite" node test
+	@@python bin/convertDocsToPdf.py

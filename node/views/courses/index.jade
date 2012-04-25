@@ -7,13 +7,16 @@ block content
         h2 List of courses
         table.table
           tr
-            th department
-            th number
-            th name
+            th Department
+            th Number
+            th Name
+            th Actions
           -each course in courses
             tr
               td=course.department
               td=course.number
               td
                 a(href="/courses/#{course.id}")=course.name
+              td
+                a.btn(href="/courses/#{course.id}/destroy") Delete
         a.btn(href="/courses/add") Add new course

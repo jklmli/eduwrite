@@ -12,8 +12,8 @@ module.exports = new function() {
     **/
   this.index = function(req,res){
     Course.get().then(function(courses){
-      res.render('courses/index', {title:"List of couses",courses:courses})
-    });;
+      res.render('courses/index', {title:"List of courses",courses:courses})
+    });
   };
 
   /**
@@ -27,7 +27,6 @@ module.exports = new function() {
       //get related courses
       Lecture.getByCourseId(course.id).then(function(lectures){
         course.lectures = lectures;
-
         //get student enrollments
         Enrollment.getByCourseId(course.id).then(function(enrollments){
           course.enrollments = enrollments;
@@ -82,10 +81,37 @@ module.exports = new function() {
     Remove a course
     **/
   this.destroy = function(req,res){
-    //check the permission
-    //remove all dependent lectures
-    res.redirect('/courses/');
+    Course.destroy(req.params.id).then(function(result){     
+      res.redirect('/courses/');
+    });
   };
+
+  /**
+    Add a current user to the course
+    **/
+  this.enroll = function(req,res){
+    var courseId = req.params.courseId; 
+    var user = req.session.user;
+    if(typeof(user)==='undefined'){
+      res.redirect('/courses/'+courseId);
+    } else {
+
+      var userId = user.id;
+
+      Enrollment.getByUserIdAndCourseId(userId,courseId).then(function(result){
+        if(result.length > 0){
+          req.flash("error", "You are already enrolled to the course");
+          res.redirect('/courses/'+courseId);
+        }else{
+          var enrollment = {courseId:courseId,userId:user.id};
+          Enrollment.insert(enrollment).then(function(result){
+            req.flash("success", "You have been successfully enrolled to the course");
+            res.redirect('/courses/'+courseId);
+          });
+        }
+      });
+    }
+  }
 
   return this;
 };

@@ -13,24 +13,24 @@ module.exports = new function() {
    *  Get an enrollment record by its unique id
    *  @param id unique id of the enrollment record
    */
-  this.get = function(id) {
+  this.getByUserIdAndCourseId = function(userId,courseId) {
     return client
       .get(table)
-      .where("id='" + id + "'")
+      .where("userId='" + userId + "' and courseId='"+courseId+"'")
       .limit(1)
       .execute();
   };
 
   /**
-   *  Get all courses that studentId is enrolled in
-   *  @param studentId the unique id of the user
+   *  Get all courses that userId is enrolled in
+   *  @param userId the unique id of the user
    */
-  this.getCoursesByStudentId = function(studentId) {
+  this.getCoursesByStudentId = function(userId) {
     var condition = table + ".courseId = courses.id";
     return client
       .get(table)
       .join("courses", condition)
-      .where("studentId = " + studentId)
+      .where("userId = " + userId)
       .execute();
   };
 
@@ -60,12 +60,12 @@ module.exports = new function() {
   /**
    *  Get a student in a course by netid
    *  @param courseId the unique id of the course
-   *  @param studentId the unique id of the user
+   *  @param userId the unique id of the user
    */
-  this.getByCourseAndUser = function(courseId, studentId) {
+  this.getByCourseAndUser = function(courseId, userId) {
     return client
       .get(table)
-      .where("courseId = " + courseId + " and studentId = '" + studentId + "'")
+      .where("courseId = " + courseId + " and userId = '" + userId + "'")
       .limit(1)
       .execute();
   };
@@ -76,7 +76,7 @@ module.exports = new function() {
    */
   this.insert = function(enrollment) {
     return client
-      .insert(table, course); // TODO: invalid parameter course
+      .insert(table, enrollment);   
   };
 
   return this;

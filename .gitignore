@@ -16,6 +16,7 @@ bin/convertSettings.json
 
 ### Auto-generated
 docs/
+docs-pdf/
 static/css/*.*
 static/bootstrap/*
 static/js/jquery.js

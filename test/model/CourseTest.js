@@ -15,20 +15,23 @@ Database.changeHost('localhost');
 function assertCoursesEqual(actualCourse, expectedCourse) {
   assert.equal(typeof(actualCourse), typeof(expectedCourse));
   assert.equal(actualCourse.id, expectedCourse.id);
-  assert.equal(actualCourse.school_id, expectedCourse.school_id);
+  assert.equal(actualCourse.schoolId, expectedCourse.schoolId);
   assert.equal(actualCourse.name, expectedCourse.name);
   assert.equal(actualCourse.term, expectedCourse.term);
-  assert.equal(actualCourse.course_number, expectedCourse.course_number);
+  assert.equal(actualCourse.department, expectedCourse.department);
+  assert.equal(actualCourse.number, expectedCourse.number);
 }
 
 
 // Sample data
 var distributedSystemsCourse = {
   id: 1,
-  school_id: 1,
-  term: 'Spring 2012',
+  schoolId: 1,
+  semester: 'Spring',
+  year: '2012',
   name: 'Distributed Systems',
-  course_number: 'CS 425'
+  department: 'CS',
+  number: 425
 };
 
 
@@ -84,7 +87,7 @@ describe('Course getBySchoolId', function() {
         // Check that courses were returned, and that
         assert.ok(courseData.length > 0);
         for (var i = 0; i < courseData.length; i++) {
-          assert.equal(courseData[i].school_id, 1);
+          assert.equal(courseData[i].schoolId, 1);
         }
         done();
 
@@ -129,7 +132,7 @@ describe('Course getByName', function() {
 describe('Course getByCourseNumber', function() {
 
   it('should return empty array when course number not found', function(done) {
-    Course.getByCourseNumber('someCourseNumberThatDoesntExist')
+    Course.getByCourseNumber('blargh', 101)
       .then(function(courseData) {
 
         // Check that no corresponding course data was found
@@ -140,7 +143,7 @@ describe('Course getByCourseNumber', function() {
   });
 
   it('should return array of correct results', function(done) {
-    Course.getByCourseNumber(distributedSystemsCourse.course_number)
+    Course.getByCourseNumber(distributedSystemsCourse.department, distributedSystemsCourse.number)
       .then(function(courseData) {
 
         // Check that we found the course
@@ -159,7 +162,7 @@ describe('Course getByCourseNumber', function() {
 describe('Course getByTerm', function() {
 
   it('should return empty array if term not found', function(done) {
-    Course.getByTerm('someTermThatDoesntExist')
+    Course.getByTerm(2001, 'Spring')
       .then(function(courseData) {
 
         // Check that no course was found
@@ -170,13 +173,14 @@ describe('Course getByTerm', function() {
   });
 
   it('should return array of correct results', function(done) {
-    Course.getByTerm('Spring 2012')
+    Course.getByTerm(2012, 'Spring')
       .then(function(courseData) {
 
         // Check that some correct course data was returned
         assert.ok(courseData.length > 0);
         for (var i = 0; i < courseData.length; i++) {
-          assert.equal(courseData[i].term, 'Spring 2012');
+          assert.equal(courseData[i].year, 2012);
+          assert.equal(courseData[i].semester, 'Spring');
         }
         done();
 

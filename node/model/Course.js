@@ -115,7 +115,7 @@ module.exports = new function() {
    *  Retrive course by the semester
    *  @param semester enum of ('Fall', 'Spring')
    */
-  this.getByTerm = function(semester) {
+  this.getBySemester = function(semester) {
     return client
       .get(table)
       .where("semester='" + semester + "'")
@@ -129,6 +129,13 @@ module.exports = new function() {
   this.insert = function(course) {
     return client
       .insert(table, course);
+  };
+
+  this.destroy = function(id) {
+    return client
+      .destroy(table)
+      .where("id='" + id + "'")
+      .execute();
   };
 
   return this;
