@@ -25,6 +25,7 @@ module.exports = new function() {
 
       // Store login in session
       req.session.user = {
+        id: 1,
         email: email,
         password: password
       };

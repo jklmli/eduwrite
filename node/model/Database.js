@@ -49,6 +49,7 @@ function trim(str) {
 var Client = mysql.Client;
 
 Client.prototype.sql = "";
+Client.prototype.values = [];
 /**
  * Construct a SQL statement to fetch specific columns
  *  @param select columns wanted to fetch
@@ -130,7 +131,14 @@ Client.prototype.limit = function(limit, offset) {
  */
 Client.prototype.execute = function() {
   var q = trim(this.sql);
-  return deferredQuery(q);
+  if(this.values.length>0){
+    var values = this.values;
+    this.sql="";
+    this.values = [];
+    return deferredQuery(q,values);
+  } else {
+    return deferredQuery(q);
+  }
 };
 
 /**
@@ -155,17 +163,21 @@ Client.prototype.insert = function(table, obj) {
  *  Helper method to update existing data in the database
  */
 Client.prototype.update = function(table, obj) {
-  var q = "update" + table + " set ";
+  var q = "update " + table + " set ";
   var values = [];
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
-      q += key + " = ?,"; // FIXME: query represents a global object here
-      values.push(obj[key]);
+      if(key!="id"){
+        q += key + " = ?,"; 
+        values.push(obj[key]);
+      }
     }
   }
   // remove dangling comma
   q = q.substring(0, q.length - 1);
   q = q+" ";
+  this.sql = q;
+  this.values = values;
   return this;
 };
 
@@ -176,7 +188,8 @@ function deferredQuery(sql, params) {
     if (params === undefined) {
       params = [];
     }
-
+    console.log(sql);
+    console.log(params);
     client.query(sql, params,
       function(err, results, fields) {
         if (err) {

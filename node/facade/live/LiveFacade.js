@@ -120,14 +120,11 @@ module.exports = new function() {
       User.getByEmailAndPassword(email, oldPassword)
         .then(function(usersFound) {
           if (Authentication.login(usersFound, req)) {
-            req.flash("success", "Your password has been changed successfully");
-            res.redirect('back'); 
-            //TODO: call facade function to make change once fixed 
-            //update the password
-            //User.updatePassword(user, newPassword)
-              //.then(function(success) {
-                //req.flash("success", "Your password has successfully been changed");
-              //});
+            User.updatePassword(user, newPassword)
+              .then(function(success) {
+                req.flash("success", "Your password has successfully been changed");
+                res.redirect('back'); 
+              });
           } else {
             req.flash("error", "You entered your current password incorrectly");
             res.redirect('back');  

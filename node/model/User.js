@@ -110,7 +110,6 @@ module.exports = new function() {
   this.update = function(user) {
     return client
       .update(table, user)
-      // FIXME: invalid SQL query modification after execution
       .where("id = " + user.id) //Are you sure you are not feeding in user.id ?
       .execute();
   };
