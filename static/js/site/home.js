@@ -222,7 +222,7 @@ function loadNotesByLectureIdCallback(data) {
   var note;
   for (i in data) {
     if (data.hasOwnProperty(i)) {
-      note = {data:data[i], attr:{id:data[i].id, rel: "note"}};
+      note = {data:data[i], attr:{id:data[i].id, rel: "note", title: data[i].title}};
       $("#notes-tree").jstree("create_node", $("#lecture" + data[i].lectureId), "inside", note);
     }
   }
