@@ -145,7 +145,7 @@ function loadCourses() {
               "select_node" : function(node){
                 // put node in data so it works with the function
                 data = {rslt: {obj: node}};
-                onNewNoteButtonClick("select_node",data)
+                onNoteClick("select_node",data)
               }
             },
             "lecture" : {
@@ -247,7 +247,7 @@ function loadUserNotes() {
         "themes", "json_data", "crrm", "ui", "sort"
       ]
     })
-    .bind("select_node.jstree", onNewNoteButtonClick)
+    .bind("select_node.jstree", onNoteClick)
     // 2) if not using the UI plugin - the Anchor tags work as expected
     //    so if the anchor has a HREF attirbute - the page will be changed
     //    you can actually prevent the default, etc (normal jquery usage)
@@ -274,7 +274,7 @@ function loadUserNotesCallback(data) {
 /**
  * Executed when a user clicks on a note from the sidebar, triggers loading a note.
  */
-function onNewNoteButtonClick(event, data) {
+function onNoteClick(event, data) {
   var title = data.rslt.obj.attr("title");
   var id = data.rslt.obj.attr("id");
   loadNoteIntoUserSpace(title,id);
