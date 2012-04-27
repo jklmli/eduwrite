@@ -39,7 +39,7 @@ function loadLecturesIntoModal(data){
       $("#newNoteLecture").append($("<option></option>")
         .attr("value", i)
         .attr("id", data[i].id)
-        .text(data[i].title));
+        .text(data[i].name));
     }
   }
 }
