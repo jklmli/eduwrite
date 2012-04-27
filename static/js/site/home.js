@@ -204,6 +204,7 @@ function loadLecturesByCourseIdCallback(data) {
   for (i in data) {
     if (data.hasOwnProperty(i)) {
       lecture = {data:data[i], attr:{id:"lecture" + data[i].id, rel: "lecture"}};
+      lecture.data.title = lecture.data.name;
       // Add the lecture to the ourse
       $("#notes-tree").jstree("create_node", $("#course" + data[i].courseId), "inside", lecture);
       $.post("/getNotesByLectureId", {
