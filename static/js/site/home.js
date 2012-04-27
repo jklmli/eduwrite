@@ -70,12 +70,13 @@ function loadCoursesIntoModal(data){
  * Add event handler for when the new note button is clicked
  */
 function createNoteClicked() {
-
-    // TODO: get lecture ID from modal
-    var id = 1;
+    var selectedItem = document.getElementById("newNoteLecture");
+    console.log(selectedItem);
+    var lectureId = selectedItem.options[selectedItem.selectedIndex].id;
+    console.log(lectureId);
 
     // Pass lecture ID and Title to the the server to be placed in database
-    $.post("/addNote",{lectureId: id, title:$("#newNoteName").val()}, createNoteClickedCallback,"json");
+    $.post("/addNote",{lectureId: lectureId, title:$("#newNoteName").val()}, createNoteClickedCallback,"json");
 
 
     $('#newNoteModal').modal('hide');
