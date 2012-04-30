@@ -48,7 +48,7 @@ block titlebar
           ul.nav
             li
               a(href="/about/") About
-            -if(isProfessor)
+            -if(loggedIn && isProfessor)
               li
                 a(href="/courses/") Courses
           .navbar-text.pull-right
