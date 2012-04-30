@@ -42,3 +42,6 @@ If you have [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) installed, a PD
 
 ## Miscellaneous
 You can run `bin/run.sh 9001 mock` if you prefer not to deal with a database while testing.
+
+## Future Improvements
+Go to [issues](https://github.com/jiaweihli/eduwrite/issues), and filter using the blue `Feature Request` tag.
