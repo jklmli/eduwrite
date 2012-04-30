@@ -11,8 +11,10 @@ gzip, git, curl, libssl develop libraries, python and gcc
 
 Some distro-specific commands to help you along:
 
-- *Debian/Ubuntu*: `sudo apt-get install gzip git-core curl python libssl-dev build-essential mysql-client mysql-server`
-- *Fedora/CentOS*: `sudo yum install gzip git-core curl python openssl-devel mysql mysql-server && yum groupinstall "Development Tools"`
+- *Debian/Ubuntu*:  
+`sudo apt-get install gzip git-core curl python libssl-dev build-essential mysql-client mysql-server`
+- *Fedora/CentOS*:  
+`sudo yum install gzip git-core curl python openssl-devel mysql mysql-server && yum groupinstall "Development Tools"`
 
 1.  Install the (additional?) dependencies with `bin/installDeps.sh` (an unfortunate dinosaur from etherpad-lite).
 2.  Run `make build`.
