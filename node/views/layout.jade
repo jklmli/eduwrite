@@ -17,6 +17,12 @@ style(type="text/css")
     padding-bottom:40px;
     text-align: justify;
   }
+  .navbar .brand {
+    padding: 0px;
+  }
+  #titlebar {
+    padding: 8px 20px 12px;
+  }
   .sidebar-nav {
     padding:9px 0;
   }
@@ -43,7 +49,9 @@ block titlebar
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.brand(href="/") EduWrite
+        a.brand(href="/", style="padding: 4px 12px")
+          img(src="/static/img/logo.png", height="25")
+        a.brand(id="titlebar", href="/") EduWrite
         .nav-collapse
           ul.nav
             li
